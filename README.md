@@ -21,6 +21,15 @@ Users can register with Song Mates, and create a profile with an image, a biogra
 
 ## Frameworks, libraries and dependencies
 
+### Django 3.2
+
+### Psychopg 2
+Python PostgreSQL adapater
+
+### Gunicorn
+Python WSGI HTTP server
+
+
 ## Data model
 
 ## Testing
