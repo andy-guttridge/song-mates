@@ -21,6 +21,16 @@ if os.path.isfile('env.py'):
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
+# Require users to login using email address
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+# Require users to verify account via email
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+# Redirection for login and logout
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -32,6 +42,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ALLOWED_HOSTS = ['songmates.herokuapp.com', 'localhost']
 
+SITE_ID = 1
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +53,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'songmates_main',
 ]
 
