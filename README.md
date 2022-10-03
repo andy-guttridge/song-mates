@@ -29,6 +29,9 @@ Python PostgreSQL adapater
 ### Gunicorn
 Python WSGI HTTP server
 
+### dj-database-url
+Django utility to create an environment variable to configure the Django application
+
 
 ## Data model
 
