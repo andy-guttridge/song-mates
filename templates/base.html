@@ -16,6 +16,7 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="#">SongMates</a>
             <ul class="navbar-nav">
+                <!-- Show nav items only if user is authenticated -->
                 {% if  user.is_authenticated  %}
                     <li class="nav-item"><a href="{% url 'account_logout' %}" class="link-light">Sign-out</a></li>
                 {% endif %}
