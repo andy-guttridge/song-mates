@@ -35,6 +35,8 @@ Django utility to create an environment variable to configure the Django applica
 ### Django-allauth
 User account management django application suite
 
+### Bootstrap 5
+Front end CSS and JavaScript library
 
 ## Data model
 
@@ -63,5 +65,6 @@ Initially, allauth configuration was set to require the user to login with an em
 - The steps to connect to a Heroku Postgres database and deploy were adapted from the Code Institute 'I think therefore I blog' tutorial. This includes defining `DATABASE_URL` and `SECRET_KEY` environment variables in an `env.py` file in the local environment and adding corresponding config variables in the Heroku dashboard, using dj_database_url to create a URL from the Heroku database URL in `settings.py`, updating `ALLOWED_HOSTS` in `settings.py` with the deployed Heroku URL and adding the templates path to a `TEMPLATES_DIR` variable in `settings.py`.
 - This [stackoverflow article](https://stackoverflow.com/questions/68810221/login-required-decorator-gives-object-has-no-attribute-user-error) was referenced to understand how to use the 'login-required' decorator with a class based view
 - The approach to deleting a user account (actually making the account inactive) in response to a button was adapted from [this stackoverflow article](https://stackoverflow.com/questions/38047408/how-to-allow-user-to-delete-account-in-django-allauth)
+- The Bootstrap 5 documentation was extensively referenced for guidance on implementing navbars and modal dialogs.
 
 ### Content
