@@ -35,6 +35,9 @@ Django utility to create an environment variable to configure the Django applica
 ### Django-allauth
 User account management django application suite
 
+### Cloudinary and django-cloudinary-storage
+Libraries to enable storage of static files and media in Cloudinary
+
 ### Bootstrap 5
 Front end CSS and JavaScript library
 
