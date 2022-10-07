@@ -5,8 +5,8 @@ from .genres import Genres
 
 
 class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,
-                             related_name="profile")
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL,
+                             unique=True, related_name="profile")
     slug = models.SlugField(max_length=200, unique=True)
     friends = models.ManyToManyField("self", blank=True,
                                      )

@@ -4,6 +4,7 @@ from django.views import View
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from .models import Profile
 
 
 class Home(View):
@@ -13,6 +14,11 @@ class Home(View):
     """
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
+        # If a profile for this user does not exist, create one
+        if not Profile.objects.filter(user=request.user).exists():
+            profile = Profile(user=request.user, slug=request.user.id)
+            profile.save()
+            print(profile.pk)
         return render(
             request,
             "index.html"
@@ -27,6 +33,11 @@ class UserDelete(View):
     # https://stackoverflow.com/questions/38047408/how-to-allow-user-to-delete-account-in-django-allauth
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
+        # Check there is a profile for the user and delete if so
+        if Profile.objects.filter(user=request.user).exists():
+            profile = Profile.objects.filter(user=request.user)
+            profile.delete()
+        # Make user account inactive
         request.user.is_active = False
         request.user.save()
         return HttpResponseRedirect(reverse_lazy('account_logout'))
