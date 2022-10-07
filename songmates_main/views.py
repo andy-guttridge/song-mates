@@ -71,3 +71,12 @@ class UserDelete(View):
         request.user.is_active = False
         request.user.save()
         return HttpResponseRedirect(reverse_lazy('account_logout'))
+
+
+class Profiles(View):
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            "profiles.html",
+        )

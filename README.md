@@ -78,3 +78,6 @@ Initially, allauth configuration was set to require the user to login with an em
 - The approach to using a crispy form Div helper class to layout form elements next to each other was based on [this stackoverflow article](https://stackoverflow.com/questions/23021746/get-two-fields-inline-in-django-crispy-forms-but-not-others-horizontal)
 
 ### Content
+
+- Font Awesome icons
+    - Burger menu icon
