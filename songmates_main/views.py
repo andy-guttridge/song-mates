@@ -40,7 +40,7 @@ class UpdateProfile(View):
     """
     @method_decorator(login_required)
     def post(self, request, *args, **kwargs):
-        # Find user profile in database, assoicate with form
+        # Find user profile in database, associate with form
         # and populate form using POST request data
         profile = Profile.objects.filter(user=request.user).first()
         profile_form = ProfileForm(request.POST, instance=profile)
