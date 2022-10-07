@@ -5,11 +5,12 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .models import Profile
+from .forms import ProfileForm
 
 
-class Home(View):
+class ProfileAccount(View):
     """
-    View for homepage, which is the user's profile.
+    User profile and account view.
     Redirects to login page if user not authenticated.
     """
     @method_decorator(login_required)
@@ -19,10 +20,39 @@ class Home(View):
             profile = Profile(user=request.user, slug=request.user.id)
             profile.save()
             print(profile.pk)
+        # Retrieve profile from database, create form from it and
+        # render
+        profile = Profile.objects.filter(user=request.user).first()
+        profile_form = ProfileForm(instance=profile)
         return render(
             request,
-            "index.html"
-            )
+            "index.html",
+            {
+                "form": profile_form
+            }
+        )
+
+
+class UpdateProfile(View):
+    """
+    Handle updates to user profile.
+    Redirects to login page if user not authenticated.
+    """
+    @method_decorator(login_required)
+    def post(self, request, *args, **kwargs):
+        # Find user profile in database, assoicate with form
+        # and populate form using POST request data
+        profile = Profile.objects.filter(user=request.user).first()
+        profile_form = ProfileForm(request.POST, instance=profile)
+        # Check if user hit submit button and form is valid. Save if true.
+        # Otherwise reload page using existing data
+        if profile_form.is_valid() and 'profile-form-submit' in request.POST:
+            profile_form.save()
+            return HttpResponseRedirect(reverse_lazy('home'))
+        else:
+            profile = Profile.objects.filter(user=request.user).first()
+            profile_form = ProfileForm(instance=profile)
+            return HttpResponseRedirect(reverse_lazy('home'))
 
 
 class UserDelete(View):
