@@ -38,6 +38,12 @@ User account management django application suite
 ### Cloudinary and django-cloudinary-storage
 Libraries to enable storage of static files and media in Cloudinary
 
+### Crispy Forms
+Django app to simplify form rendering
+
+### Crispy Bootstrap 5
+Bootstrap 5 templates for Crispy Forms
+
 ### Bootstrap 5
 Front end CSS and JavaScript library
 
