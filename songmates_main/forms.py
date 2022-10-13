@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from django.conf.urls.static import static
 from .models import Profile
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field, Button, Submit, HTML
@@ -23,7 +24,11 @@ class ProfileForm(ModelForm):
         self.helper.layout = Layout(
             Field('biog'),
             Field('image'),
-            HTML("""{% if form.image.value %}<img src="{{ MEDIA_URL }}{{ form.image.value }}">{% endif %}""", ),
+            # Approach to using a HTML helper class to display an image from
+            # the data base in the form from
+            # https://stackoverflow.com/questions/21076248/imagefield-preview-in-crispy-forms-layout
+            HTML("""<img src="{{ profile.image.url }}" class="profile-img"
+                 alt="profile image">""", ),
             # Approach to using a Div helper class to display
             # form elements next to each other from
             # https://stackoverflow.com/questions/23021746/get-two-fields-inline-in-django-crispy-forms-but-not-others-horizontal

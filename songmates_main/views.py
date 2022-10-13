@@ -28,6 +28,7 @@ class ProfileAccount(View):
             request,
             "index.html",
             {
+                "profile": profile,
                 "form": profile_form
             }
         )
