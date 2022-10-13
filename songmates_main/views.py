@@ -4,6 +4,7 @@ from django.views import View
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from cloudinary.uploader import upload
 from .models import Profile
 from .forms import ProfileForm
 
@@ -43,7 +44,8 @@ class UpdateProfile(View):
         # Find user profile in database, associate with form
         # and populate form using POST request data
         profile = Profile.objects.filter(user=request.user).first()
-        profile_form = ProfileForm(request.POST, instance=profile)
+        profile_form = ProfileForm(request.POST, request.FILES,
+                                   instance=profile)
         # Check if user hit submit button and form is valid. Save if true.
         # Otherwise reload page using existing data
         if profile_form.is_valid() and 'profile-form-submit' in request.POST:

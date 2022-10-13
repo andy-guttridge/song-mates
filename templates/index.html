@@ -8,7 +8,7 @@
 
     <div class="row">
          <!-- Form for updating user profile -->
-        <form action="update-profile/" method="post" id="profile-form">
+        <form action="update-profile/" method="post" id="profile-form" enctype="multipart/form-data">
             {% csrf_token %}
             {% crispy form form.helper %}
         </form>
