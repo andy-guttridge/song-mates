@@ -81,3 +81,4 @@ Initially, allauth configuration was set to require the user to login with an em
 
 - Font Awesome icons
     - Burger menu icon
+- Placeholder profile image by WandererCreative and downloaded from [Pixabay](https://pixabay.com/images/id-973460/)
