@@ -4,7 +4,6 @@ from django.views import View
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from cloudinary.uploader import upload
 from .models import Profile
 from .forms import ProfileForm
 
