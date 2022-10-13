@@ -73,10 +73,10 @@ class UserDelete(View):
         return HttpResponseRedirect(reverse_lazy('account_logout'))
 
 
-class Profiles(View):
+class FindCollabs(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         return render(
             request,
-            "profiles.html",
+            "find_collabs.html",
         )
