@@ -10,7 +10,7 @@ class Profile(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     friends = models.ManyToManyField("self", blank=True,
                                      )
-    image = CloudinaryField('image', default='placeholder')
+    image = CloudinaryField('image', default='blank-profile-pic.png')
     biog = models.TextField(max_length=500, null=True, blank=True)
     genre1 = models.CharField(choices=Genres.choices, max_length=3, null=True,
                               blank=True)
