@@ -78,7 +78,11 @@ class UserDelete(View):
 class FindCollabs(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
+        profiles = Profile.objects.order_by('user')
         return render(
             request,
             "find_collabs.html",
+            {
+                "profiles": profiles,
+            }
         )

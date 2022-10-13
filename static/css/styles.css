@@ -7,3 +7,7 @@
 .profile-img {
     width: 10rem;
 }
+
+.no-leading-whitespace {
+    padding-left 0px;
+}
