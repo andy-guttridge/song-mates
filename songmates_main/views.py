@@ -77,26 +77,44 @@ class UserDelete(View):
 
 class FindCollabs(View):
     """
-    Retrieve user profiles from data base and pass to the template.
+    Retrieve user profiles from data base and pass to the find_collabs template.
     """
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
+        # Find all profiles and any pending collaboration requests
+        # sent by the user
         profiles = Profile.objects.order_by('user')
+        collab_requests = CollabRequest.objects.filter(from_user=request.user)
+        collab_request_users = []
+
+        # Pull the to_users out of any collaboration requests sent by this user
+        # and add to a list
+        for collab_request in collab_requests:
+            collab_request_users.append(collab_request.to_user)
         return render(
             request,
             "find_collabs.html",
             {
                 "profiles": profiles,
+                "collab_request_users": collab_request_users,
+                "user": request.user
             }
         )
 
 
 class RequestCollab(View):
-
+    """
+    Deal with user's request to send a collaboration request to another user.
+    """
     @method_decorator(login_required)
     def post(self, request, to_user_pk, *args, **kwargs):
+        # Check if the user they want to collab with exists
+        # and retrieve if it does
+
         if User.objects.filter(pk=to_user_pk).exists():
             to_user = User.objects.filter(pk=to_user_pk).first()
+
+        # Create a new collaboration request and save
         collab_request = CollabRequest(from_user=request.user, to_user=to_user)
         collab_request.save()
         return HttpResponseRedirect(reverse_lazy('find_collabs'))

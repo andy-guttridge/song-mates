@@ -65,10 +65,18 @@
                         , {{ profile.instru_skill5 }}
                     {% endif %}
                 </p>
-                <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
+                {% if profile.user not in collab_request_users and profile.user != user %}
+                    <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to collaborate</button>
+                    </form>
+                {% endif %}
+                {% if profile.user in collab_request_users %}
+                <form action="" method="post" id="cancel-collab">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to collaborate</button>
+                    <button type="submit" class="btn btn-warning" aria-label="Cancel collaboration request">Cancel collaboration request</button>
                 </form>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
