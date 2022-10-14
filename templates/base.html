@@ -1,5 +1,7 @@
 {% load static %}
 
+{% load tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,20 +22,30 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">SongMates</a>
+            
             <!-- Show nav items only if user is authenticated -->
-            {% if  user.is_authenticated  %}
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarToggleContent" aria-controls="navbarToggleContent" aria-expanded="false"
-                    aria-label="Toggle navigation menu"><i class="fa-solid fa-bars"></i>
-                </button>
-            {% endif %}
-            <!-- Content for collapsible hamburger menu -->
-            <div class="collapse navbar-collapse justify-content-end" id="navbarToggleContent">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item p-2"><a class="link-light" href="{% url 'home' %}">Me</a></li>
-                    <li class="nav-item p-2"><a class="link-light" href="{% url 'find_collabs' %}">Find Collaborators</a></li>
-                    <li class="nav-item p-2"><a class="link-light" href="{% url 'account_logout' %}">Sign&#8209out</a></li>              
-                </ul>
+                {% if  user.is_authenticated  %}
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarToggleContent" aria-controls="navbarToggleContent" aria-expanded="false"
+                        aria-label="Toggle navigation menu"><i class="fa-solid fa-bars"></i>
+                    </button>
+                <!-- Content for collapsible hamburger menu -->
+                <div class="collapse navbar-collapse justify-content-end" id="navbarToggleContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item p-2"><a class="link-light" href="{% url 'home' %}">Me</a></li>
+
+                        <!-- Technique to convert a custom template tag to a variable is from -->
+                        <!-- https://stackoverflow.com/questions/53672002/how-to-call-conditional-statements-on-template-tags-with-no-arguments-django -->
+                        {% number_of_collab_requests request as requests %}
+                        
+                        <!-- Only show collaboration requests link if there are more than zero -->
+                        {% if requests > 0 %}
+                            <li class="nav-item p-2"><a class="link-light" href="#">{% number_of_collab_requests request %}</a></li>
+                        {% endif %}
+                        <li class="nav-item p-2"><a class="link-light" href="{% url 'find_collabs' %}">Find Collaborators</a></li>
+                        <li class="nav-item p-2"><a class="link-light" href="{% url 'account_logout' %}">Sign&#8209out</a></li>              
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </nav>
