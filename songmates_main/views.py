@@ -150,9 +150,14 @@ class CollabRequests(View):
                 profile.friends.add(new_friend)
                 profile.save()
         
-        # Delete the collaboration request, this happens for approved
-        # and rejected requests
-        collab_request = CollabRequest.objects.filter(from_user=user_pk).first()
+        # Find the right collaboration request depending if this was an
+        # incoming or outgoing request, and delete - regardless of whether
+        # it was an approval, rejection or cancellation.
+        if 'collab-approve' in request.POST or 'collab-reject' in request.POST:
+            collab_request = CollabRequest.objects.filter(from_user=user_pk).first()
+        elif 'collab-cancel' in request.POST:
+            collab_request = CollabRequest.objects.filter(to_user=user_pk).first()
+
         if collab_request:
             collab_request.delete()        
         
@@ -166,4 +171,7 @@ class CollabRequests(View):
                 "in_requests": in_requests,
                 "out_requests": out_requests,
             }
-    )
+        )
+
+
+
