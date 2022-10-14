@@ -8,6 +8,10 @@
     width: 10rem;
 }
 
-.no-leading-whitespace {
-    padding-left 0px;
+.table-cols-20 {
+    width: 20%;
+}
+
+.table-cols-40 {
+    width: 40%;
 }

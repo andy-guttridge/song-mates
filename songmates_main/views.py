@@ -118,3 +118,22 @@ class RequestCollab(View):
         collab_request = CollabRequest(from_user=request.user, to_user=to_user)
         collab_request.save()
         return HttpResponseRedirect(reverse_lazy('find_collabs'))
+
+
+class CollabRequests(View):
+    """
+    View of the user's currently pending collaboration requests.
+    """
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        # Get all pending incoming and outgoing collaboration requests
+        in_requests = CollabRequest.objects.filter(to_user=request.user)
+        out_requests = CollabRequest.objects.filter(from_user=request.user)
+        return render(
+            request,
+            "collab_requests.html",
+            {
+                "in_requests": in_requests,
+                "out_requests": out_requests,
+            }
+        )

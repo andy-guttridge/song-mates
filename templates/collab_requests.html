@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Pending Collaboration Requests</h2>
+<h3>Inbox</h3>
+<table class="table table-striped">
+    <tr>
+        <th class="table-cols-20" scope="col">From</th>
+        <th class="table-cols-40" scope="col">Date</th>
+        <th class="table-cols-40" scope="col">Approve or Reject</th>
+    </tr>
+    {% for collab in in_requests %}
+        <tr>
+            <td><a href="#" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.from_user }}</a></td>
+            <td>{{ collab.date|date:"G:i, M d Y" }}</td>
+            <td><a href="#" aria-label="Approve collaboration request">Approve</a> | <a href="#" aria-label="Reject collboration request">Reject</a></td>
+        </tr>
+    {% endfor %}
+</table>
+<h3>Outbox</h3>
+<table class="table table-striped">
+    <tr>
+        <th class="table-cols-20" scope="col">To</th>
+        <th class="table-cols-40" scope="col">Date</th>
+        <th class="table-cols-40" scope="col">Cancel</th>
+    </tr>
+    {% for collab in out_requests %}
+        <tr>
+            <td><a href="#" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.to_user }}</a></td>
+            <td>{{ collab.date|date:"G:i, M d Y" }}</td>
+            <td><a href="#" aria-label="Cancel collaboration request">Cancel</a></td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
