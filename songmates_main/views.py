@@ -141,18 +141,22 @@ class CollabRequests(View):
     @method_decorator(login_required)
     def post(self, request, user_pk, *args, **kwargs):
         # If the user has pressed the approve request button, find the user's
-        # profile, the new friend's profile, add to the many-to-many list of
-        # friends for both users and delete the collaboration request.
+        # profile, the new friend's profile and add to the many-to-many list of
+        # friends for both users.
         if 'collab-approve' in request.POST:
             profile = Profile.objects.filter(user=request.user).first()
             new_friend = Profile.objects.filter(user=user_pk).first()
             if new_friend:
                 profile.friends.add(new_friend)
                 profile.save()
-            collab_request = CollabRequest.objects.filter(from_user=user_pk).first()
-            if collab_request:
-                collab_request.delete()
-            
+        
+        # Delete the collaboration request, this happens for approved
+        # and rejected requests
+        collab_request = CollabRequest.objects.filter(from_user=user_pk).first()
+        if collab_request:
+            collab_request.delete()        
+        
+        # Re-render the page
         in_requests = CollabRequest.objects.filter(to_user=request.user)
         out_requests = CollabRequest.objects.filter(from_user=request.user)
         return render(

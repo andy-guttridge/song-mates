@@ -15,14 +15,37 @@
             <td><a href="#" class="plain-link" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.from_user }}</a></td>
             <td>{{ collab.date|date:"G:i, M d Y" }}</td>
             <td>
-                <form action="{% url 'collab_requests' collab.from_user.pk %}" method="post">
+                <form action="{% url 'collab_requests' collab.from_user.pk %}" method="post" id="reject-collab">
                     {% csrf_token %}
-                    <button class="plain-link" type="submit" name="collab-approve" aria-label="Approve collaboration request">Approve</button> | <button class="plain-link" id="collab-reject" type="submit" aria-label="Reject collboration request">Reject</button>
+                    <button class="plain-link" type="submit" name="collab-approve" aria-label="Approve collaboration request">Approve</button>
+                    | 
+                    <button class="plain-link" type="button" aria-label="Reject collboration request" data-bs-toggle="modal" data-bs-target="#modal-confirm-reject">Reject</button>
                 </form>
             </td>
         </tr>
     {% endfor %}
 </table>
+
+<!-- Modal to confirm rejection of collaboration request -->
+<div class="modal" id="modal-confirm-reject" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm rejection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to reject this collaboration request?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Cancel rejection" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger" aria-label="Confirm rejection" data-bs-dismiss="modal" form="reject-collab" name="collab-reject">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <h3>Outbox</h3>
 <table class="table table-striped">
     <tr>
