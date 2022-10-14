@@ -5,6 +5,9 @@ from .genres import Genres
 
 
 class Profile(models.Model):
+    """
+    Model for user profiles
+    """
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL,
                              unique=True, related_name="profile")
     slug = models.SlugField(max_length=200, unique=True)
@@ -27,3 +30,16 @@ class Profile(models.Model):
     instru_skill3 = models.CharField(max_length=30, null=True, blank=True)
     instru_skill4 = models.CharField(max_length=30, null=True, blank=True)
     instru_skill5 = models.CharField(max_length=30, null=True, blank=True)
+
+
+class CollabRequest(models.Model):
+    """
+    Model for collaboration requests
+    """
+    from_user = models.ForeignKey(User, null=False, on_delete=models.CASCADE,
+                                  unique=False, related_name="from_user")
+    to_user = models.ForeignKey(User, null=False, on_delete=models.CASCADE,
+                                unique=False, related_name="to_user")
+    date = models.DateTimeField(auto_now_add=True)
+    message = models.CharField(max_length=200, blank=True, null=True)
+

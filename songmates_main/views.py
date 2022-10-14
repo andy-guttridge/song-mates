@@ -76,6 +76,9 @@ class UserDelete(View):
 
 
 class FindCollabs(View):
+    """
+    Retrieve user profiles from data base and pass to the template.
+    """
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         profiles = Profile.objects.order_by('user')
@@ -86,3 +89,10 @@ class FindCollabs(View):
                 "profiles": profiles,
             }
         )
+
+
+class RequestCollab(View):
+
+    @method_decorator(login_required)
+    def post(self, request, to_user, *args, **kwargs):
+        return HttpResponseRedirect(reverse_lazy('find_collabs'))

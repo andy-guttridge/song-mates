@@ -6,6 +6,7 @@
 
 <div class="container">
     <h1>Find Collaborators</h1>
+    <!-- Loop through profiles and display the details of each in a bootstrap card -->
     {% for profile in profiles %}
         <div class="card">
             <div class="card-body">
@@ -64,6 +65,10 @@
                         , {{ profile.instru_skill5 }}
                     {% endif %}
                 </p>
+                <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to collaborate</button>
+                </form>
             </div>
         </div>
     {% endfor %}
