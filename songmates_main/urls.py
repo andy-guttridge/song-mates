@@ -11,4 +11,6 @@ urlpatterns = [
           name="request_collab"),
      path("collab-requests/", views.CollabRequests.as_view(),
           name="collab_requests"),
+     path("collab-requests/<int:user_pk>", views.CollabRequests.as_view(),
+          name="collab_requests"),
 ]

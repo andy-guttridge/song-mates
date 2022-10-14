@@ -137,3 +137,24 @@ class CollabRequests(View):
                 "out_requests": out_requests,
             }
         )
+    
+    @method_decorator(login_required)
+    def post(self, request, user_pk, *args, **kwargs):
+        if 'collab-approve' in request.POST:
+            profile = Profile.objects.filter(user=request.user).first()
+            new_friend = Profile.objects.filter(user=user_pk).first()
+            profile.friends.add(new_friend)
+            profile.save()
+            collab_request = CollabRequest.objects.filter(from_user=user_pk).first()
+            collab_request.delete()
+            
+        in_requests = CollabRequest.objects.filter(to_user=request.user)
+        out_requests = CollabRequest.objects.filter(from_user=request.user)
+        return render(
+            request,
+            "collab_requests.html",
+            {
+                "in_requests": in_requests,
+                "out_requests": out_requests,
+            }
+    )

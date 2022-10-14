@@ -15,3 +15,14 @@
 .table-cols-40 {
     width: 40%;
 }
+
+.plain-link {
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    color: dodgerblue;
+    text-decoration: underline;
+}
+
+.plain-link:hover{
+    color: darkblue;
+}

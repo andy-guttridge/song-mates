@@ -12,9 +12,14 @@
     </tr>
     {% for collab in in_requests %}
         <tr>
-            <td><a href="#" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.from_user }}</a></td>
+            <td><a href="#" class="plain-link" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.from_user }}</a></td>
             <td>{{ collab.date|date:"G:i, M d Y" }}</td>
-            <td><a href="#" aria-label="Approve collaboration request">Approve</a> | <a href="#" aria-label="Reject collboration request">Reject</a></td>
+            <td>
+                <form action="{% url 'collab_requests' collab.from_user.pk %}" method="post">
+                    {% csrf_token %}
+                    <button class="plain-link" type="submit" name="collab-approve" aria-label="Approve collaboration request">Approve</button> | <button class="plain-link" id="collab-reject" type="submit" aria-label="Reject collboration request">Reject</button>
+                </form>
+            </td>
         </tr>
     {% endfor %}
 </table>
@@ -27,9 +32,14 @@
     </tr>
     {% for collab in out_requests %}
         <tr>
-            <td><a href="#" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.to_user }}</a></td>
+            <td><a class="plain-link" href="#" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.to_user }}</a></td>
             <td>{{ collab.date|date:"G:i, M d Y" }}</td>
-            <td><a href="#" aria-label="Cancel collaboration request">Cancel</a></td>
+            <td>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <button class="plain-link" aria-label="Cancel collaboration request">Cancel</button>
+                </form>
+            </td>
         </tr>
     {% endfor %}
 </table>
