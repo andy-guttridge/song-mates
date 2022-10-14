@@ -9,15 +9,19 @@ class ProfileAdmin(admin.ModelAdmin):
     """
     prepopulated_fields = {'slug': ('user',)}
     raw_id_fields = ('friends'),
-    list_display = ('user', 'slug', 'biog', 'genre1',
-                    'instru_skill1', 'get_friends')
+    list_display = ('user', 'slug', 'biog', 'get_collaborators')
     list_filter = ('user',)
     search_fields = ('user',)
 
-    def get_friends(self, obj):
+    def get_collaborators(self, obj):
+        """
+        Create a string of the user's approved collaborators
+        """
+        # Approach to creating a string representation of a many-to-many field adapted from
+        # https://stackoverflow.com/questions/18108521/many-to-many-in-list-display-django
         string = ""
         for friend in obj.friends.all():
-            string += str(friend.user) + ','
+            string += str(friend.user) + ', '
         return string
         
 
