@@ -3,8 +3,9 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
-from .models import Profile
+from .models import Profile, CollabRequest
 from .forms import ProfileForm
 
 
@@ -19,7 +20,6 @@ class ProfileAccount(View):
         if not Profile.objects.filter(user=request.user).exists():
             profile = Profile(user=request.user, slug=request.user.id)
             profile.save()
-            print(profile.pk)
         # Retrieve profile from database, create form from it and
         # render
         profile = Profile.objects.filter(user=request.user).first()
@@ -94,5 +94,9 @@ class FindCollabs(View):
 class RequestCollab(View):
 
     @method_decorator(login_required)
-    def post(self, request, to_user, *args, **kwargs):
+    def post(self, request, to_user_pk, *args, **kwargs):
+        if User.objects.filter(pk=to_user_pk).exists():
+            to_user = User.objects.filter(pk=to_user_pk).first()
+        collab_request = CollabRequest(from_user=request.user, to_user=to_user)
+        collab_request.save()
         return HttpResponseRedirect(reverse_lazy('find_collabs'))
