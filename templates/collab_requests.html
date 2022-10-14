@@ -4,17 +4,23 @@
 
 <h2>Pending Collaboration Requests</h2>
 <h3>Inbox</h3>
+
+<!-- Table listing incoming collaboration requests -->
 <table class="table table-striped">
     <tr>
+        <!-- Column headings -->
         <th class="table-cols-20" scope="col">From</th>
         <th class="table-cols-40" scope="col">Date</th>
         <th class="table-cols-40" scope="col">Approve or Reject?</th>
     </tr>
+
+    <!-- Loop through requests and display details in table cells -->
     {% for collab in in_requests %}
         <tr>
             <td><a href="#" class="plain-link" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.from_user }}</a></td>
             <td>{{ collab.date|date:"G:i, M d Y" }}</td>
             <td>
+                <!-- Form to deal with approval or rejection of incoming collaboration requests -->
                 <form action="{% url 'collab_requests' collab.from_user.pk %}" method="post" id="reject-collab">
                     {% csrf_token %}
                     <button class="plain-link" type="submit" name="collab-approve" aria-label="Approve collaboration request">Approve</button>
@@ -47,17 +53,21 @@
 
 
 <h3>Outbox</h3>
+<!-- Table listing outgoing collaboration requests -->
 <table class="table table-striped">
     <tr>
+        <!-- Column headings -->
         <th class="table-cols-20" scope="col">To</th>
         <th class="table-cols-40" scope="col">Date</th>
         <th class="table-cols-40" scope="col">Cancel?</th>
     </tr>
+    <!-- Loop through requests and display details in table cells -->
     {% for collab in out_requests %}
         <tr>
             <td><a class="plain-link" href="#" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.to_user }}</a></td>
             <td>{{ collab.date|date:"G:i, M d Y" }}</td>
             <td>
+                <!-- Form to deal with cancellation of outgoing collaboration requests -->
                 <form action="{% url 'collab_requests' collab.to_user.pk %}" method="post" id="cancel-request">
                     {% csrf_token %}
                     <button type="button" class="plain-link" aria-label="Cancel collaboration request" data-bs-toggle="modal" data-bs-target="#modal-confirm-cancel">Cancel</button>
