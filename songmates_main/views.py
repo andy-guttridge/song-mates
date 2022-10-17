@@ -23,7 +23,9 @@ class ProfileAccount(View):
             profile.save()
         # Retrieve profile from database, create form from it and
         # render
-        profile = Profile.objects.filter(user=request.user).first()
+        profile_queryset = Profile.objects.filter(user=request.user)
+        get_object_or_404(profile_queryset)
+        profile = profile_queryset.first()
         profile_form = ProfileForm(instance=profile)
         return render(
             request,
@@ -44,7 +46,10 @@ class UpdateProfile(View):
     def post(self, request, *args, **kwargs):
         # Find user profile in database, associate with form
         # and populate form using POST request data
-        profile = Profile.objects.filter(user=request.user).first()
+
+        profile_queryset = Profile.objects.filter(user=request.user)
+        get_object_or_404(profile_queryset)
+        profile = profile_queryset.first()
         profile_form = ProfileForm(request.POST, request.FILES,
                                    instance=profile)
         # Check if user hit submit button and form is valid. Save if true.
@@ -53,7 +58,6 @@ class UpdateProfile(View):
             profile_form.save()
             return HttpResponseRedirect(reverse_lazy('home'))
         else:
-            profile = Profile.objects.filter(user=request.user).first()
             profile_form = ProfileForm(instance=profile)
             return HttpResponseRedirect(reverse_lazy('home'))
 
@@ -125,10 +129,10 @@ class RequestCollab(View):
 
         if User.objects.filter(pk=to_user_pk).exists():
             to_user = User.objects.filter(pk=to_user_pk).first()
+            # Create a new collaboration request and save
+            collab_request = CollabRequest(from_user=request.user, to_user=to_user)
+            collab_request.save()
 
-        # Create a new collaboration request and save
-        collab_request = CollabRequest(from_user=request.user, to_user=to_user)
-        collab_request.save()
         return HttpResponseRedirect(reverse_lazy('find_collabs'))
 
 
