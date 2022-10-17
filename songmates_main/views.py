@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import View
+from django.db.models import Q
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -77,17 +78,20 @@ class UserDelete(View):
 
 class FindCollabs(View):
     """
-    Retrieve user profiles from data base and pass to the find_collabs template.
+    Retrieve user profiles from data base and pass to the find_collabs
+    template.
     """
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         # Find all profiles and any pending collaboration requests
         # sent by or to the user
         profiles = Profile.objects.order_by('user')
-        collab_requests_from_user = CollabRequest.objects.filter(from_user=
-                                                                 request.user)
-        collab_requests_to_user = CollabRequest.objects.filter(to_user=
-                                                               request.user)
+        collab_requests_from_user = CollabRequest.objects.filter(
+            from_user=request.user
+            )
+        collab_requests_to_user = CollabRequest.objects.filter(
+            to_user=request.user
+            )
         collab_request_users = []
 
         # Pull the to_users out of any collaboration requests sent by or to 
@@ -159,9 +163,13 @@ class CollabRequests(View):
         # incoming or outgoing request, and delete - regardless of whether
         # it was an approval, rejection or cancellation.
         if 'collab-approve' in request.POST or 'collab-reject' in request.POST:
-            collab_request = CollabRequest.objects.filter(from_user=user_pk).first()
+            collab_request = CollabRequest.objects.filter(
+                from_user=user_pk
+                ).first()
         elif 'collab-cancel' in request.POST:
-            collab_request = CollabRequest.objects.filter(to_user=user_pk).first()
+            collab_request = CollabRequest.objects.filter(
+                to_user=user_pk
+                ).first()
 
         if collab_request:
             collab_request.delete()        
@@ -179,4 +187,21 @@ class CollabRequests(View):
         )
 
 
+class SingleProfile(View):
+    """
+    Displays a single user profile.
+    """
+    def get(self, request, user_pk, *args, **kwargs):
+        profile = Profile.objects.filter(user=user_pk).first()
+        collab_request = CollabRequest.objects.filter(
+            Q(from_user=profile.user) | Q(to_user=profile.user)
+        ).first()
+        return render(
+            request,
+            "single_profile.html",
+            {
+                "profile": profile,
+                "collab_request": collab_request,
+            }
+        )
 

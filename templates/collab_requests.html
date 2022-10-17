@@ -17,7 +17,7 @@
     <!-- Loop through requests and display details in table cells -->
     {% for collab in in_requests %}
         <tr>
-            <td><a href="#" class="plain-link" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.from_user }}</a></td>
+            <td><a href="{% url 'single_profile' collab.from_user.pk %} " class="plain-link" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.from_user }}</a></td>
             <td>{{ collab.date|date:"G:i, M d Y" }}</td>
             <td>
                 <!-- Form to deal with approval or rejection of incoming collaboration requests -->
@@ -64,7 +64,7 @@
     <!-- Loop through requests and display details in table cells -->
     {% for collab in out_requests %}
         <tr>
-            <td><a class="plain-link" href="#" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.to_user }}</a></td>
+            <td><a class="plain-link" href="{% url 'single_profile' collab.to_user.pk %}" aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.to_user }}</a></td>
             <td>{{ collab.date|date:"G:i, M d Y" }}</td>
             <td>
                 <!-- Form to deal with cancellation of outgoing collaboration requests -->

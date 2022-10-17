@@ -7,6 +7,8 @@ urlpatterns = [
      path("update-profile/", views.UpdateProfile.as_view(),
           name="update_profile"),
      path("find-collabs/", views.FindCollabs.as_view(), name="find_collabs"),
+     path("single-profile/<int:user_pk>", views.SingleProfile.as_view(),
+          name="single_profile"),
      path("request-collab/<int:to_user_pk>", views.RequestCollab.as_view(),
           name="request_collab"),
      path("collab-requests/", views.CollabRequests.as_view(),
