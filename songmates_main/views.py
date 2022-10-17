@@ -82,15 +82,20 @@ class FindCollabs(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         # Find all profiles and any pending collaboration requests
-        # sent by the user
+        # sent by or to the user
         profiles = Profile.objects.order_by('user')
-        collab_requests = CollabRequest.objects.filter(from_user=request.user)
+        collab_requests_from_user = CollabRequest.objects.filter(from_user=
+                                                                 request.user)
+        collab_requests_to_user = CollabRequest.objects.filter(to_user=
+                                                               request.user)
         collab_request_users = []
 
-        # Pull the to_users out of any collaboration requests sent by this user
-        # and add to a list
-        for collab_request in collab_requests:
+        # Pull the to_users out of any collaboration requests sent by or to 
+        # this user and add to a list
+        for collab_request in collab_requests_from_user:
             collab_request_users.append(collab_request.to_user)
+        for collab_request in collab_requests_to_user:
+            collab_request_users.append(collab_request.from_user)
         return render(
             request,
             "find_collabs.html",

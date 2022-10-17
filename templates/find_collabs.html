@@ -78,30 +78,7 @@
 
             <!-- If there is a pending collaboration, render a cancel collaboration request form and button -->
             {% if profile.user in collab_request_users %}
-            <form action="" method="post" id="cancel-collab">
-                {% csrf_token %}
-                <button type="button" class="btn btn-warning" aria-label="Cancel collaboration request" data-bs-toggle="modal" data-bs-target="#modal-confirm-cancel">Cancel collaboration request</button>
-            </form>
-
-            <!-- Modal to confirm cancelling collaboration request -->
-            <div class="modal" id="modal-confirm-cancel" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Confirm cancellation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to cancel this collaboration request?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
-                            <button type="submit" class="btn btn-danger" aria-label="Confirm deletion" data-bs-dismiss="modal" form="cancel-collab">Confirm</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+                <a role="button" href="{% url 'collab_requests' %}" class="btn btn-info" aria-label="Pending collaboration request">Pending collaboration request</a>
             {% endif %}
         </div>
     </div>
