@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.db.models import Q
@@ -192,10 +192,14 @@ class SingleProfile(View):
     Displays a single user profile.
     """
     def get(self, request, user_pk, *args, **kwargs):
-        profile = Profile.objects.filter(user=user_pk).first()
-        collab_request = CollabRequest.objects.filter(
+        profile_queryset = Profile.objects.filter(user=user_pk)
+        get_object_or_404(profile_queryset)
+        profile = profile_queryset.first()
+        collab_request_queryset = CollabRequest.objects.filter(
             Q(from_user=profile.user) | Q(to_user=profile.user)
-        ).first()
+            )
+        get_object_or_404(collab_request_queryset)
+        collab_request = collab_request_queryset.first()
         return render(
             request,
             "single_profile.html",

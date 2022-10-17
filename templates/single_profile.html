@@ -76,7 +76,7 @@
             </form>
         {% endif %}
 
-        <!-- If there is a pending collaboration request, render a link to the collab_requessts view -->
+        <!-- If there is a pending collaboration request, render a link to the collab_requests view -->
         {% if profile.user.pk == collab_request.to_user.pk  or profile.user.pk == collab_request.from_user.pk %}
             <a role="button" href="{% url 'collab_requests' %}" class="btn btn-info" aria-label="Pending collaboration request">Pending collaboration request</a>
         {% endif %}
