@@ -68,7 +68,7 @@
                 {% endif %}
             </p>
 
-            <!-- Render request collaboration form and button if there are no pending requests and if this profile is not the authenticated user -->
+            <!-- Render request collaboration form and button if there are no pending requests, if this is not already a collaborator and if this profile is not the authenticated user -->
             {% if profile.user not in collab_request_users and profile.user != user %}
                 <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
                     {% csrf_token %}
@@ -76,7 +76,7 @@
                 </form>
             {% endif %}
 
-            <!-- If there is a pending collaboration, render a cancel collaboration request form and button -->
+            <!-- If there is a pending collaboration request, render a link to the collab_requessts view -->
             {% if profile.user in collab_request_users %}
                 <a role="button" href="{% url 'collab_requests' %}" class="btn btn-info" aria-label="Pending collaboration request">Pending collaboration request</a>
             {% endif %}
