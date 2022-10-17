@@ -87,15 +87,17 @@ class FindCollabs(View):
         # sent by or to the user
         profiles = Profile.objects.order_by('user')
         collab_requests_from_user = CollabRequest.objects.filter(
-            from_user=request.user
+                from_user=request.user
             )
         collab_requests_to_user = CollabRequest.objects.filter(
-            to_user=request.user
+                to_user=request.user
             )
+        collaborators = Profile.objects.filter(user=request.user).first().\
+            friends.all()
+    
+        # Pull the to_users out of any collaboration requests sent by or
+        # to this user and add to a list
         collab_request_users = []
-
-        # Pull the to_users out of any collaboration requests sent by or to 
-        # this user and add to a list
         for collab_request in collab_requests_from_user:
             collab_request_users.append(collab_request.to_user)
         for collab_request in collab_requests_to_user:
@@ -106,6 +108,7 @@ class FindCollabs(View):
             {
                 "profiles": profiles,
                 "collab_request_users": collab_request_users,
+                "collaborators": collaborators,
                 "user": request.user
             }
         )
@@ -192,6 +195,9 @@ class SingleProfile(View):
     Displays a single user profile.
     """
     def get(self, request, user_pk, *args, **kwargs):
+        # Find the profile we need to display and retrieve any collaboration
+        # request involving both the authenticated user and the user whose
+        # profile we need to display. Then render the profile.
         profile_queryset = Profile.objects.filter(user=user_pk)
         get_object_or_404(profile_queryset)
         profile = profile_queryset.first()
@@ -209,3 +215,26 @@ class SingleProfile(View):
             }
         )
 
+
+class DeleteCollab(View):
+    """
+    Deletes collaboration connection between two users
+    """
+    def post(self, request, user_pk, *args, **kwards):
+        # Find the collaborator's profile
+        collaborator_queryset = Profile.objects.filter(user=user_pk)
+        get_object_or_404(collaborator_queryset)
+        collaborator_profile = collaborator_queryset.first()
+
+        # Find the authenticated user's profile
+        user_queryset = Profile.objects.filter(user=request.user)
+        get_object_or_404(user_queryset)
+        user_profile = user_queryset.first()
+
+        # Check both profiles exist and remove the many to many relationship
+        # between them on each side.
+        if user_profile.friends.filter(pk=collaborator_profile.pk).exists():
+            user_profile.friends.remove(collaborator_profile)
+        if collaborator_profile.friends.filter(pk=user_profile.pk).exists():
+            collaborator_profile.friends.remove(user_profile)
+        return HttpResponseRedirect(reverse_lazy('find_collabs'))
