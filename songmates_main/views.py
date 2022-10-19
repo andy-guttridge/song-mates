@@ -298,9 +298,7 @@ class SearchProfile(View):
             ).all())
         
         profiles = list(profiles_queryset)
-        for profile in profiles:
-            print(profile.user.username, 'appears', genres_profiles.count(profile), 'times')
-        
+       
         final_profiles = []
         for profile in profiles:
             if genres_profiles.count(profile) > 0:
