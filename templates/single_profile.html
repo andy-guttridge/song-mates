@@ -12,6 +12,10 @@
     <div class="card-body">
         <h2 class="card-title">
             {{ profile.user }}
+            <!-- Show collaborator icon if this profile is already a collaborator -->
+            {% if is_collaborator %}
+            <i class="fa-solid fa-user"></i>
+        {% endif %}
         </h2>
         {% if "placeholder" in profile.image.url %}
         <!-- <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" class="profile-img"> -->
