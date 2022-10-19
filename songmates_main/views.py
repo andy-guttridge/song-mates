@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from .models import Profile, CollabRequest
-from .forms import ProfileForm
+from .forms import ProfileForm, SearchForm
 
 
 class ProfileAccount(View):
@@ -106,6 +106,9 @@ class FindCollabs(View):
             collab_request_users.append(collab_request.to_user)
         for collab_request in collab_requests_to_user:
             collab_request_users.append(collab_request.from_user)
+        
+        # Create an instance of the search form
+        search_form = SearchForm()
         return render(
             request,
             "find_collabs.html",
@@ -113,7 +116,8 @@ class FindCollabs(View):
                 "profiles": profiles,
                 "collab_request_users": collab_request_users,
                 "collaborators": collaborators,
-                "user": request.user
+                "user": request.user,
+                "search_form": search_form
             }
         )
 

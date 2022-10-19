@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% load static %}
 
 {% block content %}
 
 <h2>Find Collaborators</h2>
+
+<form action="" method="get" id="">
+    <h3>Search profiles</h3>
+    {% csrf_token %}
+    {% crispy search_form %}
+</form>
 
 <!-- Loop through profiles and display the details of each in a bootstrap card -->
 {% for profile in profiles %}

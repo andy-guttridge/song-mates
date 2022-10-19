@@ -1,10 +1,11 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Form, BooleanField, MultipleChoiceField, CharField
 from django.contrib.auth.models import User
 from django.conf.urls.static import static
 from .models import Profile
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Div, Field, Button, Submit, HTML
 from crispy_forms.bootstrap import FormActions
+from .genres import Genres
 
 
 class ProfileForm(ModelForm):
@@ -54,7 +55,8 @@ class ProfileForm(ModelForm):
         )
 
     class Meta:
-        # Associate the form with Profile model and specify which fields to display
+        # Associate the form with Profile model and specify which fields to
+        # display
         model = Profile
         fields = ['image', 'biog', 'genre1', 'genre2', 'genre3',
                   'genre4', 'genre5', 'instru_skill1', 'instru_skill2',
@@ -74,3 +76,42 @@ class ProfileForm(ModelForm):
             'instru_skill4': ('Instrument or skill 4'),
             'instru_skill5': ('Instrument or skill 5'),
         }
+
+
+class SearchForm(Form):
+    """
+    Define the form for searching profiles
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        Init form using crispy forms FormHelper to form layout
+        """
+        super(SearchForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        self.helper.form_tag = False
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-4'
+        self.helper.field_class = 'col-md-4'
+        self.helper.layout = Layout(
+            Field('collabs_only', title='Show only my collaborators'),
+            Field('genres'),
+            Field('instru_skills_biog'),
+            FormActions(
+                Submit('search-form-submit', 'Search',
+                       css_class='btn btn-primary'),
+            )
+        )
+        self.fields['collabs_only'].label = 'Show only my collaborators'
+        self.fields['genres'].label = 'Select genres you are interested in'
+        self.fields['instru_skills_biog'].label = 'Search biographies, instruments and skills'
+        
+ 
+#   labels = {
+#             'collabs_only': ('Show only my collaborators'),
+#             'genres': ('Select genres you are interested in'),
+#             'instru_skills_biog': ('Search biographies, instruments and skills')
+#         }
+    collabs_only = BooleanField(required=False)
+    genres = MultipleChoiceField(required=False, choices=Genres.choices)
+    instru_skills_biog = CharField(required=False, max_length=50)
+
