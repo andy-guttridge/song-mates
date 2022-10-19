@@ -104,13 +104,7 @@ class SearchForm(Form):
         self.fields['collabs_only'].label = 'Show only my collaborators'
         self.fields['genres'].label = 'Select genres you are interested in'
         self.fields['instru_skills_biog'].label = 'Search biographies, instruments and skills'
-        
- 
-#   labels = {
-#             'collabs_only': ('Show only my collaborators'),
-#             'genres': ('Select genres you are interested in'),
-#             'instru_skills_biog': ('Search biographies, instruments and skills')
-#         }
+
     collabs_only = BooleanField(required=False)
     genres = MultipleChoiceField(required=False, choices=Genres.choices)
     instru_skills_biog = CharField(required=False, max_length=50)

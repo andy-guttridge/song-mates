@@ -8,9 +8,9 @@
 
 <h2>Find Collaborators</h2>
 
-<form action="" method="get" id="">
+<!-- Render search form -->
+<form action="{% url 'search_profile' %}" method="get" id="search-profile">
     <h3>Search profiles</h3>
-    {% csrf_token %}
     {% crispy search_form %}
 </form>
 
@@ -99,7 +99,7 @@
                 <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
                 <br>
                 <br>
-                <form action="{% url 'delete-collab' profile.user.pk %}" method="post" id ="delete-collab">
+                <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id ="delete-collab">
                     {% csrf_token %}
                     <button type="button" class="btn btn-warning" aria-label="Un-collaborate" data-bs-toggle="modal" data-bs-target="#modal-confirm-delete">Un-collaborate</a>
                 </form>

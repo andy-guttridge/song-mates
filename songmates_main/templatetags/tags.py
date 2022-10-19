@@ -14,5 +14,6 @@ def number_of_collab_requests(request):
     Find out how many collaboration requests there are for the current user and
     make available as a template tag.
     """
-    num_collab_requests = CollabRequest.objects.filter(to_user=request.user).count()
+    num_collab_requests = CollabRequest.objects.filter(
+        to_user=request.user).count()
     return num_collab_requests

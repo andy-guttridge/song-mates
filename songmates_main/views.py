@@ -202,6 +202,7 @@ class SingleProfile(View):
     """
     Displays a single user profile.
     """
+    @method_decorator(login_required)
     def get(self, request, user_pk, *args, **kwargs):
         # Find the profile we need to display and retrieve any collaboration
         # request involving both the authenticated user and the user whose
@@ -232,6 +233,7 @@ class DeleteCollab(View):
     """
     Deletes collaboration connection between two users
     """
+    @method_decorator(login_required)
     def post(self, request, user_pk, *args, **kwards):
         # Find the collaborator's profile
         collaborator_queryset = Profile.objects.filter(user=user_pk)
@@ -250,3 +252,70 @@ class DeleteCollab(View):
         if collaborator_profile.friends.filter(pk=user_profile.pk).exists():
             collaborator_profile.friends.remove(user_profile)
         return HttpResponseRedirect(reverse_lazy('find_collabs'))
+
+
+class SearchProfile(View):
+    """
+    Handle search form submission
+    """
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        collabs_only = request.GET.get('collabs_only')
+        if collabs_only == 'on':
+            profiles_queryset = Profile.objects.filter(user=request.user).first()\
+                .friends.all()
+        else:
+            profiles_queryset = Profile.objects.order_by('user')
+        
+        # Retrieve any genres selected by the user
+        # Using the getlist method to access a list returned by a multiple
+        # choice form element is from
+        # https://stackoverflow.com/questions/21666963/django-forms-multiplechoicefield-only-selects-one-value
+        genres = request.GET.getlist('genres')
+
+        # Find current collaboration requests
+        # This repeats a lot of code in FindCollabs - look at refactoring
+        collab_requests_from_user = CollabRequest.objects.filter(
+                from_user=request.user
+            )
+        collab_requests_to_user = CollabRequest.objects.filter(
+                to_user=request.user
+            )
+        collaborators = Profile.objects.filter(user=request.user).first().\
+            friends.all()
+
+        collab_request_users = []
+        for collab_request in collab_requests_from_user:
+            collab_request_users.append(collab_request.to_user)
+        for collab_request in collab_requests_to_user:
+            collab_request_users.append(collab_request.from_user)
+        
+        # Technique of using _in to check if the value of a field exists
+        # within a list from
+        # https://stackoverflow.com/questions/70703168/check-if-each-value-within-list-is-present-in-the-given-django-model-table-in-a
+        genres_profiles = list(Profile.objects.filter(
+            Q(genre1__in=genres) | Q(genre2__in=genres) | Q(genre3__in=genres) | Q(genre4__in=genres)| Q(genre5__in=genres)
+            ).all())
+        
+        profiles = list(profiles_queryset)
+        for profile in profiles:
+            print(profile.user.username, 'appears', genres_profiles.count(profile), 'times')
+        
+        final_profiles = []
+        for profile in profiles:
+            if genres_profiles.count(profile) > 0:
+                final_profiles.append(profile)
+        # Technique of using initial argument to set value of form input from
+        # https://stackoverflow.com/questions/604266/django-set-default-form-values
+        search_form = SearchForm(initial={'collabs_only': collabs_only})
+        return render(
+            request,
+            "find_collabs.html",
+            {
+                "profiles": final_profiles,
+                "collab_request_users": collab_request_users,
+                "collaborators": collaborators,
+                "user": request.user,
+                "search_form": search_form
+            }
+        )
