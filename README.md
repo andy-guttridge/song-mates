@@ -17,6 +17,10 @@ Users can register with Song Mates, and create a profile with an image, a biogra
 
 ## Features
 
+### Future features
+
+- There is currently a lot of HTML duplicated between the `find_collabs.html` and `single_profile.html` templates. These could be refactored into a single template, but this would require passing in additional data and adding conditional statements to the template to determine whether it should render as a single profile or multiple profiles (e.g. this would influence whether or not to render search features, the correct heading for the page etc).
+
 ## Planning
 
 ## Frameworks, libraries and dependencies
