@@ -68,18 +68,50 @@
             {% endif %}
         </p>
 
-        <!-- Render request collaboration form and button if there are no pending requests and the profile does not belong to the current user -->
-        {% if profile.user.pk != collab_request.to_user.pk and profile.user.pk != collab_request.from_user.pk and profile.user != user %}
+        <!-- Render request collaboration form and button if there are no pending requests, the profile does not belong to the current user and they are not already a collaborator -->
+        {% if profile.user.pk != collab_request.to_user.pk and profile.user.pk != collab_request.from_user.pk and profile.user != user and not is_collaborator %}
             <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to collaborate</button>
             </form>
         {% endif %}
 
-        <!-- If there is a pending collaboration request, render a link to the collab_requests view -->
-        {% if profile.user.pk == collab_request.to_user.pk  or profile.user.pk == collab_request.from_user.pk %}
+        <!-- If there is a pending collaboration request and the profile does not belong to the authenticated user, render a link to the collab_requests view -->
+        {% if profile.user.pk == collab_request.to_user.pk  or profile.user.pk == collab_request.from_user.pk and profile.user != user %}
             <a role="button" href="{% url 'collab_requests' %}" class="btn btn-info" aria-label="Pending collaboration request">Pending collaboration request</a>
         {% endif %}
+
+        <!-- If this profile belongs to an existing collaborator, render an email link and a remove collaborator button -->
+        {% if is_collaborator %}
+            <h3>Contact me</h3>
+            <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+            <br>
+            <br>
+            <form action="{% url 'delete-collab' profile.user.pk %}" method="post" id ="delete-collab">
+                {% csrf_token %}
+                <button type="button" class="btn btn-warning" aria-label="Un-collaborate" data-bs-toggle="modal" data-bs-target="#modal-confirm-delete">Un-collaborate</a>
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Modal to confirm cancellation of outgoing collaboration request -->
+<div class="modal" id="modal-confirm-delete" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm un-collaborate</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to end this collaboration?</p>
+                <p>You will no longer have access to this collaborator's email address in SongMates.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" aria-label="Cancel" data-bs-dismiss="modal">Dismiss</button>
+                <button type="submit" class="btn btn-danger" aria-label="Confirm un-collaborate" data-bs-dismiss="modal" form="delete-collab" name="delete-collab">Confirm</button>
+            </div>
+        </div>
     </div>
 </div>
 

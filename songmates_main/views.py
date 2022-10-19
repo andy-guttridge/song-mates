@@ -209,12 +209,17 @@ class SingleProfile(View):
             Q(from_user=profile.user) | Q(to_user=profile.user)
             )
         collab_request = collab_request_queryset.first()
+        if profile.friends.filter(user=request.user):
+            is_collaborator = True
+        else:
+            is_collaborator = False
         return render(
             request,
             "single_profile.html",
             {
                 "profile": profile,
                 "collab_request": collab_request,
+                "is_collaborator": is_collaborator,
             }
         )
 
