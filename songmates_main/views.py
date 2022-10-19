@@ -208,7 +208,6 @@ class SingleProfile(View):
         collab_request_queryset = CollabRequest.objects.filter(
             Q(from_user=profile.user) | Q(to_user=profile.user)
             )
-        get_object_or_404(collab_request_queryset)
         collab_request = collab_request_queryset.first()
         return render(
             request,
