@@ -298,13 +298,15 @@ class SearchProfile(View):
             ).all())
         
         profiles = list(profiles_queryset)
-       
-        final_profiles = []
-        for profile in profiles:
-            if genres_profiles.count(profile) > 0:
-                final_profiles.append(profile)
-        # Technique of using initial argument to set value of form input from
-        # https://stackoverflow.com/questions/604266/django-set-default-form-values
+        if not genres_profiles:
+            final_profiles = profiles
+        else:
+            final_profiles = []
+            for profile in profiles:
+                if genres_profiles.count(profile) > 0:
+                    final_profiles.append(profile)
+            # Technique of using initial argument to set value of form input from
+            # https://stackoverflow.com/questions/604266/django-set-default-form-values
         search_form = SearchForm(initial={'collabs_only': collabs_only})
         return render(
             request,
