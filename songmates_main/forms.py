@@ -95,17 +95,19 @@ class SearchForm(Form):
         self.helper.layout = Layout(
             Field('collabs_only', title='Show only my collaborators'),
             Field('genres'),
-            Field('instru_skills_biog'),
+            Field('search_phrase'),
             FormActions(
                 Submit('search-form-submit', 'Search',
                        css_class='btn btn-primary'),
+                Submit('search-form-show-all', 'Show all',
+                       css_class='btn btn-warning'),
             )
         )
         self.fields['collabs_only'].label = 'Show only my collaborators'
         self.fields['genres'].label = 'Select genres you are interested in'
-        self.fields['instru_skills_biog'].label = 'Search biographies, instruments and skills'
+        self.fields['search_phrase'].label = 'Search profiles'
 
     collabs_only = BooleanField(required=False)
     genres = MultipleChoiceField(required=False, choices=Genres.choices)
-    instru_skills_biog = CharField(required=False, max_length=50)
+    search_phrase = CharField(required=False, max_length=50)
 

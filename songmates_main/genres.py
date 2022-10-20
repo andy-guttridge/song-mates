@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Genres(models.TextChoices):
     '''
-    Defines genres for use in user profile database model
+    Defines genres for use in user profile model
     '''
     POP = 'POP', _('Pop')
     ROCK = 'ROC', _('Rock')

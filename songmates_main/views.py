@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.postgres import search
 from django.utils.decorators import method_decorator
 from .models import Profile, CollabRequest
 from .forms import ProfileForm, SearchForm
@@ -260,6 +261,9 @@ class SearchProfile(View):
     """
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
+        if 'search-form-show-all' in request.GET:
+            return HttpResponseRedirect(reverse_lazy('find_collabs'))
+
         collabs_only = request.GET.get('collabs_only')
         if collabs_only == 'on':
             profiles_queryset = Profile.objects.filter(user=request.user).first()\
@@ -272,6 +276,9 @@ class SearchProfile(View):
         # choice form element is from
         # https://stackoverflow.com/questions/21666963/django-forms-multiplechoicefield-only-selects-one-value
         genres = request.GET.getlist('genres')
+        # search_phrase = request.GET.get('search_phrase') if request.GET.get('search_phrase') != None else ""
+        search_phrase = request.GET.get('search_phrase')
+        username = request.user.username
 
         # Find current collaboration requests
         # This repeats a lot of code in FindCollabs - look at refactoring
@@ -293,21 +300,41 @@ class SearchProfile(View):
         # Technique of using _in to check if the value of a field exists
         # within a list from
         # https://stackoverflow.com/questions/70703168/check-if-each-value-within-list-is-present-in-the-given-django-model-table-in-a
-        genres_profiles = list(Profile.objects.filter(
-            Q(genre1__in=genres) | Q(genre2__in=genres) | Q(genre3__in=genres) | Q(genre4__in=genres)| Q(genre5__in=genres)
-            ).all())
+        genres_profiles_queryset = Profile.objects.filter(
+            Q(genre1__in=genres) |
+            Q(genre2__in=genres) |
+            Q(genre3__in=genres) |
+            Q(genre4__in=genres) |
+            Q(genre5__in=genres)
+            ).all()
         
-        profiles = list(profiles_queryset)
-        if not genres_profiles:
-            final_profiles = profiles
+        search_phrase_profiles_queryset = Profile.objects.filter(
+            # How to search on the property of a foreign key object from
+            # https://stackoverflow.com/questions/35012942/related-field-got-invalid-lookup-icontains
+            Q(user__username__search=search_phrase) |
+            Q(biog__search=search_phrase) |
+            Q(instru_skill1__search=search_phrase) |
+            Q(instru_skill2__search=search_phrase) |
+            Q(instru_skill3__search=search_phrase) |
+            Q(instru_skill4__search=search_phrase) |
+            Q(instru_skill5__search=search_phrase)
+        )
+        
+        if genres_profiles_queryset and search_phrase_profiles_queryset:
+            final_search_queryset = search_phrase_profiles_queryset.intersection(genres_profiles_queryset)
         else:
-            final_profiles = []
-            for profile in profiles:
-                if genres_profiles.count(profile) > 0:
-                    final_profiles.append(profile)
-            # Technique of using initial argument to set value of form input from
-            # https://stackoverflow.com/questions/604266/django-set-default-form-values
-        search_form = SearchForm(initial={'collabs_only': collabs_only})
+            final_search_queryset = search_phrase_profiles_queryset.union(genres_profiles_queryset)
+        
+        final_queryset = final_search_queryset.intersection(profiles_queryset)
+        
+        if collabs_only == 'on' and not final_queryset:
+            final_profiles = profiles_queryset.all()
+        else:
+            final_profiles = final_queryset.all()
+        
+        # Technique of using initial argument to set value of form input from
+        # https://stackoverflow.com/questions/604266/django-set-default-form-values
+        search_form = SearchForm(initial={'collabs_only': collabs_only, 'genres': genres, 'search_phrase': search_phrase})
         return render(
             request,
             "find_collabs.html",
