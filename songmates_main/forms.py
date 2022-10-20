@@ -93,7 +93,11 @@ class SearchForm(Form):
         self.helper.label_class = 'col-md-4'
         self.helper.field_class = 'col-md-4'
         self.helper.layout = Layout(
-            Field('collabs_only', title='Show only my collaborators'),
+            Field(
+                'collabs_only',
+                title='Show only my collaborators',
+                on_change=('searchSubmit()')
+            ),
             Field('genres'),
             Field('search_phrase'),
             FormActions(
