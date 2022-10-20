@@ -90,7 +90,7 @@ class FindCollabs(View):
     def get(self, request, *args, **kwargs):
         # Find all profiles, any pending collab requests
         # and current collabs
-        profiles = Profile.objects.order_by('user')
+        profiles = Profile.objects.order_by('user__username')
         collab_request_users = find_collabs(request.user)
         collaborators = Profile.objects.filter(user=request.user).first().\
             friends.all()
@@ -258,9 +258,9 @@ class SearchProfile(View):
         collabs_only = request.GET.get('collabs_only')
         if collabs_only == 'on':
             profiles_queryset = Profile.objects.filter(user=request.user).\
-                first().friends.all()
+                first().friends.order_by('user__username')
         else:
-            profiles_queryset = Profile.objects.order_by('user')
+            profiles_queryset = Profile.objects.order_by('user__username')
         
         # Retrieve any genres selected and search phrase entered
         # Using the getlist method to access a list returned by a multiple
@@ -316,7 +316,7 @@ class SearchProfile(View):
         
         # If collabs_only selected and no other search requested,
         # return all approved collabs, otherwise return final queryset
-        if collabs_only == 'on' and not final_queryset:
+        if collabs_only == 'on' and final_queryset is None:
             final_profiles = profiles_queryset.all()
         else:
             final_profiles = final_queryset.all()
