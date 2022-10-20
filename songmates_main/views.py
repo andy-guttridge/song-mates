@@ -9,6 +9,7 @@ from django.contrib.postgres import search
 from django.utils.decorators import method_decorator
 from .models import Profile, CollabRequest
 from .forms import ProfileForm, SearchForm
+from .functions import find_collabs
 
 
 class ProfileAccount(View):
@@ -88,27 +89,14 @@ class FindCollabs(View):
     """
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
-        # Find all profiles and any pending collaboration requests
-        # sent by or to the user
+        # Find all profiles, any pending collab requests
+        # and current collabs
         profiles = Profile.objects.order_by('user')
-        collab_requests_from_user = CollabRequest.objects.filter(
-                from_user=request.user
-            )
-        collab_requests_to_user = CollabRequest.objects.filter(
-                to_user=request.user
-            )
+        collab_request_users = find_collabs(request.user)
         collaborators = Profile.objects.filter(user=request.user).first().\
             friends.all()
-    
-        # Pull the to_users out of any collaboration requests sent by or
-        # to this user and add to a list
-        collab_request_users = []
-        for collab_request in collab_requests_from_user:
-            collab_request_users.append(collab_request.to_user)
-        for collab_request in collab_requests_to_user:
-            collab_request_users.append(collab_request.from_user)
         
-        # Create an instance of the search form
+        # Create instance of the search form
         search_form = SearchForm()
         return render(
             request,
@@ -283,22 +271,10 @@ class SearchProfile(View):
         search_phrase = request.GET.get('search_phrase')
         username = request.user.username
 
-        # Find current collaboration requests
-        # This repeats a lot of code in FindCollabs - look at refactoring
-        collab_requests_from_user = CollabRequest.objects.filter(
-                from_user=request.user
-            )
-        collab_requests_to_user = CollabRequest.objects.filter(
-                to_user=request.user
-            )
+        # Find current collabs and pending collab requests
         collaborators = Profile.objects.filter(user=request.user).first().\
             friends.all()
-
-        collab_request_users = []
-        for collab_request in collab_requests_from_user:
-            collab_request_users.append(collab_request.to_user)
-        for collab_request in collab_requests_to_user:
-            collab_request_users.append(collab_request.from_user)
+        collab_request_users = find_collabs(request.user)
         
         # Retrieve profiles that match any selected genres.
         # Technique of using _in to check if the value of a field exists
