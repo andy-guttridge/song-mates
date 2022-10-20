@@ -55,6 +55,9 @@ Front end CSS and JavaScript library
 
 ## Testing
 
+### Fixed bugs
+- While testing the search feature, it was realised that if the user did not select any genres, no profiles would be returned. This was fixed by adding a simple conditional statement to ensure that profiles are not filtered by genre if no genres are selected.
+
 ### Manual testing
 
 ### Automated tests
