@@ -261,27 +261,30 @@ class SearchProfile(View):
     """
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
+        # Clear search and form if 'Show all' button pressed
         if 'search-form-show-all' in request.GET:
             return HttpResponseRedirect(reverse_lazy('find_collabs'))
-
+        
+        # Retrieve only profiles of approved collaborators if
+        # collabs_only checkbox selected, otherwise retrieve all
+        # profiles
         collabs_only = request.GET.get('collabs_only')
         if collabs_only == 'on':
-            profiles_queryset = Profile.objects.filter(user=request.user).first()\
-                .friends.all()
+            profiles_queryset = Profile.objects.filter(user=request.user).\
+                first().friends.all()
         else:
             profiles_queryset = Profile.objects.order_by('user')
         
-        # Retrieve any genres selected by the user
+        # Retrieve any genres selected and search phrase entered
         # Using the getlist method to access a list returned by a multiple
         # choice form element is from
         # https://stackoverflow.com/questions/21666963/django-forms-multiplechoicefield-only-selects-one-value
         genres = request.GET.getlist('genres')
-        # search_phrase = request.GET.get('search_phrase') if request.GET.get('search_phrase') != None else ""
         search_phrase = request.GET.get('search_phrase')
         username = request.user.username
 
         # Find current collaboration requests
-        # This repeats a lot of code in FindCollabs - look at refactoring
+        # This repeats a lot of code in FindCollabs - look at refactoring
         collab_requests_from_user = CollabRequest.objects.filter(
                 from_user=request.user
             )
@@ -297,6 +300,7 @@ class SearchProfile(View):
         for collab_request in collab_requests_to_user:
             collab_request_users.append(collab_request.from_user)
         
+        # Retrieve profiles that match any selected genres.
         # Technique of using _in to check if the value of a field exists
         # within a list from
         # https://stackoverflow.com/questions/70703168/check-if-each-value-within-list-is-present-in-the-given-django-model-table-in-a
@@ -308,6 +312,7 @@ class SearchProfile(View):
             Q(genre5__in=genres)
             ).all()
         
+        # Retrieve profiles that match search phrase
         search_phrase_profiles_queryset = Profile.objects.filter(
             # How to search on the property of a foreign key object from
             # https://stackoverflow.com/questions/35012942/related-field-got-invalid-lookup-icontains
@@ -320,13 +325,22 @@ class SearchProfile(View):
             Q(instru_skill5__search=search_phrase)
         )
         
+        # Retrieve profiles that match genres and search phrase...
         if genres_profiles_queryset and search_phrase_profiles_queryset:
-            final_search_queryset = search_phrase_profiles_queryset.intersection(genres_profiles_queryset)
+            final_search_queryset = search_phrase_profiles_queryset\
+                .intersection(genres_profiles_queryset)
+        # Or just matches to genre or search phrase if user only searched one
+        # of these
         else:
-            final_search_queryset = search_phrase_profiles_queryset.union(genres_profiles_queryset)
-        
+            final_search_queryset = search_phrase_profiles_queryset.union(
+                genres_profiles_queryset
+                )
+        # Retrieve profiles matched by search and those that are approved
+        # collabs if user had selected collabs_only
         final_queryset = final_search_queryset.intersection(profiles_queryset)
         
+        # If collabs_only selected and no other search requested,
+        # return all approved collabs, otherwise return final queryset
         if collabs_only == 'on' and not final_queryset:
             final_profiles = profiles_queryset.all()
         else:
@@ -334,7 +348,11 @@ class SearchProfile(View):
         
         # Technique of using initial argument to set value of form input from
         # https://stackoverflow.com/questions/604266/django-set-default-form-values
-        search_form = SearchForm(initial={'collabs_only': collabs_only, 'genres': genres, 'search_phrase': search_phrase})
+        search_form = SearchForm(initial={
+                'collabs_only': collabs_only,
+                'genres': genres,
+                'search_phrase': search_phrase
+            })
         return render(
             request,
             "find_collabs.html",
