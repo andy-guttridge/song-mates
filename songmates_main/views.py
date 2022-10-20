@@ -5,7 +5,6 @@ from django.db.models import Q
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.postgres import search
 from django.utils.decorators import method_decorator
 from .models import Profile, CollabRequest
 from .forms import ProfileForm, SearchForm
@@ -292,13 +291,13 @@ class SearchProfile(View):
         search_phrase_profiles_queryset = Profile.objects.filter(
             # How to search on the property of a foreign key object from
             # https://stackoverflow.com/questions/35012942/related-field-got-invalid-lookup-icontains
-            Q(user__username__search=search_phrase) |
+            Q(user__username__icontains=search_phrase) |
             Q(biog__search=search_phrase) |
-            Q(instru_skill1__search=search_phrase) |
-            Q(instru_skill2__search=search_phrase) |
-            Q(instru_skill3__search=search_phrase) |
-            Q(instru_skill4__search=search_phrase) |
-            Q(instru_skill5__search=search_phrase)
+            Q(instru_skill1__icontains=search_phrase) |
+            Q(instru_skill2__icontains=search_phrase) |
+            Q(instru_skill3__icontains=search_phrase) |
+            Q(instru_skill4__icontains=search_phrase) |
+            Q(instru_skill5__icontains=search_phrase)
         )
         
         # Retrieve profiles that match genres and search phrase...
