@@ -1,4 +1,5 @@
 from django import template
+from django.db.models import Q
 from songmates_main.models import CollabRequest
 
 register = template.Library()
@@ -15,5 +16,6 @@ def number_of_collab_requests(request):
     make available as a template tag.
     """
     num_collab_requests = CollabRequest.objects.filter(
-        to_user=request.user).count()
+            Q(from_user=request.user) | Q(to_user=request.user)
+            ).count()
     return num_collab_requests
