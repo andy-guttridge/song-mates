@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Form, BooleanField, MultipleChoiceField, CharField
+from django.forms import ModelForm, Form, BooleanField, MultipleChoiceField, CharField, HiddenInput
 from django.contrib.auth.models import User
 from django.conf.urls.static import static
 from .models import Profile
@@ -82,7 +82,7 @@ class SearchForm(Form):
     """
     Define the form for searching profiles
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, is_authenticated=False, *args, **kwargs):
         """
         Init form using crispy forms FormHelper to form layout
         """
@@ -107,10 +107,12 @@ class SearchForm(Form):
                        css_class='btn btn-warning'),
             )
         )
+        if not is_authenticated:
+            self.fields['collabs_only'].widget = HiddenInput()
         self.fields['collabs_only'].label = 'Show only my collaborators'
         self.fields['genres'].label = 'Select genres you are interested in'
         self.fields['search_phrase'].label = 'Search profiles'
-
+    
     collabs_only = BooleanField(required=False)
     genres = MultipleChoiceField(required=False, choices=Genres.choices)
     search_phrase = CharField(required=False, max_length=50)

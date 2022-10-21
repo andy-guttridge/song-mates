@@ -20,7 +20,7 @@ class ProfileAccount(View):
     def get(self, request, *args, **kwargs):
         # If a profile for this user does not exist, create one
         if not Profile.objects.filter(user=request.user).exists():
-            profile = Profile(user=request.user, slug=request.user.id)
+            profile = Profile(user=request.user)
             profile.save()
         # Retrieve profile from database, create form from it and
         # render
@@ -30,7 +30,7 @@ class ProfileAccount(View):
         profile_form = ProfileForm(instance=profile)
         return render(
             request,
-            "index.html",
+            "edit_profile.html",
             {
                 "profile": profile,
                 "form": profile_form
@@ -57,10 +57,10 @@ class UpdateProfile(View):
         # Otherwise reload page using existing data
         if profile_form.is_valid() and 'profile-form-submit' in request.POST:
             profile_form.save()
-            return HttpResponseRedirect(reverse_lazy('home'))
+            return HttpResponseRedirect(reverse_lazy('edit_profile'))
         else:
             profile_form = ProfileForm(instance=profile)
-            return HttpResponseRedirect(reverse_lazy('home'))
+            return HttpResponseRedirect(reverse_lazy('edit_profile'))
 
 
 class UserDelete(View):
@@ -86,28 +86,47 @@ class FindCollabs(View):
     Retrieve user profiles from data base and pass to the find_collabs
     template.
     """
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         # Find all profiles, any pending collab requests
         # and current collabs
         profiles = Profile.objects.order_by('user__username')
-        collab_request_users = find_collabs(request.user)
-        collaborators = Profile.objects.filter(user=request.user).first().\
-            friends.all()
+
+        # Find any collabs and collab requests if user is authenticated
+        # and divert them to edit profile if they don't yet have a profile
+        if request.user.is_authenticated:
+            user_profile = Profile.objects.filter(user=request.user).first()
+            if user_profile is None:
+                return HttpResponseRedirect(reverse_lazy('edit_profile'))
+            collab_request_users = find_collabs(request.user)
+            collaborators = Profile.objects.filter(user=request.user).first().\
+                friends.all()
+        
+
         
         # Create instance of the search form
-        search_form = SearchForm()
-        return render(
-            request,
-            "find_collabs.html",
-            {
-                "profiles": profiles,
-                "collab_request_users": collab_request_users,
-                "collaborators": collaborators,
-                "user": request.user,
-                "search_form": search_form
-            }
-        )
+        search_form = SearchForm(is_authenticated=request.user.is_authenticated)
+        if request.user.is_authenticated:
+            return render(
+                request,
+                "find_collabs.html",
+                {
+                    "profiles": profiles,
+                    "user_profile": user_profile,
+                    "collab_request_users": collab_request_users,
+                    "collaborators": collaborators,
+                    "user": request.user,
+                    "search_form": search_form
+                },
+            )
+        else:
+            return render(
+                request,
+                "find_collabs.html",
+                {
+                    "profiles": profiles,
+                    "search_form": search_form
+                }
+            )
 
 
 class RequestCollab(View):
@@ -125,7 +144,7 @@ class RequestCollab(View):
             collab_request = CollabRequest(from_user=request.user, to_user=to_user)
             collab_request.save()
 
-        return HttpResponseRedirect(reverse_lazy('find_collabs'))
+        return HttpResponseRedirect(reverse_lazy('home'))
 
 
 class CollabRequests(View):
@@ -239,18 +258,17 @@ class DeleteCollab(View):
             user_profile.friends.remove(collaborator_profile)
         if collaborator_profile.friends.filter(pk=user_profile.pk).exists():
             collaborator_profile.friends.remove(user_profile)
-        return HttpResponseRedirect(reverse_lazy('find_collabs'))
+        return HttpResponseRedirect(reverse_lazy('home'))
 
 
 class SearchProfile(View):
     """
     Handle search form submission
     """
-    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         # Clear search and form if 'Show all' button pressed
         if 'search-form-show-all' in request.GET:
-            return HttpResponseRedirect(reverse_lazy('find_collabs'))
+            return HttpResponseRedirect(reverse_lazy('home'))
         
         # Retrieve only profiles of approved collaborators if
         # collabs_only checkbox selected, otherwise retrieve all
@@ -271,9 +289,10 @@ class SearchProfile(View):
         username = request.user.username
 
         # Find current collabs and pending collab requests
-        collaborators = Profile.objects.filter(user=request.user).first().\
-            friends.all()
-        collab_request_users = find_collabs(request.user)
+        if request.user.is_authenticated:
+            collaborators = Profile.objects.filter(user=request.user).first().\
+                friends.all()
+            collab_request_users = find_collabs(request.user)
         
         # Retrieve profiles that match any selected genres.
         # Technique of using _in to check if the value of a field exists
@@ -328,15 +347,31 @@ class SearchProfile(View):
                 'collabs_only': collabs_only,
                 'genres': genres,
                 'search_phrase': search_phrase
-            })
-        return render(
-            request,
-            "find_collabs.html",
-            {
-                "profiles": final_profiles,
-                "collab_request_users": collab_request_users,
-                "collaborators": collaborators,
-                "user": request.user,
-                "search_form": search_form
-            }
-        )
+            },
+                is_authenticated=request.user.is_authenticated
+            )
+
+        user_profile = Profile.objects.filter(user=request.user).\
+                first()
+        if request.user.is_authenticated:
+            return render(
+                request,
+                "find_collabs.html",
+                {
+                    "profiles": final_profiles,
+                    "user_profile": user_profile,
+                    "collab_request_users": collab_request_users,
+                    "collaborators": collaborators,
+                    "user": request.user,
+                    "search_form": search_form
+                }
+            )
+        else:
+            return render(
+                request,
+                "find_collabs.html",
+                {
+                    "profiles": final_profiles,
+                    "search_form": search_form
+                }
+            )

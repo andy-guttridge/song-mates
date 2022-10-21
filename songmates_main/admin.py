@@ -7,9 +7,8 @@ class ProfileAdmin(admin.ModelAdmin):
     """
     Specify fields to be accessible in the admin panel for the Profile model
     """
-    prepopulated_fields = {'slug': ('user',)}
     raw_id_fields = ('friends'),
-    list_display = ('user', 'slug', 'biog', 'get_collaborators')
+    list_display = ('user', 'get_profile_complete', 'biog', 'get_collaborators')
     list_filter = ('user',)
     search_fields = ('user',)
 
@@ -23,6 +22,12 @@ class ProfileAdmin(admin.ModelAdmin):
         for friend in obj.friends.all():
             string += str(friend.user) + ', '
         return string
+    
+    def get_profile_complete(self, obj):
+        """
+        Return a string representation of the profile_complete field
+        """
+        return 'True' if obj.profile_complete is True else 'False'
         
 
 
