@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-from django.db.models import Q
+from django.db.models import Q, F
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -285,7 +285,7 @@ class SearchProfile(View):
             Q(genre3__in=genres) |
             Q(genre4__in=genres) |
             Q(genre5__in=genres)
-            ).all()
+            )
         
         # Retrieve profiles that match search phrase
         search_phrase_profiles_queryset = Profile.objects.filter(
@@ -319,7 +319,8 @@ class SearchProfile(View):
         if collabs_only == 'on' and final_queryset is None:
             final_profiles = profiles_queryset.all()
         else:
-            final_profiles = final_queryset.all()
+            final_profiles = sorted(list(final_queryset.all()),
+                                    key=lambda profile: profile.user.username)
         
         # Technique of using initial argument to set value of form input from
         # https://stackoverflow.com/questions/604266/django-set-default-form-values
