@@ -8,7 +8,7 @@
 
 <div class="row">
         <!-- Form for updating user profile -->
-    <form action="update-profile/" method="post" id="profile-form" enctype="multipart/form-data">
+    <form action="{% url 'update_profile' %}" method="post" id="profile-form" enctype="multipart/form-data">
         {% csrf_token %}
         {% crispy form form.helper %}
     </form>
@@ -17,7 +17,7 @@
 <h1>Account</h1>
     <div class="row">
         <!-- Form for account deletion -->
-        <form action="user-delete/" method="post" id="user-delete">
+        <form action="{% url 'user_delete' %}" method="post" id="user-delete">
             {% csrf_token %}
             <button type="button" class="btn btn-danger" aria-label="Delete my account" data-bs-toggle="modal" data-bs-target="#modal-confirm-del">Delete my account</button>
         </form>
