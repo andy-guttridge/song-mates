@@ -25,6 +25,20 @@
 </div>
 {% endif %}
 
+<!-- Display a message and link to sign-in/register account page for un-authenticated users -->
+{% if not user.is_authenticated %}
+<div class="card">
+    <div class="card-body">
+        <h3>
+            You're not registered with SongMates!
+        </h3>
+        <p>
+            Why not <a  href="{% url 'account_login' %}" aria-label="Link to registration page">register</a> so you can connect with potential collaborators?
+        </p>
+    </div>
+</div>
+{% endif %}
+
 <!-- Render search form -->
 <form action="{% url 'search_profile' %}" method="get" id="search-profile">
     <h3>Search profiles</h3>
