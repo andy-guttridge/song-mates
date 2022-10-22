@@ -351,9 +351,9 @@ class SearchProfile(View):
                 is_authenticated=request.user.is_authenticated
             )
 
-        user_profile = Profile.objects.filter(user=request.user).\
-                first()
         if request.user.is_authenticated:
+            user_profile = Profile.objects.filter(user=request.user).\
+                first()
             return render(
                 request,
                 "find_collabs.html",
