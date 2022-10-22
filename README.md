@@ -27,6 +27,7 @@ User profiles can be viewed and searched without signing in, but registering an 
 Further work to be completed:
 
 - Implementation of user to user messaging;
+- Create a full list of genre options for user profiles (the current list of five is placeholder for testing);
 - Design and styling to create an attractive and responsive mobile-first frontend;
 - Improvement of the search functionality to enable multiple search terms to be specified via a comma separated list (time permitting);
 - Enabling users to send a short message along with a connection request (time permitting).
