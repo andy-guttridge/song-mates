@@ -1,4 +1,6 @@
-# SongMates
+# Song Mates
+
+[Link to deployed site](https://songmates.herokuapp.com/)
 
 ## Purpose
 
@@ -7,43 +9,25 @@ medium of digital recording. Great music is often the result of collaboration, a
  
 The purpose of Song Mates is to provide a platform for musicians who want to write, perform and record material to find like minded people to collaborate with, whether that be for a song or an album.
 
-Users can register with Song Mates, and create a profile with an image, a biography or summary of what they're looking for, and can specify the instruments they play and relevant skills. They can search for potential collaborators using these criteria, and make collaboration requests (like a connection request on LinkedIn or friend request on Facebook). The receiving user can see they have received a collaboration request via a number in the nav menu, and can then view the profile of the user who has requested to collaborate and decide whether to accept or decline the request. 
+Users can register with Song Mates, and create a profile with an image, a biography or summary of what they're looking for, and can specify the instruments they play and relevant skills. They can search for potential collaborators using these criteria, and make collaboration requests (like a connection request on LinkedIn or friend request on Facebook). Users can send direct messages to their  connections.
 
-Users can currently see the email addresses on the profiles of users who are approved 'collaborators' - this will be replaced by a user to user messaging function.
+**Important**
 
-[Link to deployed site](https://songmates.herokuapp.com/)
+Song mates is a work in progress. The backend is in place and key features for a minimum viable product have been implemented, however no real styling or design has yet been applied. At least one additional feature (user to user messaging) will be implemented for the final version, to be completed by mid-November 2022.
 
-## **Important**
+## Table of contents
 
-SongMates is a work in progress. The backend and key interaction between the backend and frontend are in place, and key features for a minimum viable product have been implemented, however the front-end is a skeleton/placeholder using a few default Bootstrap components for testing and as a basis for further development - no substantive styling or design has yet been applied. At least one additional feature (user to user messaging) will be implemented for the final version, which is to be completed by mid-November 2022.
+## User stories
 
-User profiles can be viewed and searched without signing in, but registering an account with a dummy email address is recommended to enable all features to be accessed (there is currently no requirement to verify email addresses). This will enable you to:
+## Agile development methodology
 
-- Create a profile (currently accessed via the 'Me' link in the menu);
-- Make connection requests to other users;
-- Approve/reject incoming connection requests;
-- Use the search form to filter profiles to only approved collaborators (the checkbox for this is not visible for anonymous users).
+## Features
 
-Further work to be completed:
-
-- Implementation of user to user messaging;
-- Design and styling to create an attractive and responsive mobile-first frontend;
-- Improvement of the search functionality to enable multiple search terms to be specified via a comma separated list (time permitting);
-- Enabling users to send a short message along with a connection request (time permitting).
-
-## Key code details
-
-Class based database models are declared in [songmates_main/models.py](https://github.com/andy-guttridge/song-mates/blob/a391de9ce36a807fb7125c7e3f413a86d03d08bf/songmates_main/models.py). These consist of a 'Profile' model to store user profile data (with a foreign key for user accounts and a many-to-many relationship to record collaboration links between users), and a 'CollabRequest' model to store details of user-to-user collaboration requests. Once requests are accepted or rejected, 'CollabRequest' records are no longer required and are deleted.
-
-View logic is in [songmates_main/views.py](https://github.com/andy-guttridge/song-mates/blob/a391de9ce36a807fb7125c7e3f413a86d03d08bf/songmates_main/views.py).
-
-Forms are declared in [songmates_main/forms.py](https://github.com/andy-guttridge/song-mates/blob/a391de9ce36a807fb7125c7e3f413a86d03d08bf/songmates_main/forms.py)
-
-HTML templates  are in [templates](https://github.com/andy-guttridge/song-mates/blob/a391de9ce36a807fb7125c7e3f413a86d03d08bf/templates).
-
-### Future improvements
+### Future features
 
 - There is currently a lot of HTML duplicated between the `find_collabs.html` and `single_profile.html` templates. These could be refactored into a single template, but this would require passing in additional data and adding conditional statements to the template to determine whether it should render as a single profile or multiple profiles (e.g. this would influence whether or not to render search features, the correct heading for the page etc).
+
+## Planning
 
 ## Frameworks, libraries and dependencies
 
@@ -73,11 +57,30 @@ Bootstrap 5 templates for Crispy Forms
 ### Bootstrap 5
 Front end CSS and JavaScript library
 
+## Data model
+
+## Testing
+
 ### Fixed bugs
-- Initially, allauth configuration was set to require the user to login with an email address and for email verification to be required. However, this caused a Django 'connection refused' error. This was caused by the fact no email server was availabe to send verification request emails. Settings were changed so that account login is by username rather than email address. 
 - Testing of the update profile form showed that profile pictures were not uploading to cloudinary. This was rectifed by adding the `enctype="multipart/form-data"` attribute to the form element.
 - While testing the search feature, it was realised that if the user did not select any genres, no profiles would be returned. This was fixed by adding a simple conditional statement to ensure that profiles are not filtered by genre if no genres are selected.
 - During testing, it was found that the 'Show my collaborators only' checkbox on the search form was overriding other search results. For example, if a genre of 'Hip-Hop' was selected in the genres menu and the checkbox to show collaborators only was selected, collaborators would show in the search results even if none of them were matched with the 'Hip-Hop' selection. The correct outcome in this case would be no search results. This was bug was caused by an incorrect boolean condition in an if statement and easily fixed.
+
+### Manual testing
+
+### Automated tests
+
+### Validator testing
+
+##  Bugs
+
+Initially, allauth configuration was set to require the user to login with an email address and for email verification to be required. However, this caused a Django 'connection refused' error. This was caused by the fact no email server was availabe to send verification request emails. Settings were changed so that account login is by username rather than email address. 
+
+### Resolved bugs
+
+### Unresolved bugs
+
+## Deployment
 
 ## Credits
 
@@ -102,5 +105,5 @@ Front end CSS and JavaScript library
 
 - Font Awesome icons
     - [Burger menu icon](https://fontawesome.com/icons/bars?s=solid&f=classic)
-    - ['Collaborator' icon](https://fontawesome.com/icons/user?s=solid&f=classic)
+    - ['Collaborator' icon](https://fontawesome.com/icons/user?s=solid&f=classic
 - Placeholder profile image by WandererCreative and downloaded from [Pixabay](https://pixabay.com/images/id-973460/)
