@@ -1,11 +1,58 @@
+/* Google Font import */
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+
+/* Fonts for site wide elements */
+
+h1, h2 {
+    font-family: 'Monoton', cursive;
+}
+
+h3, h4 {
+    font-family: 'Rubik Mono One', sans-serif;
+}
+
+h3, h4, p, span, label, input, li {
+    font-family: 'Rubik', sans-serif;
+}
+
+/* Main colours */
+.bkgnd-color-0 {
+    background-color: #141414;
+}
+
+.bkgnd-color-1 {
+    background-color: #fff3e9;
+}
+
+.bkgnd-color-2 {
+    background-color: #520708;
+}
+
+.txt-color-0 {
+    color: #fef921;
+}
+
+.txt-color-1 {
+    color: #e8e1e8;
+}
+
+.txt-color-2 {
+    color: #262526;
+}
+
 /* Site wide styles */
 
 .navbar-brand {
-    font-size: 3rem;
+    font-family: 'Monoton', cursive;
+    font-size: 3.5rem;
+    color:#fef921;
 }
 
 .profile-img {
     width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .table-cols-20 {
@@ -25,4 +72,12 @@
 
 .plain-link:hover{
     color: darkblue;
+}
+
+.btn {
+    font-family: 'Gudea', sans-serif;
+}
+
+.card-title {
+    display: inline-block;
 }

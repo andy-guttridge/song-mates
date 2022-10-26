@@ -19,11 +19,11 @@
     <title>SongMates</title>
 </head>
 
-<body>
-    <div class="container g-0">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">SongMates</a>
+<body class="bkgnd-color-0">
+    <div class="container-fluid g-0 bkgnd-color-0 text-center">
+        <nav class="navbar navbar-expand-md navbar-dark">
+            <div class="container">
+                <a class="navbar-brand col-sm" href="/">SongMates</a>
                 
                 <!-- Show nav items only if user is authenticated -->
                 {% if  user.is_authenticated  %}
@@ -53,7 +53,6 @@
         {% block content %}
 
         {% endblock content %}
-
     </div>
 
     <!-- Boot strap JavaScript link -->

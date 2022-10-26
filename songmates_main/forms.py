@@ -98,8 +98,8 @@ class SearchForm(Form):
                 title='Show only my collaborators',
                 on_change=('searchSubmit()')
             ),
-            Field('genres'),
-            Field('search_phrase'),
+            Field('genres', css_class='bkgnd-color-1 txt-color-2'),
+            Field('search_phrase', css_class='bkgnd-color-1 txt-color-2'),
             FormActions(
                 Submit('search-form-submit', 'Search',
                        css_class='btn btn-primary'),
