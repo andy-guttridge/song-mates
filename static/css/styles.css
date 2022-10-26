@@ -44,7 +44,7 @@ h3, h4, p, span, label, input, li {
 
 .navbar-brand {
     font-family: 'Monoton', cursive;
-    font-size: 3.5rem;
+    font-size: 3rem;
     color:#fef921;
 }
 
@@ -78,6 +78,9 @@ h3, h4, p, span, label, input, li {
     font-family: 'Gudea', sans-serif;
 }
 
+.card-heading {
+    word-break: break-all;
+}
 .card-title {
     display: inline-block;
 }
