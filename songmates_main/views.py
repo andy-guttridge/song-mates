@@ -5,7 +5,9 @@ from django.db.models import Q, F
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.utils.decorators import method_decorator
+from cloudinary.exceptions import Error
 from .models import Profile, CollabRequest
 from .forms import ProfileForm, SearchForm
 from .functions import find_collabs
@@ -59,9 +61,9 @@ class UpdateProfile(View):
             profile_form.clean()
             try:
                 profile_form.save()
-            except:
+            except Error:
                 messages.error(request, "Error in form submission. Did you\
-                                try to upload a file that isn' an image?")
+                                try to upload a file that isn't an image?")
             return HttpResponseRedirect(reverse_lazy('edit_profile'))
         else:
             profile_form = ProfileForm(instance=profile)
