@@ -44,7 +44,7 @@ h3, h4, p, span, label, input, li {
 
 .navbar-brand {
     font-family: 'Monoton', cursive;
-    font-size: 3rem;
+    font-size: 2.5rem;
     color:#fef921;
 }
 
@@ -81,6 +81,7 @@ h3, h4, p, span, label, input, li {
 .card-heading {
     word-break: break-all;
 }
-.card-title {
+
+/* .card-title {
     display: inline-block;
-}
+} */
