@@ -86,6 +86,7 @@ a:hover{
     word-break: break-all;
 }
 
-/* .card-title {
-    display: inline-block;
-} */
+.txt-explain {
+    font-size: 75%;
+    font-style: italic;
+}

@@ -41,11 +41,13 @@
     {% endif %}
 
     <!-- Render search form -->
-    <div class="row bkgnd-color-1 txt-color-2 mb-3">
-        <form action="{% url 'search_profile' %}" method="get" id="search-profile" class="bkgnd-color-1">
+    <div class="row bkgnd-color-1 txt-color-2 mb-3 d-flex justify-content-md-around p-2">
+        <div class="col-md-6 col-xl-4">
+        <form action="{% url 'search_profile' %}" method="get" id="search-profile" class="bkgnd-color-1 text-center">
             <h3>Search profiles</h3>
             {% crispy search_form %}
         </form>
+        </div>
     </div>
 
     <!-- Loop through profiles and display the details of each in a bootstrap card -->

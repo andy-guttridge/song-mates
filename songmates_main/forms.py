@@ -90,21 +90,25 @@ class SearchForm(Form):
         self.helper = FormHelper(self)
         self.helper.form_tag = False
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-md-4'
-        self.helper.field_class = 'col-md-4'
+        # self.helper.label_class = 'col-md-4'
+        # self.helper.field_class = 'col-md-4'
         self.helper.layout = Layout(
+            HTML('<div class = "text-start">'),
             Field(
                 'collabs_only',
                 title='Show only my collaborators',
-                on_change=('searchSubmit()')
+                on_change=('searchSubmit()'),
             ),
             Field('genres', css_class='bkgnd-color-1 txt-color-2'),
+            HTML('<p class = "txt-explain d-none d-lg-block ">Hold down \
+                 CTRL to select multiple items on PC or Command on Mac</p>'),
             Field('search_phrase', css_class='bkgnd-color-1 txt-color-2'),
+            HTML('</div>'),
             FormActions(
                 Submit('search-form-submit', 'Search',
-                       css_class='btn btn-primary'),
+                       css_class='btn btn-primary m-1'),
                 Submit('search-form-show-all', 'Show all',
-                       css_class='btn btn-warning'),
+                       css_class='btn btn-warning m-1'),
             )
         )
         if not is_authenticated:
