@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Form, BooleanField, MultipleChoiceField, CharField, HiddenInput
+from django.forms import ModelForm, Form, BooleanField, MultipleChoiceField, CharField, HiddenInput, FileInput, ImageField
 from django.contrib.auth.models import User
 from django.conf.urls.static import static
 from .models import Profile
@@ -20,11 +20,11 @@ class ProfileForm(ModelForm):
         self.helper = FormHelper(self)
         self.helper.form_tag = False
         self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-md-6'
         self.helper.field_class = 'col-md-12'
         self.helper.layout = Layout(
-            Field('biog'),
-            Field('image'),
+            HTML('<div class = "text-start">'),
+            Field('biog', css_class='bkgnd-color-1 txt-color-2'),
+            Field('image', css_class='bkgnd-color-1 txt-color-2'),
             # Approach to using a HTML helper class to display an image from
             # the data base in the form from
             # https://stackoverflow.com/questions/21076248/imagefield-preview-in-crispy-forms-layout
@@ -39,13 +39,14 @@ class ProfileForm(ModelForm):
                 Div('genre3', css_class='col-md-4'),
                 Div('genre4', css_class='col-md-4'),
                 Div('genre5', css_class='col-md-4'),
-                css_class='row'
+                css_class='row profile-genres',
             ),
-            Field('instru_skill1'),
-            Field('instru_skill2'),
-            Field('instru_skill3'),
-            Field('instru_skill4'),
-            Field('instru_skill5'),
+            Field('instru_skill1', css_class='bkgnd-color-1 txt-color-2'),
+            Field('instru_skill2', css_class='bkgnd-color-1 txt-color-2'),
+            Field('instru_skill3', css_class='bkgnd-color-1 txt-color-2'),
+            Field('instru_skill4', css_class='bkgnd-color-1 txt-color-2'),
+            Field('instru_skill5', css_class='bkgnd-color-1 txt-color-2'),
+            HTML('</div>'),
             FormActions(
                 Submit('profile-form-cancel', 'Revert',
                        css_class='btn btn-primary'),
@@ -75,6 +76,11 @@ class ProfileForm(ModelForm):
             'instru_skill3': ('Instrument or skill 3'),
             'instru_skill4': ('Instrument or skill 4'),
             'instru_skill5': ('Instrument or skill 5'),
+        }
+
+        # Specify a custom widget for the image field
+        widgets = {
+            'image': FileInput
         }
 
 

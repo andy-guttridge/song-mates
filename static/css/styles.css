@@ -11,7 +11,7 @@ h3, h4 {
     font-family: 'Rubik Mono One', sans-serif;
 }
 
-h3, h4, p, span, label, input, li, select {
+h3, h4, p, span, label, input, li, select, textarea {
     font-family: 'Rubik', sans-serif;
 }
 
@@ -94,6 +94,15 @@ a:hover{
     font-size: 75%;
     font-style: italic;
 }
+
+#profile-form label{
+    color: #fff3e9;
+}
+
+.profile-genres select{
+    background-color: #fff3e9;
+}
+/* Button styles */
 
 .btn {
     font-family: 'Rubik', sans-serif;
