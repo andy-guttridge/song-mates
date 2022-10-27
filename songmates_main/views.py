@@ -56,7 +56,12 @@ class UpdateProfile(View):
         # Check if user hit submit button and form is valid. Save if true.
         # Otherwise reload page using existing data
         if profile_form.is_valid() and 'profile-form-submit' in request.POST:
-            profile_form.save()
+            profile_form.clean()
+            try:
+                profile_form.save()
+            except:
+                messages.error(request, "Error in form submission. Did you\
+                                try to upload a file that isn' an image?")
             return HttpResponseRedirect(reverse_lazy('edit_profile'))
         else:
             profile_form = ProfileForm(instance=profile)
