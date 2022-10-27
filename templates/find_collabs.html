@@ -7,7 +7,7 @@
 {% block content %}
 
 <div class="container-fluid text-center">
-    <h2 class="txt-color-0">Find Collaborators</h2>
+    <h2 class="txt-color-3">Find Collaborators</h2>
 
     <!-- Display a message and link to update profile page for users who haven't yet updated their profiles -->
     {% if user.is_authenticated and user_profile.profile_complete is False %}
@@ -64,7 +64,7 @@
                                     {{ profile.user }}
                                     <!-- Show collaborator icon if this profile is already a collaborator -->
                                     {% if profile in collaborators %}
-                                        <i class="fa-solid fa-user"></i>
+                                        <i class="fa-solid fa-user txt-color-3"></i>
                                     {% endif %}
                                 </h2>
                             </div>

@@ -40,6 +40,10 @@ h3, h4, p, span, label, input, li {
     color: #262526;
 }
 
+.txt-color-3 {
+    color: #ccebff;
+}
+
 /* Site wide styles */
 
 .navbar-brand {
