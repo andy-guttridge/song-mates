@@ -118,8 +118,16 @@ a:hover{
     color: #ccebff
 }
 
-.btn-secondary {
-    background-color: #;
+.btn-info {
+    background-color: #ddc2ff;
+    color: #141414;
+    border-color: #4b4257;
+}
+
+.btn-info:hover {
+    background-color: #4b4257;
+    color:#ddc2ff;
+    border-color: #ddc2ff;
 }
 
 .btn-warning {
