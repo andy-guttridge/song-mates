@@ -4,118 +4,137 @@
 
 {% block content %}
 
-<h2>View Profile</h2>
+<div class="container-fluid text-center">
 
-<!-- Loop through profiles and display the details of each in a bootstrap card -->
+    <h2 class="txt-color-3">View Profile</h2>
 
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title">
-            {{ profile.user }}
-            <!-- Show collaborator icon if this profile is already a collaborator -->
-            {% if is_collaborator %}
-            <i class="fa-solid fa-user"></i>
-        {% endif %}
-        </h2>
-        {% if "placeholder" in profile.image.url %}
-        <!-- <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" class="profile-img"> -->
-        <img src="{% static 'images/blank-profile-pic.png' %}" alt="Profile Picture" class="profile-img">
-        {% else %}
-        <img src="{{ profile.image.url }}" alt="Profile Picture" class="profile-img">
-        {% endif %}
-        <h3 class="card-subtitle">
-            About Me
-        </h3>
-        <p>
-            {{ profile.biog|linebreaksbr }}
-        </p>
-        <h3 class="card-subtitle">
-            Genres I'm interested in
-        </h3>
+    <!-- Display a single profile -->
 
-        <!-- Only display genres and instrument/skills if there are non-null values -->
-        <p>
-            {% if profile.genre1 %}
-                {{ profile.get_genre1_display }}
-            {% endif %}
-            {% if profile.genre2 %}
-                , {{ profile.get_genre2_display }}
-            {% endif %}
-            {% if profile.genre3 %}
-                , {{ profile.get_genre3_display }}
-            {% endif %}
-            {% if profile.genre4 %}
-                , {{ profile.get_genre4_display }}
-            {% endif %}
-            {% if profile.genre5 %}
-                , {{ profile.get_genre5_display }}
-            {% endif %}
-        </p>
-        <h3 class="card-subtitle">
-            Instruments and skills
-        </h3>
-        <p>
-            {% if profile.instru_skill1 %}
-                {{ profile.instru_skill1 }}
-            {% endif %}
-            {% if profile.instru_skill1 %}
-                , {{ profile.instru_skill2 }}
-            {% endif %}
-            {% if profile.instru_skill3 %}
-                , {{ profile.instru_skill3 }}
-            {% endif %}
-            {% if profile.instru_skill4 %}
-                , {{ profile.instru_skill4 }}
-            {% endif %}
-            {% if profile.instru_skill5 %}
-                , {{ profile.instru_skill5 }}
-            {% endif %}
-        </p>
+    <div class="container-fluid g-0">
+        <div class = "row justify-content-center">
+            <div class = "col-md-8 txt-color-1">
+                <div class="card text-start border-start-0 border-end-0 border-top-0 border-bottom-1">
+                    <div class="card-body bkgnd-color-0">
+                        <div class="row">
+                            <div class="col-6 card-heading">
+                                <h2 class="card-title txt-color-0">
+                                    {{ profile.user }}
+                                    <!-- Show collaborator icon if this profile is already a collaborator -->
+                                    {% if is_collaborator %}
+                                        <i class="fa-solid fa-user txt-color-3"></i>
+                                    {% endif %}
+                                </h2>
+                            </div>
+                            <div class="col text-end">
+                                {% if "placeholder" in profile.image.url %}
+                                <!-- <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" class="profile-img"> -->
+                                <img src="{% static 'images/blank-profile-pic.png' %}" alt="Profile Picture" class="profile-img">
+                                {% else %}
+                                <img src="{{ profile.image.url }}" alt="Profile Picture" class="profile-img">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <h3 class="card-subtitle">
+                            About Me
+                        </h3>
+                        <p>
+                            {{ profile.biog|linebreaksbr }}
+                        </p>
+                        <h3 class="card-subtitle">
+                            Genres
+                        </h3>
 
-        <!-- Render request collaboration form and button if there are no pending requests, the profile does not belong to the current user and they are not already a collaborator -->
-        {% if profile.user.pk != collab_request.to_user.pk and profile.user.pk != collab_request.from_user.pk and profile.user != user and not is_collaborator %}
-            <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to collaborate</button>
-            </form>
-        {% endif %}
+                        <!-- Only display genres and instrument/skills if there are non-null values -->
+                        <p>
+                            {% if profile.genre1 %}
+                                {{ profile.get_genre1_display }}
+                            {% endif %}
+                            {% if profile.genre2 %}
+                                , {{ profile.get_genre2_display }}
+                            {% endif %}
+                            {% if profile.genre3 %}
+                                , {{ profile.get_genre3_display }}
+                            {% endif %}
+                            {% if profile.genre4 %}
+                                , {{ profile.get_genre4_display }}
+                            {% endif %}
+                            {% if profile.genre5 %}
+                                , {{ profile.get_genre5_display }}
+                            {% endif %}
+                        </p>
+                        <h3 class="card-subtitle">
+                            Instruments and skills
+                        </h3>
+                        <p>
+                            {% if profile.instru_skill1 %}
+                                {{ profile.instru_skill1 }}
+                            {% endif %}
+                            {% if profile.instru_skill1 %}
+                                , {{ profile.instru_skill2 }}
+                            {% endif %}
+                            {% if profile.instru_skill3 %}
+                                , {{ profile.instru_skill3 }}
+                            {% endif %}
+                            {% if profile.instru_skill4 %}
+                                , {{ profile.instru_skill4 }}
+                            {% endif %}
+                            {% if profile.instru_skill5 %}
+                                , {{ profile.instru_skill5 }}
+                            {% endif %}
+                        </p>
+                        
+                        {% if  user.is_authenticated  %}
+                            <!-- Render request collaboration form and button if there are no pending requests, if this is not already a collaborator, if this profile is not the authenticated user and if this profile is not aleady a collaborator -->
+                            {% if profile.user.pk != collab_request.to_user.pk and profile.user != user and not is_collaborator %}
+                                <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to collaborate</button>
+                                </form>
+                            {% endif %}
 
-        <!-- If there is a pending collaboration request and the profile does not belong to the authenticated user, render a link to the collab_requests view -->
-        {% if profile.user.pk == collab_request.to_user.pk  or profile.user.pk == collab_request.from_user.pk and profile.user != user %}
-            <a role="button" href="{% url 'collab_requests' %}" class="btn btn-info" aria-label="Pending collaboration request">Pending collaboration request</a>
-        {% endif %}
+                            <!-- If there is a pending collaboration request, render a link to the collab_requests view -->
+                            {% if profile.user.pk == collab_request.to_user.pk or profile.user.pk == collab_request.from_user.pk and profile.user != user %}
+                                <a role="button" href="{% url 'collab_requests' %}" class="btn btn-info" aria-label="Pending collaboration request">Pending collaboration request</a>
+                            {% endif %}
 
-        <!-- If this profile belongs to an existing collaborator, render an email link and a remove collaborator button -->
-        {% if is_collaborator %}
-            <h3>Contact me</h3>
-            <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
-            <br>
-            <br>
-            <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id ="delete-collab">
-                {% csrf_token %}
-                <button type="button" class="btn btn-warning" aria-label="Un-collaborate" data-bs-toggle="modal" data-bs-target="#modal-confirm-delete">Un-collaborate</a>
-            </form>
-        {% endif %}
-    </div>
-</div>
-
-<!-- Modal to confirm cancellation of outgoing collaboration request -->
-<div class="modal" id="modal-confirm-delete" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirm un-collaborate</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to end this collaboration?</p>
-                <p>You will no longer have access to this collaborator's email address in SongMates.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" aria-label="Cancel" data-bs-dismiss="modal">Dismiss</button>
-                <button type="submit" class="btn btn-danger" aria-label="Confirm un-collaborate" data-bs-dismiss="modal" form="delete-collab" name="delete-collab">Confirm</button>
+                            <!-- If this profile belongs to an existing collaborator, render an email link and a remove collaborator button -->
+                            {% if is_collaborator %}
+                                <h3>Contact me</h3>
+                                <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+                                <br>
+                                <br>
+                                <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id ="delete-collab">
+                                    {% csrf_token %}
+                                    <button type="button" class="btn btn-warning" aria-label="Un-collaborate" data-bs-toggle="modal" data-bs-target="#modal-confirm-delete">Un-collaborate</a>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
+            
+
+        <!-- Modal to confirm cancellation of outgoing collaboration request -->
+        <div class="modal" id="modal-confirm-delete" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bkgnd-color-1">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm un-collaborate</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to end this collaboration?</p>
+                        <p>You will no longer have access to this collaborator's email address in SongMates.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" aria-label="Cancel" data-bs-dismiss="modal">Dismiss</button>
+                        <button type="submit" class="btn btn-danger" aria-label="Confirm un-collaborate" data-bs-dismiss="modal" form="delete-collab" name="delete-collab">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
 
