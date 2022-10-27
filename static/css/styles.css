@@ -11,7 +11,7 @@ h3, h4 {
     font-family: 'Rubik Mono One', sans-serif;
 }
 
-h3, h4, p, span, label, input, li {
+h3, h4, p, span, label, input, li, select {
     font-family: 'Rubik', sans-serif;
 }
 
@@ -93,4 +93,42 @@ a:hover{
 .txt-explain {
     font-size: 75%;
     font-style: italic;
+}
+
+.btn {
+    font-family: 'Rubik', sans-serif;
+}
+
+.btn-primary {
+    background-color: #ccebff;
+    color: #141414
+}
+
+.btn-primary:hover {
+    background-color: #6C7C87;
+    color: #ccebff
+}
+
+.btn-secondary {
+    background-color: #;
+}
+
+.btn-warning {
+    background-color: #fef921;
+    color: #141414
+}
+
+.btn-warning:hover {
+    background-color: #7A7910;
+    color: #fef921
+}
+
+.btn-danger {
+    background-color: #ff0809;
+    color: #fff3e9
+}
+
+.btn-danger:hover {
+    background-color: #400000;
+    color: #ff0809
 }

@@ -48,9 +48,9 @@ class ProfileForm(ModelForm):
             Field('instru_skill5'),
             FormActions(
                 Submit('profile-form-cancel', 'Revert',
-                       css_class='btn btn-secondary'),
+                       css_class='btn btn-primary'),
                 Submit('profile-form-submit', 'Submit',
-                       css_class='btn btn-primary')
+                       css_class='btn btn-warning')
             )
         )
 
