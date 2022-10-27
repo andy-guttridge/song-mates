@@ -35,12 +35,12 @@
 
                     <!-- Content for collapsible hamburger menu -->
                     <div class="collapse navbar-collapse d-md-inline-flex justify-content-md-end" id="navbarToggleContent">
-                        <ul class="navbar-nav ">
+                        <ul class="navbar-nav">
                             {% number_of_collab_requests request as requests %}
-                            <li class="nav-item p-2"><a class="link-light" href="{% url 'collab_requests' %}"><i class="fa-solid fa-user"></i> {% number_of_collab_requests request %}</a></li>
-                            <li class="nav-item p-2"><a class="link-light" href="{% url 'home' %}">Find Collaborators</a></li>
-                            <li class="nav-item p-2"><a class="link-light" href="{% url 'edit_profile' %}">Me</a></li>
-                            <li class="nav-item p-2"><a class="link-light" href="{% url 'account_logout' %}">Sign&#8209out</a></li>              
+                            <li class="nav-item p-2"><a class="txt-color-1" href="{% url 'collab_requests' %}"><i class="fa-solid fa-user"></i> {% number_of_collab_requests request %}</a></li>
+                            <li class="nav-item p-2"><a class="txt-color-1" href="{% url 'home' %}">Find Collaborators</a></li>
+                            <li class="nav-item p-2"><a class="txt-color-1" href="{% url 'edit_profile' %}">Me</a></li>
+                            <li class="nav-item p-2"><a class="txt-color-1" href="{% url 'account_logout' %}">Sign&#8209out</a></li>              
                         </ul>
                     </div>
                 {% else %}

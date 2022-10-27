@@ -66,12 +66,16 @@ h3, h4, p, span, label, input, li {
 .plain-link {
     border: none;
     background-color: rgba(255, 255, 255, 0);
-    color: dodgerblue;
+    color: #141414;
     text-decoration: underline;
 }
 
+a:hover{
+    color: #3bb5ff;
+}
+
 .plain-link:hover{
-    color: darkblue;
+    color: #3bb5ff;
 }
 
 .btn {
