@@ -2,11 +2,13 @@
 
 {% block content %}
 
-<h2>Pending Collaboration Requests</h2>
-<h3>Inbox</h3>
+<div class="container-fluid text-center">
+<h2 class="txt-color-0">Pending Collaboration Requests</h2>
+<h3 class="txt-color-1">Inbox</h3>
 
+<div class="container g-0">
 <!-- Table listing incoming collaboration requests -->
-<table class="table table-striped">
+<table class="table table-striped bkgnd-color-1">
     <tr>
         <!-- Column headings -->
         <th class="table-cols-20" scope="col">From</th>
@@ -52,9 +54,9 @@
 </div>
 
 
-<h3>Outbox</h3>
+<h3 class="txt-color-1">Outbox</h3>
 <!-- Table listing outgoing collaboration requests -->
-<table class="table table-striped">
+<table class="table table-striped bkgnd-color-1">
     <tr>
         <!-- Column headings -->
         <th class="table-cols-20" scope="col">To</th>
@@ -95,5 +97,6 @@
         </div>
     </div>
 </div>
-
+</div>
+</div>
 {% endblock %}
