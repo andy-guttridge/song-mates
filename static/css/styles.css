@@ -20,16 +20,25 @@ h3, h4, p, span, label, input, li, select, textarea {
     background-color: #141414;
 }
 
+.bkgnd-color-0a {
+    background-color: #404040;
+}
+
 .bkgnd-color-1 {
     background-color: #fff3e9;
 }
 
 .bkgnd-color-2 {
-    background-color: #520708;
+    background-color: rgba(43, 49, 54, 1);
 }
 
 .bkgnd-color-3 {
     background-color: #ddc2ff;
+}
+
+.bkgnd-hero {
+    background-image: url('/static/images/amp2.jpg');
+    background-attachment: fixed;
 }
 
 .txt-color-0 {
@@ -166,4 +175,12 @@ a:hover{
 .btn-danger:hover {
     background-color: #400000;
     color: #ff0809
+}
+
+/* Media queries */
+
+@media (max-width: 767px) {
+    .bkgnd-hero {
+        background-image: none;
+    }
 }
