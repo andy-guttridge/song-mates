@@ -56,12 +56,10 @@
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
+
     <h2 class="txt-color-3">Find Collaborators</h2>
+
     <div class="row">
 
         <!-- Render search form -->
@@ -71,7 +69,7 @@
                 {% crispy search_form %}
             </form>
         </div>
-        
+
         <!-- Loop through profiles and display the details of each in a bootstrap card -->
         {% for profile in profiles %}
 
@@ -97,7 +95,7 @@
                                         <!-- <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" class="profile-img"> -->
                                         <img src="{% static 'images/blank-profile-pic.png' %}" alt="Profile Picture"
                                             class="profile-img">
-                                        {% else %}
+                                    {% else %}
                                         <img src="{{ profile.image.url }}" alt="Profile Picture" class="profile-img">
                                     {% endif %}
                                 </div>
