@@ -1,5 +1,5 @@
 /* Google Font import */
-@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@600&family=Monoton&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
 
 /* Fonts for site wide elements */
 
@@ -25,11 +25,19 @@ h3, h4, p, span, label, input, li, select, textarea {
 }
 
 .bkgnd-color-2 {
-    background-color: #520708;
+    background-color: rgba(43, 49, 54, 1);
 }
 
 .bkgnd-color-3 {
     background-color: #ddc2ff;
+}
+
+.bkgnd-hero {
+    background-image: url('/static/images/amp2.jpg');
+    background-attachment: fixed;
+    height: 500px;
+    font-size: 170%;
+    font-weight: bolder;
 }
 
 .txt-color-0 {
@@ -54,6 +62,13 @@ h3, h4, p, span, label, input, li, select, textarea {
     font-family: 'Monoton', cursive;
     font-size: 2.5rem;
     color:#fef921;
+}
+
+.hero-font {
+    font-family: 'Karla', sans-serif;
+}
+.text-left {
+    text-align: left;
 }
 
 .profile-img {
@@ -166,4 +181,21 @@ a:hover{
 .btn-danger:hover {
     background-color: #400000;
     color: #ff0809
+}
+
+/* Media queries */
+
+@media (max-width: 767px) {
+    .bkgnd-hero {
+        background-image: none;
+        font-size: 100%;
+        height: auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+    .bkgnd-hero {
+        font-size: 150%;
+        height: auto;
+    }
 }
