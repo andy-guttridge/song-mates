@@ -8,6 +8,7 @@
             document.getElementById('id_collabs_only').addEventListener('click', searchSubmit);
         }
         
+        // Using setTimeout to automatically dismiss messages adapted from Code Institute Django Blog tutorial
         setTimeout(function() {
             let alertList = document.getElementsByClassName('alert');
             alertArray = Array.from(alertList)
