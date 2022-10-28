@@ -33,7 +33,6 @@ h3, h4, p, span, label, input, li, select, textarea {
 }
 
 .bkgnd-hero {
-    background-image: url('/static/images/amp2.jpg');
     background-attachment: fixed;
     height: 500px;
     font-size: 170%;
