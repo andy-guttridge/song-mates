@@ -56,13 +56,14 @@
                 {% endif %}          
             </nav>
         </div>
-
+        
+        <!-- Display Django messages if there are any -->
         {% if messages %}
             {% for message in messages %}
-                <div class="row justify-content-center">
-                    <div class="col col-md-6 bkgnd-color-1">
-                        <p {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</p>
-                    </div>
+                <div class="alert bkgnd-color-3 fade show position-absolute top-50 start-50 translate-middle h-25 w-75 text-center" role="alert">
+                    <p><i class="fa-solid fa-circle-info icon-big"></i></p>
+                    <hr>
+                    <p class="alert-text position-relative top-25">{{ message }}</p>
                 </div>
             {%  endfor %}
         {% endif %}

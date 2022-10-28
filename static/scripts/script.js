@@ -1,12 +1,21 @@
 (function(){
-    document.addEventListener('DOMContentLoaded', addEventListeners);
+    document.addEventListener('DOMContentLoaded', setUp);
     /**
-     * Add event listeners when DOM has loaded
+     * Add event listeners and remove any alerts from the DOM after 3 seconds
      */
-    function addEventListeners(){
+    function setUp(){
         if(document.querySelector('#id_collabs_only')){
             document.getElementById('id_collabs_only').addEventListener('click', searchSubmit);
         }
+        
+        setTimeout(function() {
+            let alertList = document.getElementsByClassName('alert');
+            alertArray = Array.from(alertList)
+            alertArray.forEach(function (alert) {
+                let anAlert = new bootstrap.Alert(alert);
+                anAlert.close();
+            })
+        }, 3000)
     }
 
     /**

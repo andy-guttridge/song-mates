@@ -28,6 +28,10 @@ h3, h4, p, span, label, input, li, select, textarea {
     background-color: #520708;
 }
 
+.bkgnd-color-3 {
+    background-color: #ddc2ff;
+}
+
 .txt-color-0 {
     color: #fef921;
 }
@@ -95,13 +99,27 @@ a:hover{
     font-style: italic;
 }
 
-#profile-form label{
+#profile-form label {
     color: #fff3e9;
 }
 
-.profile-genres select{
+.profile-genres select {
     background-color: #fff3e9;
 }
+
+.alert {
+    z-index: 1060;
+}
+
+.alert-text {
+    font-size: 150%;
+    font-weight: bold;
+}
+
+.icon-big {
+    font-size: 300%;
+}
+
 /* Button styles */
 
 .btn {
