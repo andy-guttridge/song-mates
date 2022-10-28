@@ -7,12 +7,12 @@
 {% block content %}
 
 <div class="container-fluid g-0 text-center">
-    <div class="row mb-3 d-flex bkgnd-hero" style="background-image: url({% static 'images/amp2.jpg' %});">
+    <div class="row mb-3 d-flex bkgnd-hero no-gutters" style="background-image: url({% static 'images/amp2.jpg' %});">
 
         <div class="container justify-content-md-center d-flex p-0">
             <div class="col-md-6 ms-auto">
                 <div class="card border-0 bkgnd-color-2 h-100 d-inline-block">
-                    <div class="card-body txt-color-1">
+                    <div class="card-body txt-color-1 p-0 m-4">
                         <div class="d-none d-lg-inline">
                             <img src="{% static 'images/songmates_logo.png' %}">
                         </div>
@@ -60,11 +60,11 @@
 
     <h2 class="txt-color-3">Find Collaborators</h2>
 
-    <div class="row">
+    <div class="row no-gutters">
 
         <!-- Render search form -->
-        <div class="col-md-6 col-xl-4  mb-3 align-items-stretch bkgnd-color-0 txt-color-1 rounded p-5 border-bottom">
-            <form action="{% url 'search_profile' %}" method="get" id="search-profile" class="text-center">
+        <div class="col-md-6 col-xl-4  mb-3 align-items-stretch bkgnd-color-0 txt-color-1 rounded p-0 border-bottom">
+            <form action="{% url 'search_profile' %}" method="get" id="search-profile" class="text-center m-5">
                 <h3>Search profiles</h3>
                 {% crispy search_form %}
             </form>
@@ -78,7 +78,7 @@
                 <div class="col-md-6 col-xl-4 mb-3 align-items-stretch d-flex txt-color-1">
                     <div class="card text-start border-start-0 border-end-0 border-top-0 border-bottom-1">
                         <div class="card-body bkgnd-color-0">
-                            <div class="row">
+                            <div class="row no-gutters">
                                 <div class="col-6 card-heading">
                                     <h2 class="card-title txt-color-0">
                                         {{ profile.user }}
