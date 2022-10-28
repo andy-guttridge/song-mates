@@ -37,16 +37,22 @@
                     <div class="collapse navbar-collapse d-md-inline-flex justify-content-md-end" id="navbarToggleContent">
                         <ul class="navbar-nav">
                             {% number_of_collab_requests request as requests %}
-                            <li class="nav-item p-2"><a class="txt-color-1" href="{% url 'collab_requests' %}"><i class="fa-solid fa-user"></i> {% number_of_collab_requests request %}</a></li>
-                            <li class="nav-item p-2"><a class="txt-color-1" href="{% url 'home' %}">Find Collaborators</a></li>
-                            <li class="nav-item p-2"><a class="txt-color-1" href="{% url 'edit_profile' %}">Me</a></li>
-                            <li class="nav-item p-2"><a class="txt-color-1" href="{% url 'account_logout' %}">Sign&#8209out</a></li>              
+                            <!-- Technique for identifying and conditionally applying a class to the currently active link is from: -->
+                            <!-- https://stackoverflow.com/questions/46617375/how-do-i-show-an-active-link-in-a-django-navigation-bar-dropdown-list -->
+                            {% with request.resolver_match.url_name as url_name %}
+                                <li class="nav-item p-2"><a class="{% if url_name == 'collab_requests' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'collab_requests' %}"><i class="fa-solid fa-user"></i> {% number_of_collab_requests request %}</a></li>
+                                <li class="nav-item p-2"><a class="{% if url_name == 'home' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'home' %}">Find Collaborators</a></li>
+                                <li class="nav-item p-2"><a class="{% if url_name == 'edit_profile' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'edit_profile' %}">Me</a></li>
+                                <li class="nav-item p-2"><a class="{% if url_name == 'account_logout' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'account_logout' %}">Sign&#8209out</a></li>       
+                            {% endwith %}       
                         </ul>
                     </div>
                 {% else %}
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="link-light" href="{% url 'account_login' %}">Sign&#8209in or register</a></li>
-                    </ul>
+                    {% with request.resolver_match.url_name as url_name %}
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="{% if url_name == 'account_login' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'account_login' %}">Sign&#8209in or register</a></li>
+                        </ul>
+                    {% endwith %}  
                 {% endif %}          
             </nav>
         </div>
