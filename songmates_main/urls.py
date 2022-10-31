@@ -18,5 +18,7 @@ urlpatterns = [
     path("delete-collab/<int:user_pk>", views.DeleteCollab.as_view(),
          name="delete_collab"),
     path("search-profile/", views.SearchProfile.as_view(),
-         name="search_profile")
+         name="search_profile"),
+    path("send-msg/<int:to_user_pk>", views.SendMsg.as_view(),
+         name="send_msg"),
 ]

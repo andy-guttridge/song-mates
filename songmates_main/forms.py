@@ -1,4 +1,4 @@
-from django.forms import ModelForm, Form, BooleanField, MultipleChoiceField, CharField, HiddenInput, FileInput, ImageField
+from django.forms import ModelForm, Form, BooleanField, MultipleChoiceField, CharField, HiddenInput, FileInput, ImageField, Textarea
 from django.contrib.auth.models import User
 from django.conf.urls.static import static
 from .models import Profile
@@ -96,8 +96,6 @@ class SearchForm(Form):
         self.helper = FormHelper(self)
         self.helper.form_tag = False
         self.helper.form_class = 'form-horizontal'
-        # self.helper.label_class = 'col-md-4'
-        # self.helper.field_class = 'col-md-4'
         self.helper.layout = Layout(
             HTML('<div class = "text-start">'),
             Field(
@@ -126,4 +124,4 @@ class SearchForm(Form):
     collabs_only = BooleanField(required=False)
     genres = MultipleChoiceField(required=False, choices=Genres.choices)
     search_phrase = CharField(required=False, max_length=50)
-
+    

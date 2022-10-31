@@ -216,16 +216,16 @@
                         </div>
                         <div class="modal-body">
                             <p>Enter the message you want to send to {{ profile.user }}.</p>
-                            <form <form action="{% url 'send_msg' profile.user.pk %}" method="post" id="send-msg">
+                            <form action="{% url 'send_msg' profile.user.pk %}" method="post" id="send-msg-{{ profile.user.pk }}">
                             {% csrf_token %}
                                 <div class="text-start d-inline-block">
                                     <label for="msg-subject-input-{{ profile.user.pk }}">Subject:</label>
                                     <br>
-                                    <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}">
+                                    <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}" name="msg-subject">
                                     <br>
                                     <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
                                     <br>
-                                    <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}"></textarea>
+                                    <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
                                 </div>
                             </form>
                         </div>
@@ -233,7 +233,7 @@
                             <button type="button" class="btn btn-primary" aria-label="Dismiss"
                                 data-bs-dismiss="modal">Dismiss</button>
                             <button type="submit" class="btn btn-warning" aria-label="Confirm send message"
-                                data-bs-dismiss="modal" form="send-msg" name="send-msg">Send</button>
+                                data-bs-dismiss="modal" form="send-msg-{{ profile.user.pk }}" name="send-msg-btn">Send</button>
                         </div>
                     </div>
                 </div>

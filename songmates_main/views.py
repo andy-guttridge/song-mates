@@ -382,3 +382,25 @@ class SearchProfile(View):
                     "search_form": search_form
                 }
             )
+
+
+class SendMsg(View):
+    """
+    Deal with user's request to send a message to another user.
+    """
+    @method_decorator(login_required)
+    def post(self, request, to_user_pk, *args, **kwargs):
+        # Check if the user they want to message exists
+        # and retrieve if it does
+
+        if User.objects.filter(pk=to_user_pk).exists():
+            pass
+            # to_user = User.objects.filter(pk=to_user_pk).first()
+            # # Create a new collaboration request and save
+            # collab_request = CollabRequest(from_user=request.user, to_user=to_user)
+            # collab_request.save()
+
+        subject = request.POST.get('msg-subject')
+        message = request.POST.get('msg-body')
+        print('Subject:', subject, 'Message:', message)
+        return HttpResponseRedirect(reverse_lazy('home'))
