@@ -169,7 +169,7 @@
                                 <!-- If this profile belongs to an existing collaborator, render a contact icon and a remove collaborator button -->
                                 {% if profile in collaborators %}
                                     <h3>Contact me</h3>
-                                    <button type="button" class="icon-big icon-button txt-color-3" aria-labe="Send message" data-bs-toggle="modal" data-bs-target="#modal-send-msg-{{ profile.user.pk }}"><i class="fa-solid fa-user-pen"></i></button>
+                                    <button type="button" class="btn btn-primary" aria-labe="Send message" data-bs-toggle="modal" data-bs-target="#modal-send-msg-{{ profile.user.pk }}"><i class="fa-solid fa-user-pen icon-big"></i></button>
                                     <br>
                                     <br>
                                     <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id="delete-collab">

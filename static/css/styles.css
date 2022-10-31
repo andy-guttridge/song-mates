@@ -55,6 +55,10 @@ h3, h4, p, span, label, input, li, select, textarea {
     color: #ccebff;
 }
 
+textarea::placeholder {
+    color: #262526;
+}
+
 /* Site wide styles */
 
 .navbar-brand {

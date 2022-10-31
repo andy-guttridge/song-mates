@@ -403,3 +403,22 @@ class SendMsg(View):
             message.save()
 
         return HttpResponseRedirect(reverse_lazy('home'))
+
+
+class Messages(View):
+    """
+    View of the user's messages inbox and outbox.
+    """
+    @method_decorator(login_required)
+    def get(self, request, *args, **kwargs):
+        # Get all messages in inbox and outbox
+        in_messages = Message.objects.filter(to_user=request.user).order_by('date')
+        out_messages = Message.objects.filter(from_user=request.user).order_by('date')
+        return render(
+            request,
+            "messages.html",
+            {
+                "in_messages": in_messages,
+                "out_messages": out_messages,
+            }
+        )

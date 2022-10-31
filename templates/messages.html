@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid text-center">
+    <h2 class="txt-color-3">Messages</h2>
+    <h3 class="txt-color-1">Inbox</h3>
+
+    <div class="container g-0">
+        <!-- Table listing incoming collaboration requests -->
+        <table class="table table-striped bkgnd-color-1">
+            <tr>
+                <!-- Column headings -->
+                <th class="table-cols-20" scope="col">From</th>
+                <th class="table-cols-20" scope="col">Date</th>
+                <th class="table-cols-20" scope="col">Subject</th>
+                <th class="table-cols-20" scope="col">Delete?</th>
+            </tr>
+
+            <!-- Loop through requests and display details in table cells -->
+            {% for message in in_messages %}
+                <tr>
+                    <td><a href="{% url 'single_profile' message.from_user.pk %} " class="plain-link"
+                            aria-label="Link to user profile for {{ message.from_user }}">{{ message.from_user }}</a></td>
+                    <td>{{ message.date|date:"G:i, M d Y" }}</td>
+                    <td><button class="plain-link" type="button" aria-label="Show message content"
+                        data-bs-toggle="modal" data-bs-target="#modal-show-msg-{{ message.pk }}">{{ message.subject }}</button></td>
+                    <td>
+                        <!-- Form to deal with deletion of incoming messages requests -->
+                        <form action="" method="post" id="reject-collab">
+                            {% csrf_token %}
+                            <button class="plain-link" type="submit" name="collab-approve"
+                                aria-label="Approve collaboration request">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+
+                <!-- Modal to confirm rejection of incoming collaboration request -->
+                <div class="modal" id="modal-show-msg-{{ message.pk }}" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content bkgnd-color-1">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Read message</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{% url 'send_msg' message.from_user.pk %}" method="post" id="reply-msg-{{ message.to_user.pk }}">
+                                    {% csrf_token %}
+                                    <h5>Message from {{ message.from_user }}</h5>
+                                    <div class="text-start d-inline-block">
+                                        <label for="in-msg-subject{{ message.pk }}">Subject:</label>
+                                        <br>
+                                        <input type="text" maxlength="50" class="msg-subject-input bkgnd-color-1" id="in-msg-subject{{ message.pk }}" value="{{ message.subject }}" readonly>
+                                        <br>
+                                        <label for="in-msg-message{{ message.pk }}">Message:</label>
+                                        <br>
+                                        <textarea maxlength="200" row="100" cols="50" class="msg-body-input bkgnd-color-1 placeholder-color-0" id="in-msg-message{{ message.pk }}" placeholder="{{ message.message }}" readonly></textarea>
+                                        <br>
+                                    </div>
+                                    <h5>
+                                        Reply
+                                    </h5>
+                                        <div class="text-start d-inline-block">
+                                            <label for="msg-subject-input-{{ profile.user.pk }}">Subject:</label>
+                                            <br>
+                                            <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}" name="msg-subject">
+                                            <br>
+                                            <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
+                                            <br>
+                                            <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
+                                        </div>
+                                    </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" aria-label="Dismiss message"
+                                    data-bs-dismiss="modal">Dismiss</button>
+                                <button type="submit" class="btn btn-warning" aria-label="Reply to message"
+                                    data-bs-dismiss="modal" form="reply-msg-{{ message.to_user.pk }}" name="reply-msg">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %} 
+        </table>
+
+        
+
+
+        <h3 class="txt-color-1">Outbox</h3>
+        <!-- Table listing outgoing collaboration requests -->
+        <table class="table table-striped bkgnd-color-1">
+            <tr>
+                <!-- Column headings -->
+                <th class="table-cols-20" scope="col">To</th>
+                <th class="table-cols-20" scope="col">Date</th>
+                <th class="table-cols-20" scope="col">Subject</th>
+                <th class="table-cols-20" scope="col">Delete?</th>
+            </tr>
+            <!-- Loop through requests and display details in table cells -->
+            <!-- {% for collab in out_requests %}
+                <tr>
+                    <td><a class="plain-link" href="{% url 'single_profile' collab.to_user.pk %}"
+                            aria-label="Link to user profile for {{ collab.from_user }}">{{ collab.to_user }}</a></td>
+                    <td>{{ collab.date|date:"G:i, M d Y" }}</td>
+                    <td> -->
+                        <!-- Form to deal with cancellation of outgoing collaboration requests -->
+                        <!-- <form action="{% url 'collab_requests' collab.to_user.pk %}" method="post" id="cancel-request">
+                            {% csrf_token %}
+                            <button type="button" class="plain-link" aria-label="Cancel collaboration request"
+                                data-bs-toggle="modal" data-bs-target="#modal-confirm-cancel">Cancel</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %} -->
+        </table>
+
+        <!-- Modal to confirm cancellation of outgoing collaboration request -->
+        <!-- <div class="modal" id="modal-confirm-cancel" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bkgnd-color-1">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm cancelation</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to cancel this collaboration request?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" aria-label="Dismiss cancellation"
+                            data-bs-dismiss="modal">Dismiss</button>
+                        <button type="submit" class="btn btn-danger" aria-label="Confirm cancellation"
+                            data-bs-dismiss="modal" form="cancel-request" name="collab-cancel">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+{% endblock %}

@@ -21,4 +21,6 @@ urlpatterns = [
          name="search_profile"),
     path("send-msg/<int:to_user_pk>", views.SendMsg.as_view(),
          name="send_msg"),
+    path("messages/", views.Messages.as_view(),
+         name="messages"),
 ]
