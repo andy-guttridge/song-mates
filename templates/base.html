@@ -37,10 +37,11 @@
                     <div class="collapse navbar-collapse d-md-inline-flex justify-content-md-end" id="navbarToggleContent">
                         <ul class="navbar-nav">
                             {% number_of_collab_requests request as requests %}
+                            {% number_of_incoming_messages request as requests %}
                             <!-- Technique for identifying and conditionally applying a class to the currently active link is from: -->
                             <!-- https://stackoverflow.com/questions/46617375/how-do-i-show-an-active-link-in-a-django-navigation-bar-dropdown-list -->
                             {% with request.resolver_match.url_name as url_name %}
-                                <li class="nav-item p-2"><a class="{% if url_name == 'messages' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'messages' %}"><i class="fa-solid fa-envelope"></i>Dummy 0</a></li>
+                                <li class="nav-item p-2"><a class="{% if url_name == 'messages' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'messages' %}"><i class="fa-solid fa-envelope"></i> {% number_of_incoming_messages request %}</a></li>
                                 <li class="nav-item p-2"><a class="{% if url_name == 'collab_requests' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'collab_requests' %}"><i class="fa-solid fa-user"></i> {% number_of_collab_requests request %}</a></li>
                                 <li class="nav-item p-2"><a class="{% if url_name == 'home' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'home' %}">Find Collaborators</a></li>
                                 <li class="nav-item p-2"><a class="{% if url_name == 'edit_profile' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'edit_profile' %}">Me</a></li>
