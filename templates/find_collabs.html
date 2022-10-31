@@ -166,10 +166,10 @@
                                         aria-label="Pending collaboration request">Pending collaboration request</a>
                                 {% endif %}
 
-                                <!-- If this profile belongs to an existing collaborator, render an email link and a remove collaborator button -->
+                                <!-- If this profile belongs to an existing collaborator, render a contact icon and a remove collaborator button -->
                                 {% if profile in collaborators %}
                                     <h3>Contact me</h3>
-                                    <a href="mailto:{{ profile.user.email }}">{{ profile.user.email }}</a>
+                                    <button type="button" class="icon-big icon-button txt-color-3" aria-labe="Send message" data-bs-toggle="modal" data-bs-target="#modal-send-msg-{{ profile.user.pk }}"><i class="fa-solid fa-user-pen"></i></button>
                                     <br>
                                     <br>
                                     <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id="delete-collab">
@@ -184,7 +184,7 @@
                 </div>
             {% endif %}
 
-            <!-- Modal to confirm cancellation of outgoing collaboration request -->
+            <!-- Modal to confirm deleting a current connection request -->
             <div class="modal" id="modal-confirm-delete" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content bkgnd-color-1">
@@ -194,13 +194,46 @@
                         </div>
                         <div class="modal-body">
                             <p>Are you sure you want to end this collaboration?</p>
-                            <p>You will no longer have access to this collaborator's email address in SongMates.</p>
+                            <p>You will no longer be able to send messages to this user in SongMates.</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" aria-label="Cancel"
+                            <button type="button" class="btn btn-primary" aria-label="Dismiss"
                                 data-bs-dismiss="modal">Dismiss</button>
                             <button type="submit" class="btn btn-danger" aria-label="Confirm un-collaborate"
                                 data-bs-dismiss="modal" form="delete-collab" name="delete-collab">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal to send message to collaborator -->
+            <div class="modal" id="modal-send-msg-{{ profile.user.pk }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content bkgnd-color-1">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Send message</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Enter the message you want to send to {{ profile.user }}.</p>
+                            <form <form action="{% url 'send_msg' profile.user.pk %}" method="post" id="send-msg">
+                            {% csrf_token %}
+                                <div class="text-start d-inline-block">
+                                    <label for="msg-subject-input-{{ profile.user.pk }}">Subject:</label>
+                                    <br>
+                                    <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}">
+                                    <br>
+                                    <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
+                                    <br>
+                                    <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" aria-label="Dismiss"
+                                data-bs-dismiss="modal">Dismiss</button>
+                            <button type="submit" class="btn btn-warning" aria-label="Confirm send message"
+                                data-bs-dismiss="modal" form="send-msg" name="send-msg">Send</button>
                         </div>
                     </div>
                 </div>

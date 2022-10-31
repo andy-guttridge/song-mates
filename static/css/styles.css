@@ -134,6 +134,16 @@ a:hover{
     font-size: 300%;
 }
 
+.msg-subject-input {
+    width: 300px;
+}
+
+.msg-body-input {
+    height: 200px;
+    width: 300px;
+}
+
+
 /* Button styles */
 
 .btn {
@@ -180,6 +190,11 @@ a:hover{
 .btn-danger:hover {
     background-color: #400000;
     color: #ff0809
+}
+
+.icon-button {
+    background-color: transparent;
+    border: none;
 }
 
 /* Media queries */
