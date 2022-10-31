@@ -8,7 +8,7 @@ class Profile(models.Model):
     """
     Model for user profiles
     """
-    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL,
+    user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL,
                              unique=True, related_name="profile")
     profile_complete = models.BooleanField(default=False)
     friends = models.ManyToManyField("self", blank=True,
@@ -69,3 +69,14 @@ class CollabRequest(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     message = models.CharField(max_length=200, blank=True, null=True)
 
+
+class Message(models.Model):
+    from_user = models.ForeignKey(User, null=False, on_delete=models.CASCADE,
+                                  unique=False, related_name="msg_from_user")
+    to_user = models.ForeignKey(User, null=False, on_delete=models.CASCADE,
+                                unique=False, related_name="msg_to_user")
+    date = models.DateTimeField(auto_now_add=True)
+    subject = models.CharField(max_length=50, blank=True, null=True)
+    message = models.CharField(max_length=200, blank=True, null=True)
+    from_deleted = models.BooleanField(default=False)
+    to_deleted = models.BooleanField(default=False)
