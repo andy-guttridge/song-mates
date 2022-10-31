@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from cloudinary.exceptions import Error
-from .models import Profile, CollabRequest
+from .models import Profile, CollabRequest, Message
 from .forms import ProfileForm, SearchForm
 from .functions import find_collabs
 
@@ -394,13 +394,12 @@ class SendMsg(View):
         # and retrieve if it does
 
         if User.objects.filter(pk=to_user_pk).exists():
-            pass
-            # to_user = User.objects.filter(pk=to_user_pk).first()
-            # # Create a new collaboration request and save
-            # collab_request = CollabRequest(from_user=request.user, to_user=to_user)
-            # collab_request.save()
+            to_user = User.objects.filter(pk=to_user_pk).first()
+            subject = request.POST.get('msg-subject')
+            message = request.POST.get('msg-body')
+            # Create a new message and save
+            message = Message(from_user=request.user, to_user=to_user,
+                              subject=subject, message=message)
+            message.save()
 
-        subject = request.POST.get('msg-subject')
-        message = request.POST.get('msg-body')
-        print('Subject:', subject, 'Message:', message)
         return HttpResponseRedirect(reverse_lazy('home'))

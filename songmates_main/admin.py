@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, CollabRequest
+from .models import Profile, CollabRequest, Message
 
 
 @admin.register(Profile)
@@ -30,10 +30,19 @@ class ProfileAdmin(admin.ModelAdmin):
         return 'True' if obj.profile_complete is True else 'False'
         
 
-
 @admin.register(CollabRequest)
 class CollabRequestAdmin(admin.ModelAdmin):
     """
-    Specify fields to be accessible in the admin panel for the CollabRequest model
+    Specify fields to be accessible in the admin panel for the CollabRequest
+    model
     """
     list_display = ('from_user', 'to_user', 'date', 'message')
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    """
+    Specify fields to be accessible in the admin panel for the Message model
+    """
+    list_display = ('from_user', 'to_user', 'date', 'subject','message',
+                    'from_deleted', 'to_deleted')
