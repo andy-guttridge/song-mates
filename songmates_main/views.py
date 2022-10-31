@@ -248,7 +248,7 @@ class DeleteCollab(View):
     Deletes collaboration connection between two users
     """
     @method_decorator(login_required)
-    def post(self, request, user_pk, *args, **kwards):
+    def post(self, request, user_pk, *args, **kwargs):
         # Find the collaborator's profile
         collaborator_queryset = Profile.objects.filter(user=user_pk)
         get_object_or_404(collaborator_queryset)
@@ -422,3 +422,42 @@ class Messages(View):
                 "out_messages": out_messages,
             }
         )
+
+
+class DeleteMsg(View):
+    """
+    Handle request to delete a user message
+    """
+    @method_decorator(login_required)
+    def post(self, request, message_pk, *args, **kwargs):
+        # Find the message to be deleted
+        message_queryset = Message.objects.filter(pk=message_pk)
+        get_object_or_404(message_queryset)
+        message = message_queryset.first()
+
+        # Find the authenticated user's profile
+        user_queryset = Profile.objects.filter(user=request.user)
+        get_object_or_404(user_queryset)
+        user_profile = user_queryset.first()
+
+        # Check if the request to delete the message was for an incoming
+        # or outgoing message, check the request came from the actual user who
+        # received or sent the message. If so, mark it as deletable on their
+        # side of the message
+        if ('confirm-msg-in-delete' in request.POST
+                and user_profile.user == message.to_user):
+            message.to_deleted = True
+            message.save()
+        if ('confirm-msg-out-delete' in request.POST
+                and user_profile.user == message.from_user):
+            message.from_deleted = True
+            message.save()
+        
+        # If message has been marked as deletable by both sending and receiving
+        # users, delete it
+        message_queryset = Message.objects.filter(pk=message_pk)
+        get_object_or_404(message_queryset)
+        if message.from_deleted is True and message.to_deleted is True:
+            message.delete()
+            
+        return HttpResponseRedirect(reverse_lazy('messages'))

@@ -23,4 +23,6 @@ urlpatterns = [
          name="send_msg"),
     path("messages/", views.Messages.as_view(),
          name="messages"),
+    path("delete-msg/<int:message_pk>", views.DeleteMsg.as_view(),
+         name="delete_msg"),
 ]
