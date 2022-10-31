@@ -401,8 +401,13 @@ class SendMsg(View):
             message = Message(from_user=request.user, to_user=to_user,
                               subject=subject, message=message)
             message.save()
-
-        return HttpResponseRedirect(reverse_lazy('home'))
+        
+        # Return to messages view if that's where the sent message came from,
+        # otherwise back to home.
+        if 'reply-msg' in request.POST:
+            return HttpResponseRedirect(reverse_lazy('messages'))
+        else: 
+            return HttpResponseRedirect(reverse_lazy('home'))
 
 
 class Messages(View):
