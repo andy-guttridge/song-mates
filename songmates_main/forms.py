@@ -64,18 +64,28 @@ class ProfileForm(ModelForm):
                   'instru_skill3', 'instru_skill4', 'instru_skill5']
         # Specify labels for form fields
         labels = {
-            'image': ('Profile Image'),
-            'biog': ('Biography'),
-            'genre1': ('Genre 1'),
-            'genre2': ('Genre 2'),
-            'genre3': ('Genre 3'),
-            'genre4': ('Genre 4'),
-            'genre5': ('Genre 5'),
-            'instru_skill1': ('Instrument or skill 1'),
-            'instru_skill2': ('Instrument or skill 2'),
-            'instru_skill3': ('Instrument or skill 3'),
-            'instru_skill4': ('Instrument or skill 4'),
-            'instru_skill5': ('Instrument or skill 5'),
+            'image': 'Profile Image',
+            'biog': 'Biography',
+            'genre1': 'Genre 1',
+            'genre2': 'Genre 2',
+            'genre3': 'Genre 3',
+            'genre4': 'Genre 4',
+            'genre5': 'Genre 5',
+            'instru_skill1': 'Instrument or skill 1',
+            'instru_skill2': 'Instrument or skill 2',
+            'instru_skill3': 'Instrument or skill 3',
+            'instru_skill4': 'Instrument or skill 4',
+            'instru_skill5': 'Instrument or skill 5',
+        }
+
+        #Specify help text for form fields
+        help_texts = {
+            'biog': 'Maximum 500 characters',
+            'instru_skill1': 'Maximum 30 characters',
+            'instru_skill2': 'Maximum 30 characters',
+            'instru_skill3': 'Maximum 30 characters',
+            'instru_skill4': 'Maximum 30 characters',
+            'instru_skill5': 'Maximum 30 characters',
         }
 
         # Specify a custom widget for the image field

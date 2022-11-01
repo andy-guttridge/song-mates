@@ -73,10 +73,12 @@
                                             <label for="msg-subject-input-{{ profile.user.pk }}">Subject:</label>
                                             <br>
                                             <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}" name="msg-subject">
+                                            <p class="txt-explain">Maximum 50 characters</p>
                                             <br>
                                             <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
                                             <br>
                                             <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
+                                            <p class="txt-explain">Maximum 200 characters</p>
                                         </div>
                                     </form>
                             </div>

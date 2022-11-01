@@ -70,6 +70,7 @@ textarea::placeholder {
 .hero-font {
     font-family: 'Karla', sans-serif;
 }
+
 .text-left {
     text-align: left;
 }
@@ -113,6 +114,12 @@ a:hover{
 }
 
 .txt-explain {
+    font-size: 85%;
+    font-style: italic;
+}
+
+.form-text {
+    color: #fff3e9;
     font-size: 75%;
     font-style: italic;
 }
