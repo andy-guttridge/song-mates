@@ -212,15 +212,15 @@
                     <p>Enter the message you want to send to {{ profile.user }}.</p>
                     <form action="{% url 'send_msg' profile.user.pk %}" method="post" id="send-msg-{{ profile.user.pk }}">
                     {% csrf_token %}
-                        <div class="text-start d-inline-block">
+                        <div class="text-start d-inline-block msg-field-container">
                             <label for="msg-subject-input-{{ profile.user.pk }}">Subject:</label>
                             <br>
-                            <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}" name="msg-subject">
+                            <input type="text" maxlength="50" class="msg-subject-field m-1 msg-border" id="msg-subject-input-{{ profile.user.pk }}" name="msg-subject">
                             <p class="txt-explain">Maximum 50 characters</p>
                             <br>
                             <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
                             <br>
-                            <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
+                            <textarea maxlength="200" row="100" cols="50" class="msg-body-field m1 msg-border" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
                             <p class="txt-explain">Maximum 200 characters</p>
                         </div>
                     </form>

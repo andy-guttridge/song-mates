@@ -145,13 +145,27 @@ a:hover{
     font-size: 300%;
 }
 
-.msg-subject-input {
-    width: 300px;
+.msg-field-container {
+    width: 90%;
 }
 
-.msg-body-input {
+.msg-subject-field {
+    width: 95%;
+}
+
+.msg-body-field {
     height: 200px;
-    width: 300px;
+    width: 95%;
+    overflow: scroll;
+    overflow-wrap: break-word;
+}
+
+.msg-border {
+    border-color: #141414;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.2rem;
+    padding: 1px;
 }
 
 
