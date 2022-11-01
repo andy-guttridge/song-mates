@@ -61,12 +61,6 @@ textarea::placeholder {
 
 /* Site wide styles */
 
-.navbar-brand {
-    font-family: 'Monoton', cursive;
-    font-size: 2.5rem;
-    color:#fef921;
-}
-
 .hero-font {
     font-family: 'Karla', sans-serif;
 }
@@ -223,6 +217,12 @@ a:hover{
 }
 
 /* Media queries */
+
+@media (max-width: 350px) {
+    .navbar-brand img {
+        width: 200px;
+    }
+}
 
 @media (max-width: 767px) {
     .bkgnd-hero {
