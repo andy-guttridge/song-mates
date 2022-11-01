@@ -5,21 +5,17 @@
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
-<div class="container text-center">
-    <h2 class="txt-color-3">{% trans "Sign Up" %}</h1>
-    <div class="row justify-content-center">
-        <div class="col">
-            <p class="txt-color-1">{% blocktrans %}Already have an account? Then please <a class="txt-color-3" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+<h2 class="txt-color-3">{% trans "Sign Up" %}</h1>
+    <div class="col">
+        <p class="txt-color-1">{% blocktrans %}Already have an account? Then please <a class="txt-color-3" href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
-            <form class="signup txt-color-1" id="signup_form" method="post" action="{% url 'account_signup' %}">
-            {% csrf_token %}
-            {{ form.as_p }}
-            {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-            {% endif %}
-            <button class="btn btn-warning primaryAction m-2" type="submit">{% trans "Sign Up" %} &raquo;</button>
-            </form>
-        </div>
+        <form class="signup txt-color-1" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="btn btn-warning primaryAction m-2" type="submit">{% trans "Sign Up" %} &raquo;</button>
+        </form>
     </div>
-</div>
 {% endblock %}

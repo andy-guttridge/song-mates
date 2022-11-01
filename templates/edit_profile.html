@@ -4,46 +4,41 @@
 
 {% block content %}
 
-<div class="container-fluid text-center">
-    <h2 class="txt-color-3">Update Profile</h2>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <!-- Form for updating user profile -->
-            <form action="{% url 'update_profile' %}" method="post" id="profile-form" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% crispy form form.helper %}
-            </form>
-        </div>
-    </div>
+<h2 class="txt-color-3">Update Profile</h2>
+<div class="col-md-6">
+    <!-- Form for updating user profile -->
+    <form action="{% url 'update_profile' %}" method="post" id="profile-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% crispy form form.helper %}
+    </form>
+</div>
 
-    <h2 class="txt-color-3">Delete Account</h2>
+<h2 class="txt-color-3">Delete Account</h2>
 </br>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <!-- Form for account deletion -->
-                <form action="{% url 'user_delete' %}" method="post" id="user-delete">
-                    {% csrf_token %}
-                    <button type="button" class="btn btn-danger" aria-label="Delete my account" data-bs-toggle="modal" data-bs-target="#modal-confirm-del">Delete my account</button>
-                </form>
+<div class="col-md-6">
+    <!-- Form for account deletion -->
+    <form action="{% url 'user_delete' %}" method="post" id="user-delete">
+        {% csrf_token %}
+        <button type="button" class="btn btn-danger" aria-label="Delete my account" data-bs-toggle="modal" data-bs-target="#modal-confirm-del">Delete my account</button>
+    </form>
+</div>
+
+
+
+<!-- Modal to confirm account deletion -->
+<div class="modal" id="modal-confirm-del" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content bkgnd-color-1">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        </div>
-
-
-    <!-- Modal to confirm account deletion -->
-    <div class="modal" id="modal-confirm-del" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content bkgnd-color-1">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm deletion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete your account?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Cancel deletion">Dismiss</button>
-                    <button type="submit" class="btn btn-danger" aria-label="Confirm deletion" data-bs-dismiss="modal" form="user-delete">Confirm</button>
-                </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete your account?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Cancel deletion">Dismiss</button>
+                <button type="submit" class="btn btn-danger" aria-label="Confirm deletion" data-bs-dismiss="modal" form="user-delete">Confirm</button>
             </div>
         </div>
     </div>

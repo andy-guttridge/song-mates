@@ -2,209 +2,208 @@
 
 {% block content %}
 
-<div class="container-fluid text-center">
-    <h2 class="txt-color-3">Messages</h2>
-    <h3 class="txt-color-1">Inbox</h3>
 
-    <div class="container g-0">
-        <!-- ************** Inbox ************** -->
+<h2 class="txt-color-3">Messages</h2>
+<h3 class="txt-color-1">Inbox</h3>
 
-        <!-- Table listing incoming messages -->
-        <table class="table table-striped bkgnd-color-1 text-start">
+<!-- ************** Inbox ************** -->
+
+<!-- Table listing incoming messages -->
+<table class="table table-striped bkgnd-color-1 text-start">
+    <tr>
+        <!-- Column headings -->
+        <th class="table-cols-20" scope="col">From</th>
+        <th class="table-cols-20" scope="col">Date</th>
+        <th class="table-cols-20" scope="col">Subject</th>
+        <th class="table-cols-20" scope="col">Delete?</th>
+    </tr>
+
+    <!-- Loop through messages and display details in table cells -->
+    {% for message in in_messages %}
+
+        <!-- Only display the message in the table if it is not marked as deleted by this user -->
+        {% if message.to_deleted == False %}
             <tr>
-                <!-- Column headings -->
-                <th class="table-cols-20" scope="col">From</th>
-                <th class="table-cols-20" scope="col">Date</th>
-                <th class="table-cols-20" scope="col">Subject</th>
-                <th class="table-cols-20" scope="col">Delete?</th>
+                <td>
+                    <a href="{% url 'single_profile' message.from_user.pk %} " class="plain-link"
+                        aria-label="Link to user profile for {{ message.from_user }}">{{ message.from_user }}</a>
+                    </td>
+                <td>{{ message.date|date:"G:i, M d Y" }}</td>
+                <td>
+                    <button class="plain-link" type="button" aria-label="Show message content"
+                    data-bs-toggle="modal" data-bs-target="#modal-show-msg-{{ message.pk }}">{{ message.subject }}</button></td>
+                <td>
+                    <!-- Form to deal with deletion of incoming messages -->
+                    <form action="{% url 'delete_msg' message.pk %}" method="post" id="delete-msg-form-{{ message.pk }}">
+                        {% csrf_token %}
+                        <button class="plain-link" type="button" name="delete-msg"
+                            aria-label="Delete message" data-bs-toggle="modal" data-bs-target="#modal-delete-msg-{{ message.pk }}">Delete</button>
+                    </form>
+                </td>
             </tr>
 
-            <!-- Loop through messages and display details in table cells -->
-            {% for message in in_messages %}
-
-                <!-- Only display the message in the table if it is not marked as deleted by this user -->
-                {% if message.to_deleted == False %}
-                    <tr>
-                        <td>
-                            <a href="{% url 'single_profile' message.from_user.pk %} " class="plain-link"
-                                aria-label="Link to user profile for {{ message.from_user }}">{{ message.from_user }}</a>
-                            </td>
-                        <td>{{ message.date|date:"G:i, M d Y" }}</td>
-                        <td>
-                            <button class="plain-link" type="button" aria-label="Show message content"
-                            data-bs-toggle="modal" data-bs-target="#modal-show-msg-{{ message.pk }}">{{ message.subject }}</button></td>
-                        <td>
-                            <!-- Form to deal with deletion of incoming messages -->
-                            <form action="{% url 'delete_msg' message.pk %}" method="post" id="delete-msg-form-{{ message.pk }}">
-                                {% csrf_token %}
-                                <button class="plain-link" type="button" name="delete-msg"
-                                    aria-label="Delete message" data-bs-toggle="modal" data-bs-target="#modal-delete-msg-{{ message.pk }}">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-
-                    <!-- Modal to read and respond to incoming message -->
-                    <div class="modal" id="modal-show-msg-{{ message.pk }}" tabindex="-1">
-                        <div class="modal-dialog">
-                            <div class="modal-content bkgnd-color-1">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Read message</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{% url 'send_msg' message.from_user.pk %}" method="post" id="reply-msg-{{ message.to_user.pk }}">
-                                        {% csrf_token %}
-                                        <h5>Message from {{ message.from_user }}</h5>
-                                        <div class="text-start d-inline-block">
-                                            <label for="in-msg-subject{{ message.pk }}">Subject:</label>
-                                            <br>
-                                            <input type="text" maxlength="50" class="msg-subject-input bkgnd-color-1" id="in-msg-subject{{ message.pk }}" value="{{ message.subject }}" readonly>
-                                            <br>
-                                            <label for="in-msg-message{{ message.pk }}">Message:</label>
-                                            <br>
-                                            <textarea maxlength="200" row="100" cols="50" class="msg-body-input bkgnd-color-1 placeholder-color-0" id="in-msg-message{{ message.pk }}" placeholder="{{ message.message }}" readonly></textarea>
-                                            <br>
-                                        </div>
-                                        <h5>
-                                            Reply
-                                        </h5>
-                                            <div class="text-start d-inline-block">
-                                                <label for="msg-subject-input-{{ profile.user.pk }}">Subject:</label>
-                                                <br>
-                                                <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}" name="msg-subject">
-                                                <br>
-                                                <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
-                                                <br>
-                                                <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
-                                            </div>
-                                        </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" aria-label="Dismiss message"
-                                        data-bs-dismiss="modal">Dismiss</button>
-                                    <button type="submit" class="btn btn-warning" aria-label="Reply to message"
-                                        data-bs-dismiss="modal" form="reply-msg-{{ message.to_user.pk }}" name="reply-msg">Reply</button>
-                                </div>
-                            </div>
+            <!-- Modal to read and respond to incoming message -->
+            <div class="modal" id="modal-show-msg-{{ message.pk }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content bkgnd-color-1">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Read message</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                    </div>
-
-                    <!-- Modal to confirm deletion of incoming message -->
-                    <div class="modal" id="modal-delete-msg-{{ message.pk }}" tabindex="-1">
-                        <div class="modal-dialog">
-                            <div class="modal-content bkgnd-color-1">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Confirm deletion</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Are you sure you want to delete this message?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" aria-label="Cancel deletion"
-                                        data-bs-dismiss="modal">Dismiss</button>
-                                    <button type="submit" class="btn btn-danger" aria-label="Confirm deletion"
-                                        data-bs-dismiss="modal" form="delete-msg-form-{{ message.pk }}" name="confirm-msg-in-delete">Confirm</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %} 
-            </table>    
-
-        <!-- ************** Outbox ************** -->
-
-        <h3 class="txt-color-1">Outbox</h3>
-
-        <!-- Table listing outgoing messages -->
-        <table class="table table-striped bkgnd-color-1 text-start">
-            <tr>
-                <!-- Column headings -->
-                <th class="table-cols-20" scope="col">To</th>
-                <th class="table-cols-20" scope="col">Date</th>
-                <th class="table-cols-20" scope="col">Subject</th>
-                <th class="table-cols-20" scope="col">Delete?</th>
-            </tr>
-
-            <!-- Loop through messages and display details in table cells -->
-            {% for message in out_messages %}
-
-                <!-- Only display the message in the table if it is not marked as deleted by this user -->
-                {% if message.from_deleted == False %}
-                    <tr>
-                        <td>
-                            <a href="{% url 'single_profile' message.from_user.pk %} " class="plain-link"
-                                aria-label="Link to user profile for {{ message.from_user }}">{{ message.from_user }}</a>
-                            </td>
-                        <td>{{ message.date|date:"G:i, M d Y" }}</td>
-                        <td>
-                            <button class="plain-link" type="button" aria-label="Show message content"
-                            data-bs-toggle="modal" data-bs-target="#modal-show-msg-{{ message.pk }}">{{ message.subject }}</button></td>
-                        <td>
-
-                            <!-- Form to deal with deletion of outgoing messages -->
-                            <form action="{% url 'delete_msg' message.pk %}" method="post" id="delete-msg-form-{{ message.pk }}">
+                        <div class="modal-body">
+                            <form action="{% url 'send_msg' message.from_user.pk %}" method="post" id="reply-msg-{{ message.to_user.pk }}">
                                 {% csrf_token %}
-                                <button class="plain-link" type="button" name="delete-msg"
-                                    aria-label="Delete message" data-bs-toggle="modal" data-bs-target="#modal-delete-msg-{{ message.pk }}">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% endif %}
-
-                <!-- Modal to read outgoing message -->
-                <div class="modal" id="modal-show-msg-{{ message.pk }}" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content bkgnd-color-1">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Read message</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-
-                                <!-- This form has no attributes as we are just using it to display info -->
-                                <h5>Message to {{ message.to_user }}</h5>
+                                <h5>Message from {{ message.from_user }}</h5>
                                 <div class="text-start d-inline-block">
-                                    <label for="out-msg-subject{{ message.pk }}">Subject:</label>
+                                    <label for="in-msg-subject{{ message.pk }}">Subject:</label>
                                     <br>
-                                    <input type="text" role="generic" maxlength="50" class="msg-subject-input bkgnd-color-1" id="out-msg-subject{{ message.pk }}" value="{{ message.subject }}" readonly>
+                                    <input type="text" maxlength="50" class="msg-subject-input bkgnd-color-1" id="in-msg-subject{{ message.pk }}" value="{{ message.subject }}" readonly>
                                     <br>
-                                    <label for="out-msg-message{{ message.pk }}">Message:</label>
+                                    <label for="in-msg-message{{ message.pk }}">Message:</label>
                                     <br>
-                                    <textarea maxlength="200" role="generic" row="100" cols="50" class="msg-body-input bkgnd-color-1 placeholder-color-0" id="out-msg-message{{ message.pk }}" placeholder="{{ message.message }}" readonly></textarea>
+                                    <textarea maxlength="200" row="100" cols="50" class="msg-body-input bkgnd-color-1 placeholder-color-0" id="in-msg-message{{ message.pk }}" placeholder="{{ message.message }}" readonly></textarea>
                                     <br>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" aria-label="Dismiss message"
-                                    data-bs-dismiss="modal">Dismiss</button>
-                            </div>
+                                <h5>
+                                    Reply
+                                </h5>
+                                    <div class="text-start d-inline-block">
+                                        <label for="msg-subject-input-{{ profile.user.pk }}">Subject:</label>
+                                        <br>
+                                        <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}" name="msg-subject">
+                                        <br>
+                                        <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
+                                        <br>
+                                        <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
+                                    </div>
+                                </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" aria-label="Dismiss message"
+                                data-bs-dismiss="modal">Dismiss</button>
+                            <button type="submit" class="btn btn-warning" aria-label="Reply to message"
+                                data-bs-dismiss="modal" form="reply-msg-{{ message.to_user.pk }}" name="reply-msg">Reply</button>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Modal to confirm deletion of outgoing message -->
-                <div class="modal" id="modal-delete-msg-{{ message.pk }}" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content bkgnd-color-1">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Confirm deletion</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to delete this message?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" aria-label="Cancel deletion"
-                                    data-bs-dismiss="modal">Dismiss</button>
-                                <button type="submit" class="btn btn-danger" aria-label="Confirm deletion"
-                                    data-bs-dismiss="modal" form="delete-msg-form-{{ message.pk }}" name="confirm-msg-out-delete">Confirm</button>
-                            </div>
+            <!-- Modal to confirm deletion of incoming message -->
+            <div class="modal" id="modal-delete-msg-{{ message.pk }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content bkgnd-color-1">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirm deletion</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete this message?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" aria-label="Cancel deletion"
+                                data-bs-dismiss="modal">Dismiss</button>
+                            <button type="submit" class="btn btn-danger" aria-label="Confirm deletion"
+                                data-bs-dismiss="modal" form="delete-msg-form-{{ message.pk }}" name="confirm-msg-in-delete">Confirm</button>
                         </div>
                     </div>
                 </div>
-            {% endfor %} 
-        </table>
-</div>
+            </div>
+        {% endif %}
+    {% endfor %} 
+</table>    
+
+<!-- ************** Outbox ************** -->
+
+<h3 class="txt-color-1">Outbox</h3>
+
+<!-- Table listing outgoing messages -->
+<table class="table table-striped bkgnd-color-1 text-start">
+    <tr>
+        <!-- Column headings -->
+        <th class="table-cols-20" scope="col">To</th>
+        <th class="table-cols-20" scope="col">Date</th>
+        <th class="table-cols-20" scope="col">Subject</th>
+        <th class="table-cols-20" scope="col">Delete?</th>
+    </tr>
+
+    <!-- Loop through messages and display details in table cells -->
+    {% for message in out_messages %}
+
+        <!-- Only display the message in the table if it is not marked as deleted by this user -->
+        {% if message.from_deleted == False %}
+            <tr>
+                <td>
+                    <a href="{% url 'single_profile' message.from_user.pk %} " class="plain-link"
+                        aria-label="Link to user profile for {{ message.from_user }}">{{ message.from_user }}</a>
+                    </td>
+                <td>{{ message.date|date:"G:i, M d Y" }}</td>
+                <td>
+                    <button class="plain-link" type="button" aria-label="Show message content"
+                    data-bs-toggle="modal" data-bs-target="#modal-show-msg-{{ message.pk }}">{{ message.subject }}</button></td>
+                <td>
+
+                    <!-- Form to deal with deletion of outgoing messages -->
+                    <form action="{% url 'delete_msg' message.pk %}" method="post" id="delete-msg-form-{{ message.pk }}">
+                        {% csrf_token %}
+                        <button class="plain-link" type="button" name="delete-msg"
+                            aria-label="Delete message" data-bs-toggle="modal" data-bs-target="#modal-delete-msg-{{ message.pk }}">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endif %}
+
+        <!-- Modal to read outgoing message -->
+        <div class="modal" id="modal-show-msg-{{ message.pk }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bkgnd-color-1">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Read message</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- This form has no attributes as we are just using it to display info -->
+                        <h5>Message to {{ message.to_user }}</h5>
+                        <div class="text-start d-inline-block">
+                            <label for="out-msg-subject{{ message.pk }}">Subject:</label>
+                            <br>
+                            <input type="text" role="generic" maxlength="50" class="msg-subject-input bkgnd-color-1" id="out-msg-subject{{ message.pk }}" value="{{ message.subject }}" readonly>
+                            <br>
+                            <label for="out-msg-message{{ message.pk }}">Message:</label>
+                            <br>
+                            <textarea maxlength="200" role="generic" row="100" cols="50" class="msg-body-input bkgnd-color-1 placeholder-color-0" id="out-msg-message{{ message.pk }}" placeholder="{{ message.message }}" readonly></textarea>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" aria-label="Dismiss message"
+                            data-bs-dismiss="modal">Dismiss</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal to confirm deletion of outgoing message -->
+        <div class="modal" id="modal-delete-msg-{{ message.pk }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bkgnd-color-1">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm deletion</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this message?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" aria-label="Cancel deletion"
+                            data-bs-dismiss="modal">Dismiss</button>
+                        <button type="submit" class="btn btn-danger" aria-label="Confirm deletion"
+                            data-bs-dismiss="modal" form="delete-msg-form-{{ message.pk }}" name="confirm-msg-out-delete">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %} 
+</table>
+
 {% endblock %}

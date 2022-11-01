@@ -20,8 +20,8 @@
 </head>
 
 <body class="bkgnd-color-0">
-    <div class="container-fluid g-0 bkgnd-color-0">
-        <div class="container p-0">
+    <div class="container-fluid bkgnd-color-0 text-center">
+        <div class="row">
             <nav class="navbar navbar-expand-md navbar-dark justify-content-sm-left justify-content-md-around">
                 <a class="navbar-brand" href="/"><img src="{% static 'images/songmates_logo.png' %}" alt="SongMates logo"></a>
                 
@@ -57,23 +57,23 @@
                     {% endwith %}  
                 {% endif %}          
             </nav>
-        </div>
-        
-        <!-- Display Django messages if there are any -->
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert bkgnd-color-3 fade show position-absolute top-50 start-50 translate-middle w-75 text-center rounded" role="alert">
-                    <p><i class="fa-solid fa-circle-info icon-big"></i></p>
-                    <hr>
-                    <p class="alert-text position-relative top-25">{{ message }}</p>
-                </div>
-            {%  endfor %}
-        {% endif %}
-        
-        {% block content %}
+            
+            
+            <!-- Display Django messages if there are any -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert bkgnd-color-3 fade show position-absolute top-50 start-50 translate-middle w-75 text-center rounded" role="alert">
+                        <p><i class="fa-solid fa-circle-info icon-big"></i></p>
+                        <hr>
+                        <p class="alert-text position-relative top-25">{{ message }}</p>
+                    </div>
+                {%  endfor %}
+            {% endif %}
+            
+            {% block content %}
 
-        {% endblock content %}
-        
+            {% endblock content %}
+        </div>
     </div>
 
     <!-- Boot strap JavaScript link -->
