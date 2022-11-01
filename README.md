@@ -9,24 +9,24 @@ The purpose of Song Mates is to provide a platform for musicians who want to wri
 
 Users can register with Song Mates, and create a profile with an image, a biography or summary of what they're looking for, and can specify the instruments they play and relevant skills. They can search for potential collaborators using these criteria, and make collaboration requests (like a connection request on LinkedIn or friend request on Facebook). The receiving user can see they have received a collaboration request via a number in the nav menu, and can then view the profile of the user who has requested to collaborate and decide whether to accept or decline the request. 
 
-Users can currently see the email addresses on the profiles of users who are approved 'collaborators' - this will be replaced by a user to user messaging function.
+Users can send messages to others who are approved 'collaborators' using a simple user-to-user messaging facility.
 
 [Link to deployed site](https://songmates.herokuapp.com/)
 
 ## **Important**
 
-SongMates is a work in progress. The backend and key interaction between the backend and frontend are in place, and key features for a minimum viable product have been implemented, however the front-end is a skeleton/placeholder using a few default Bootstrap components for testing and as a basis for further development - no substantive styling or design has yet been applied. At least one additional feature (user to user messaging) will be implemented for the final version, which is to be completed by mid-November 2022.
+SongMates is a work in progress. The backend and key interaction between the backend and frontend are in place, and key features for a minimum viable product have been implemented, however the front-end is very much a work in progress, with additional design and styling work to be completed. Version 1 of SongMates is expected to be completed by mid-November 2022.
 
 User profiles can be viewed and searched without signing in, but registering an account with a dummy email address is recommended to enable all features to be accessed (there is currently no requirement to verify email addresses). This will enable you to:
 
 - Create a profile (currently accessed via the 'Me' link in the menu);
 - Make connection requests to other users;
 - Approve/reject incoming connection requests;
-- Use the search form to filter profiles to only approved collaborators (the checkbox for this is not visible for anonymous users).
+- Use the search form to filter profiles to only approved collaborators (the checkbox for this is not visible for anonymous users);
+- Send messages to other users who are approved collaborators.
 
 Further work to be completed:
 
-- Implementation of user to user messaging;
 - Create a full list of genre options for user profiles (the current list of five is placeholder for testing);
 - Design and styling to create an attractive and responsive mobile-first frontend;
 - Improvement of the search functionality to enable multiple search terms to be specified via a comma separated list (time permitting);
