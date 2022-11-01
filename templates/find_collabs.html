@@ -6,237 +6,232 @@
 
 {% block content %}
 
-<!-- <div class="row mb-3 d-flex bkgnd-hero justify-content-md-center d-flex p-0" style="background-image: url({% static 'images/amp2.jpg' %});"> -->
+<div class="col-md-6 bkgnd-hero" style="background-image: url({% static 'images/amp2.jpg' %});">
+</div>
 
-    <!-- <div class="container justify-content-md-center d-flex p-0"> -->
-        <div class="col-md-6 ms-auto bkgnd-color-2">
-            <div class="card border-0 h-100 bkgnd-color-2 d-inline-block">
-                <div class="card-body txt-color-1 p-0 m-4">
-                    <div class="d-none d-lg-inline">
-                        <img src="{% static 'images/songmates_logo.png' %}">
-                    </div>
-                    <div class="text-left">
-                        <br>
-                        <p class="hero-font">
-                            A platform for <span class="txt-color-0 hero-font">musicians</span> who want to <span
-                                class="txt-color-0 hero-font">write, perform</span> and <span
-                                class="txt-color-0 hero-font">record</span> to find like minded
-                            people to <span class="txt-color-0 hero-font">collaborate</span> with.
-                        </p>
-                        <br>
+<div class="col-md-6 ms-auto bkgnd-color-2">
+    <div class="card border-0 h-100 bkgnd-color-2 d-inline-block">
+        <div class="card-body txt-color-1 p-0 m-4">
+            <div class="d-none d-lg-inline">
+                <img src="{% static 'images/songmates_logo.png' %}">
+            </div>
+            <div class="text-left">
+                <br>
+                <p class="hero-font">
+                    A platform for <span class="txt-color-0 hero-font">musicians</span> who want to <span
+                        class="txt-color-0 hero-font">write, perform</span> and <span
+                        class="txt-color-0 hero-font">record</span> to find like minded
+                    people to <span class="txt-color-0 hero-font">collaborate</span> with.
+                </p>
+                <br>
 
-                        <!-- Display a message and link to sign-in/register account page for un-authenticated users -->
-                        {% if not user.is_authenticated %}
-                            <p class="hero-font">
-                                Why not <a href="{% url 'account_login' %}" class="txt-color-0"
-                                    aria-label="Link to registration page">register</a> so you can <span
-                                    class="txt-color-0 hero-font">connect</span> with
-                                potential <span class="txt-color-0 hero-font">collaborators</span>?
-                            </p>
-                        {% endif %}
+                <!-- Display a message and link to sign-in/register account page for un-authenticated users -->
+                {% if not user.is_authenticated %}
+                    <p class="hero-font">
+                        Why not <a href="{% url 'account_login' %}" class="txt-color-0"
+                            aria-label="Link to registration page">register</a> so you can <span
+                            class="txt-color-0 hero-font">connect</span> with
+                        potential <span class="txt-color-0 hero-font">collaborators</span>?
+                    </p>
+                {% endif %}
 
-                        {% if user.is_authenticated and user_profile.profile_complete is False %}
+                {% if user.is_authenticated and user_profile.profile_complete is False %}
 
-                            <!-- Display a message and link to update profile page for users who haven't yet updated their profiles -->
-                            <h2 class="txt-color-3">
-                                Your profile looks empty!
-                            </h2>
-                            <p class="hero-font">
-                                Your profile won't be visible to others.
-                            </p>
-                            <p class="hero-font">
-                                Why not start <a href="{% url 'edit_profile' %}" class="txt-color-1"
-                                    aria-label="Link to update profile page">filling your profile</a> out so that others
-                                can find you.
-                            </p>
-                        {% endif %}
-                    </div>
-                </div>
+                    <!-- Display a message and link to update profile page for users who haven't yet updated their profiles -->
+                    <h2 class="txt-color-3">
+                        Your profile looks empty!
+                    </h2>
+                    <p class="hero-font">
+                        Your profile won't be visible to others.
+                    </p>
+                    <p class="hero-font">
+                        Why not start <a href="{% url 'edit_profile' %}" class="txt-color-1"
+                            aria-label="Link to update profile page">filling your profile</a> out so that others
+                        can find you.
+                    </p>
+                {% endif %}
             </div>
         </div>
-    <!-- </div> -->
+    </div>
+</div>
 
 
 <h2 class="txt-color-3">Find Collaborators</h2>
 
-<!-- <div class="row"> -->
+<!-- Render search form -->
+<div class="col col-md-6 col-xl-4  m-3 align-items-stretch bkgnd-color-0 txt-color-1 border-bottom">
+    <form action="{% url 'search_profile' %}" method="get" id="search-profile" class="text-center m-0">
+        <h3>Search profiles</h3>
+        {% crispy search_form %}
+    </form>
+</div>
 
-    <!-- Render search form -->
-    <div class="col-md-6 col-xl-4  mb-3 align-items-stretch bkgnd-color-0 txt-color-1 rounded border-bottom">
-        <form action="{% url 'search_profile' %}" method="get" id="search-profile" class="text-center m-0">
-            <h3>Search profiles</h3>
-            {% crispy search_form %}
-        </form>
-    </div>
+<!-- Loop through profiles and display the details of each in a bootstrap card -->
+{% for profile in profiles %}
 
-    <!-- Loop through profiles and display the details of each in a bootstrap card -->
-    {% for profile in profiles %}
+    <!-- Only display profile if at least some profile data has been entered -->
+    {% if profile.profile_complete is True %}
+        <div class="col-md-6 col-xl-4 mb-3 align-items-stretch d-flex txt-color-1">
+            <div class="card text-start border-start-0 border-end-0 border-top-0 border-bottom-1">
+                <div class="card-body bkgnd-color-0">
+                    <div class="col-6 card-heading">
+                        <h2 class="card-title txt-color-0">
+                            {{ profile.user }}
 
-        <!-- Only display profile if at least some profile data has been entered -->
-        {% if profile.profile_complete is True %}
-            <div class="col-md-6 col-xl-4 mb-3 align-items-stretch d-flex txt-color-1">
-                <div class="card text-start border-start-0 border-end-0 border-top-0 border-bottom-1">
-                    <div class="card-body bkgnd-color-0">
-                        <div class="col-6 card-heading">
-                            <h2 class="card-title txt-color-0">
-                                {{ profile.user }}
-
-                                <!-- Show collaborator icon if this profile is already a collaborator -->
-                                {% if profile in collaborators %}
-                                    <i class="fa-solid fa-user txt-color-3"></i>
-                                {% endif %}
-                            </h2>
-                        </div>
-                        <div class="col text-end">
-                            {% if "placeholder" in profile.image.url %}
-
-                                <!-- <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" class="profile-img"> -->
-                                <img src="{% static 'images/blank-profile-pic.png' %}" alt="Profile Picture"
-                                    class="profile-img">
-                            {% else %}
-                                <img src="{{ profile.image.url }}" alt="Profile Picture" class="profile-img">
-                            {% endif %}
-                        </div>
-                        <h3 class="card-subtitle">
-                            About Me
-                        </h3>
-                        <p>
-                            {{ profile.biog|linebreaksbr }}
-                        </p>
-                        <h3 class="card-subtitle">
-                            Genres
-                        </h3>
-
-                        <!-- Only display genres and instrument/skills if there are non-null values -->
-                        <p>
-                            {% if profile.genre1 %}
-                                {{ profile.get_genre1_display }}
-                            {% endif %}
-                            {% if profile.genre2 %}
-                                , {{ profile.get_genre2_display }}
-                            {% endif %}
-                            {% if profile.genre3 %}
-                                , {{ profile.get_genre3_display }}
-                            {% endif %}
-                            {% if profile.genre4 %}
-                                , {{ profile.get_genre4_display }}
-                            {% endif %}
-                            {% if profile.genre5 %}
-                                , {{ profile.get_genre5_display }}
-                            {% endif %}
-                        </p>
-                        <h3 class="card-subtitle">
-                            Instruments and skills
-                        </h3>
-                        <p>
-                            {% if profile.instru_skill1 %}
-                                {{ profile.instru_skill1 }}
-                            {% endif %}
-                            {% if profile.instru_skill1 %}
-                                , {{ profile.instru_skill2 }}
-                            {% endif %}
-                            {% if profile.instru_skill3 %}
-                                , {{ profile.instru_skill3 }}
-                            {% endif %}
-                            {% if profile.instru_skill4 %}
-                                , {{ profile.instru_skill4 }}
-                            {% endif %}
-                            {% if profile.instru_skill5 %}
-                                , {{ profile.instru_skill5 }}
-                            {% endif %}
-                        </p>
-
-                        {% if  user.is_authenticated  %}
-
-                            <!-- Render request collaboration form and button if there are no pending requests, if this is not already a collaborator, if this profile is not the authenticated user and if this profile is not aleady a collaborator -->
-                            {% if profile.user not in collab_request_users and profile.user != user and profile not in collaborators %}
-                                <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to
-                                        collaborate</button>
-                                </form>
-                            {% endif %}
-
-                            <!-- If there is a pending collaboration request, render a link to the collab_requests view -->
-                            {% if profile.user in collab_request_users %}
-                                <a role="button" href="{% url 'collab_requests' %}" class="btn btn-info"
-                                    aria-label="Pending collaboration request">Pending collaboration request</a>
-                            {% endif %}
-
-                            <!-- If this profile belongs to an existing collaborator, render a contact icon and a remove collaborator button -->
+                            <!-- Show collaborator icon if this profile is already a collaborator -->
                             {% if profile in collaborators %}
-                                <h3>Contact me</h3>
-                                <button type="button" class="btn btn-primary" aria-labe="Send message" data-bs-toggle="modal" data-bs-target="#modal-send-msg-{{ profile.user.pk }}"><i class="fa-solid fa-user-pen icon-big"></i></button>
-                                <br>
-                                <br>
-                                <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id="delete-collab">
-                                    {% csrf_token %}
-                                    <button type="button" class="btn btn-warning" aria-label="Un-collaborate" data-bs-toggle="modal"
-                                        data-bs-target="#modal-confirm-delete">Un-collaborate</a>
-                                </form>
+                                <i class="fa-solid fa-user txt-color-3"></i>
                             {% endif %}
+                        </h2>
+                    </div>
+                    <div class="col text-end">
+                        {% if "placeholder" in profile.image.url %}
+
+                            <!-- <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" class="profile-img"> -->
+                            <img src="{% static 'images/blank-profile-pic.png' %}" alt="Profile Picture"
+                                class="profile-img">
+                        {% else %}
+                            <img src="{{ profile.image.url }}" alt="Profile Picture" class="profile-img">
                         {% endif %}
                     </div>
-                </div>
-            </div>
-        {% endif %}
+                    <h3 class="card-subtitle">
+                        About Me
+                    </h3>
+                    <p>
+                        {{ profile.biog|linebreaksbr }}
+                    </p>
+                    <h3 class="card-subtitle">
+                        Genres
+                    </h3>
 
-        <!-- Modal to confirm deleting a current connection request -->
-        <div class="modal" id="modal-confirm-delete" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content bkgnd-color-1">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirm un-collaborate</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to end this collaboration?</p>
-                        <p>You will no longer be able to send messages to this user in SongMates.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" aria-label="Dismiss"
-                            data-bs-dismiss="modal">Dismiss</button>
-                        <button type="submit" class="btn btn-danger" aria-label="Confirm un-collaborate"
-                            data-bs-dismiss="modal" form="delete-collab" name="delete-collab">Confirm</button>
-                    </div>
+                    <!-- Only display genres and instrument/skills if there are non-null values -->
+                    <p>
+                        {% if profile.genre1 %}
+                            {{ profile.get_genre1_display }}
+                        {% endif %}
+                        {% if profile.genre2 %}
+                            , {{ profile.get_genre2_display }}
+                        {% endif %}
+                        {% if profile.genre3 %}
+                            , {{ profile.get_genre3_display }}
+                        {% endif %}
+                        {% if profile.genre4 %}
+                            , {{ profile.get_genre4_display }}
+                        {% endif %}
+                        {% if profile.genre5 %}
+                            , {{ profile.get_genre5_display }}
+                        {% endif %}
+                    </p>
+                    <h3 class="card-subtitle">
+                        Instruments and skills
+                    </h3>
+                    <p>
+                        {% if profile.instru_skill1 %}
+                            {{ profile.instru_skill1 }}
+                        {% endif %}
+                        {% if profile.instru_skill1 %}
+                            , {{ profile.instru_skill2 }}
+                        {% endif %}
+                        {% if profile.instru_skill3 %}
+                            , {{ profile.instru_skill3 }}
+                        {% endif %}
+                        {% if profile.instru_skill4 %}
+                            , {{ profile.instru_skill4 }}
+                        {% endif %}
+                        {% if profile.instru_skill5 %}
+                            , {{ profile.instru_skill5 }}
+                        {% endif %}
+                    </p>
+
+                    {% if  user.is_authenticated  %}
+
+                        <!-- Render request collaboration form and button if there are no pending requests, if this is not already a collaborator, if this profile is not the authenticated user and if this profile is not aleady a collaborator -->
+                        {% if profile.user not in collab_request_users and profile.user != user and profile not in collaborators %}
+                            <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to
+                                    collaborate</button>
+                            </form>
+                        {% endif %}
+
+                        <!-- If there is a pending collaboration request, render a link to the collab_requests view -->
+                        {% if profile.user in collab_request_users %}
+                            <a role="button" href="{% url 'collab_requests' %}" class="btn btn-info"
+                                aria-label="Pending collaboration request">Pending collaboration request</a>
+                        {% endif %}
+
+                        <!-- If this profile belongs to an existing collaborator, render a contact icon and a remove collaborator button -->
+                        {% if profile in collaborators %}
+                            <h3>Contact me</h3>
+                            <button type="button" class="btn btn-primary" aria-labe="Send message" data-bs-toggle="modal" data-bs-target="#modal-send-msg-{{ profile.user.pk }}"><i class="fa-solid fa-user-pen icon-big"></i></button>
+                            <br>
+                            <br>
+                            <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id="delete-collab">
+                                {% csrf_token %}
+                                <button type="button" class="btn btn-warning" aria-label="Un-collaborate" data-bs-toggle="modal"
+                                    data-bs-target="#modal-confirm-delete">Un-collaborate</a>
+                            </form>
+                        {% endif %}
+                    {% endif %}
                 </div>
             </div>
         </div>
+    {% endif %}
 
-        <!-- Modal to send message to collaborator -->
-        <div class="modal" id="modal-send-msg-{{ profile.user.pk }}" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content bkgnd-color-1">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Send message</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Enter the message you want to send to {{ profile.user }}.</p>
-                        <form action="{% url 'send_msg' profile.user.pk %}" method="post" id="send-msg-{{ profile.user.pk }}">
-                        {% csrf_token %}
-                            <div class="text-start d-inline-block">
-                                <label for="msg-subject-input-{{ profile.user.pk }}">Subject:</label>
-                                <br>
-                                <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}" name="msg-subject">
-                                <br>
-                                <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
-                                <br>
-                                <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" aria-label="Dismiss"
-                            data-bs-dismiss="modal">Dismiss</button>
-                        <button type="submit" class="btn btn-warning" aria-label="Confirm send message"
-                            data-bs-dismiss="modal" form="send-msg-{{ profile.user.pk }}" name="send-msg-btn">Send</button>
-                    </div>
+    <!-- Modal to confirm deleting a current connection request -->
+    <div class="modal" id="modal-confirm-delete" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bkgnd-color-1">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm un-collaborate</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to end this collaboration?</p>
+                    <p>You will no longer be able to send messages to this user in SongMates.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" aria-label="Dismiss"
+                        data-bs-dismiss="modal">Dismiss</button>
+                    <button type="submit" class="btn btn-danger" aria-label="Confirm un-collaborate"
+                        data-bs-dismiss="modal" form="delete-collab" name="delete-collab">Confirm</button>
                 </div>
             </div>
         </div>
-    {% endfor %}
-<!-- </div> -->
-<!-- </div> -->
+    </div>
+
+    <!-- Modal to send message to collaborator -->
+    <div class="modal" id="modal-send-msg-{{ profile.user.pk }}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bkgnd-color-1">
+                <div class="modal-header">
+                    <h5 class="modal-title">Send message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Enter the message you want to send to {{ profile.user }}.</p>
+                    <form action="{% url 'send_msg' profile.user.pk %}" method="post" id="send-msg-{{ profile.user.pk }}">
+                    {% csrf_token %}
+                        <div class="text-start d-inline-block">
+                            <label for="msg-subject-input-{{ profile.user.pk }}">Subject:</label>
+                            <br>
+                            <input type="text" maxlength="50" class="msg-subject-input" id="msg-subject-input-{{ profile.user.pk }}" name="msg-subject">
+                            <br>
+                            <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
+                            <br>
+                            <textarea maxlength="200" row="100" cols="50" class="msg-body-input" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" aria-label="Dismiss"
+                        data-bs-dismiss="modal">Dismiss</button>
+                    <button type="submit" class="btn btn-warning" aria-label="Confirm send message"
+                        data-bs-dismiss="modal" form="send-msg-{{ profile.user.pk }}" name="send-msg-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
 
 {% endblock %}
