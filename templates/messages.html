@@ -10,7 +10,7 @@
         <!-- ************** Inbox ************** -->
 
         <!-- Table listing incoming messages -->
-        <table class="table table-striped bkgnd-color-1">
+        <table class="table table-striped bkgnd-color-1 text-start">
             <tr>
                 <!-- Column headings -->
                 <th class="table-cols-20" scope="col">From</th>
@@ -118,7 +118,7 @@
         <h3 class="txt-color-1">Outbox</h3>
 
         <!-- Table listing outgoing messages -->
-        <table class="table table-striped bkgnd-color-1">
+        <table class="table table-striped bkgnd-color-1 text-start">
             <tr>
                 <!-- Column headings -->
                 <th class="table-cols-20" scope="col">To</th>
@@ -135,7 +135,7 @@
                     <tr>
                         <td>
                             <a href="{% url 'single_profile' message.from_user.pk %} " class="plain-link"
-                                aria-label="Link to user profile for {{ message.from_user }}">{{ message.to_user }}</a>
+                                aria-label="Link to user profile for {{ message.from_user }}">{{ message.from_user }}</a>
                             </td>
                         <td>{{ message.date|date:"G:i, M d Y" }}</td>
                         <td>
