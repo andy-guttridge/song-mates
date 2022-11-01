@@ -466,3 +466,13 @@ class DeleteMsg(View):
             message.delete()
             
         return HttpResponseRedirect(reverse_lazy('messages'))
+
+
+class PageNotFoundError(View):
+    def get(request, *args, **kwargs):
+        return render(request, '404.html')
+
+
+class ServerError(View):
+    def get(request, *args, **kwargs):
+        return render(request, '500.html')
