@@ -56,11 +56,11 @@
                                 <div class="modal-body">
                                     <h5>Message from {{ message.from_user }}</h5>
                                     <div class="text-start d-inline-block msg-field-container">
-                                        <label for="in-msg-subject{{ message.pk }}">Subject:</label>
+                                        <span>Subject:</span>
                                         <br>
                                         <div class="msg-subject-field msg-border bkgnd-color-1 m-1" id="in-msg-subject{{ message.pk }}">{{ message.subject }}</div>
                                         <br>
-                                        <label for="in-msg-message{{ message.pk }}">Message:</label>
+                                        <span>Message:</span>
                                         <br>
                                         <div class="msg-body-field bkgnd-color-1 msg-border m-1 placeholder-color-0" id="in-msg-message{{ message.pk }}">{{ message.message|linebreaksbr }}</div>
                                         <br>
@@ -168,11 +168,11 @@
                                 <!-- Display message to user -->
                                 <h5>Message to {{ message.to_user }}</h5>
                                 <div class="text-start d-inline-block msg-field-container">
-                                    <label for="out-msg-subject{{ message.pk }}">Subject:</label>
+                                    <span>Subject:</span>
                                     <br>
                                     <div class="msg-subject-field msg-border bkgnd-color-1 m-1" id="out-msg-subject{{ message.pk }}">{{ message.subject }}</div>
                                     <br>
-                                    <label for="out-msg-message{{ message.pk }}">Message:</label>
+                                    <span>Message:</span>
                                     <br>
                                     <div class="msg-body-field bkgnd-color-1 msg-border m-1 placeholder-color-0" id="out-msg-message{{ message.pk }}">{{ message.message|linebreaksbr }}</div>
                                     <br>
