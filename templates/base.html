@@ -45,7 +45,7 @@
                                     {% with request.resolver_match.url_name as url_name %}
                                         <li class="nav-item p-2"><a class="{% if url_name == 'messages' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'messages' %}"><i class="fa-solid fa-envelope"></i> {% number_of_incoming_messages request %}</a></li>
                                         <li class="nav-item p-2"><a class="{% if url_name == 'collab_requests' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'collab_requests' %}"><i class="fa-solid fa-user"></i> {% number_of_collab_requests request %}</a></li>
-                                        <li class="nav-item p-2"><a class="{% if url_name == 'home' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'home' %}">Find Collaborators</a></li>
+                                        <li class="nav-item p-2"><a class="{% if url_name == 'find_collabs' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'find_collabs' %}">Find Collaborators</a></li>
                                         <li class="nav-item p-2"><a class="{% if url_name == 'edit_profile' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'edit_profile' %}">Me</a></li>
                                         <li class="nav-item p-2"><a class="{% if url_name == 'account_logout' %}txt-color-0{% else %}txt-color-1{% endif %}" href="{% url 'account_logout' %}">Sign&#8209out</a></li>       
                                     {% endwith %}       

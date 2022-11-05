@@ -13,6 +13,17 @@ from .forms import ProfileForm, SearchForm
 from .functions import find_collabs
 
 
+class Home(View):
+    """
+    The site homepage
+    """
+    def get(self, request, *args, **kwargs):
+        return render(
+            request,
+            "home.html"
+        )
+
+
 class ProfileAccount(View):
     """
     User profile and account view.
