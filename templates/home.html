@@ -6,9 +6,28 @@
 
 {% block content %}
 
-<h1 class="txt-color-0" style="font-size: 500%;">Home Page!</h1>
-
-<div class="col-md-6 bkgnd-hero" style="background-image: url({% static 'images/amp2.jpg' %});">
+<div class="bkgnd-hero vh-100 g-0" style="background-image: url({% static 'images/red_vinyl_large.jpg' %});">
+    <div class="bkgnd-color-2 h-100 d-flex align-items-top align-items-md-center justify-content-center">
+        <div class="carousel slide position-relative" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="5000">
+                    <span class="txt-color-0 hero-txt m-1">Collaborate with like minded musicians</span>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <span class="txt-color-0 hero-txt m-1">Write, perform, produce, record</span>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <span class="txt-color-0 hero-txt m-1">Find your SongMates!</span>
+                </div>
+            </div>
+        </div>
+        <div class="justify-content-evenly position-absolute hero-buttons-align">
+            <a class="btn btn-primary" href="{% url 'account_signup' %}">Sign-up</a>
+            <a class="btn btn-primary" href="{% url 'find_collabs' %}">Find Collaborators</a>
+        <br>
+        <br>
+    </div>
+    </div>
 </div>
 
 {% endblock %}
