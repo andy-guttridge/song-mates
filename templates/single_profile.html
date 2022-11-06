@@ -83,7 +83,7 @@
                 {% if  user.is_authenticated  %}
 
                     <!-- Render request collaboration form and button if there are no pending requests, if this is not already a collaborator, if this profile is not the authenticated user and if this profile is not aleady a collaborator -->
-                    {% if profile.user.pk != collab_request.to_user.pk and profile.user != user and not is_collaborator %}
+                    {% if profile.user.pk != collab_request.to_user.pk and profile.user.pk != collab_request.from_user.pk and profile.user != user and not is_collaborator %}
                         <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
                             {% csrf_token %}
                             <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to collaborate</button>
