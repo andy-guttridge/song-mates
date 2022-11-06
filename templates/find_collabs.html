@@ -6,53 +6,32 @@
 
 {% block content %}
 
-<div class="col-md-6 bkgnd-hero" style="background-image: url({% static 'images/amp2.jpg' %});">
-</div>
+<div class="col-md-8">
+    <!-- Display a message and link to sign-in/register account page for un-authenticated users -->
+    {% if not user.is_authenticated %}
+        <p class="info-font txt-color-3">
+            Why not <a href="{% url 'account_login' %}" class="txt-color-0"
+                aria-label="Link to registration page">register</a> so you can <span
+                class="txt-color-0 info-font">connect</span> with
+            potential <span class="txt-color-0 info-font">collaborators</span>?
+        </p>
+    {% endif %}
 
-<div class="col-md-6 ms-auto bkgnd-color-2">
-    <div class="card border-0 h-100 bkgnd-color-2 d-inline-block">
-        <div class="card-body txt-color-1 p-0 m-4">
-            <div class="d-none d-lg-inline">
-                <img src="{% static 'images/songmates_logo.png' %}">
-            </div>
-            <div class="text-left">
-                <br>
-                <p class="hero-font">
-                    A platform for <span class="txt-color-0 hero-font">musicians</span> who want to <span
-                        class="txt-color-0 hero-font">write, perform</span> and <span
-                        class="txt-color-0 hero-font">record</span> to find like minded
-                    people to <span class="txt-color-0 hero-font">collaborate</span> with.
-                </p>
-                <br>
+    {% if user.is_authenticated and user_profile.profile_complete is False %}
 
-                <!-- Display a message and link to sign-in/register account page for un-authenticated users -->
-                {% if not user.is_authenticated %}
-                    <p class="hero-font">
-                        Why not <a href="{% url 'account_login' %}" class="txt-color-0"
-                            aria-label="Link to registration page">register</a> so you can <span
-                            class="txt-color-0 hero-font">connect</span> with
-                        potential <span class="txt-color-0 hero-font">collaborators</span>?
-                    </p>
-                {% endif %}
-
-                {% if user.is_authenticated and user_profile.profile_complete is False %}
-
-                    <!-- Display a message and link to update profile page for users who haven't yet updated their profiles -->
-                    <h2 class="txt-color-3">
-                        Your profile looks empty!
-                    </h2>
-                    <p class="hero-font">
-                        Your profile won't be visible to others.
-                    </p>
-                    <p class="hero-font">
-                        Why not start <a href="{% url 'edit_profile' %}" class="txt-color-1"
-                            aria-label="Link to update profile page">filling your profile</a> out so that others
-                        can find you.
-                    </p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
+        <!-- Display a message and link to update profile page for users who haven't yet updated their profiles -->
+        <h2 class="txt-color-3 info-font">
+            Your profile looks empty!
+        </h2>
+        <p class="info-font txt-color-3">
+            Your profile won't be visible to others.
+        </p>
+        <p class="info-font txt-color-3">
+            Why not start <a href="{% url 'edit_profile' %}" class="txt-color-1"
+                aria-label="Link to update profile page">filling your profile</a> out so that others
+            can find you.
+        </p>
+    {% endif %}
 </div>
 
 
@@ -73,8 +52,8 @@
     {% if profile.profile_complete is True %}
         <div class="col-md-6 col-xl-4 mb-3 align-items-stretch d-flex txt-color-1">
             <div class="card text-start border-start-0 border-end-0 border-top-0 border-bottom-1">
-                <div class="card-body bkgnd-color-0">
-                    <div class="col-6 card-heading">
+                <div class="card-header bkgnd-color-4">
+                    <div class="card-heading">
                         <h2 class="card-title txt-color-0">
                             {{ profile.user }}
 
@@ -84,7 +63,7 @@
                             {% endif %}
                         </h2>
                     </div>
-                    <div class="col text-end">
+                    <div class="text-end">
                         {% if "placeholder" in profile.image.url %}
 
                             <!-- <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" class="profile-img"> -->
@@ -94,13 +73,15 @@
                             <img src="{{ profile.image.url }}" alt="Profile Picture" class="profile-img">
                         {% endif %}
                     </div>
-                    <h3 class="card-subtitle">
+                </div>
+                <div class="card-body bkgnd-color-1 txt-color-2">
+                    <h3 class="card-subtitle txt-color-4">
                         About Me
                     </h3>
                     <p>
                         {{ profile.biog|linebreaksbr }}
                     </p>
-                    <h3 class="card-subtitle">
+                    <h3 class="card-subtitle txt-color-4">
                         Genres
                     </h3>
 
@@ -122,7 +103,7 @@
                             , {{ profile.get_genre5_display }}
                         {% endif %}
                     </p>
-                    <h3 class="card-subtitle">
+                    <h3 class="card-subtitle txt-color-4">
                         Instruments and skills
                     </h3>
                     <p>

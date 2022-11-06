@@ -32,6 +32,14 @@ h3, h4, p, span, label, input, li, select, textarea {
     background-color: #fef921;
 }
 
+.bkgnd-color-4 {
+    background-color: #b23840;
+}
+
+.bkgnd-color-5 {
+    background-color: #202020;
+}
+
 .bkgnd-hero {
     background-attachment: fixed;
     background-position-x: 40%;
@@ -56,13 +64,17 @@ h3, h4, p, span, label, input, li, select, textarea {
     color: #ccebff;
 }
 
+.txt-color-4 {
+    color: #b23840;
+}
+
 textarea::placeholder {
     color: #262526;
 }
 
 /* Site wide styles */
 
-.hero-font {
+.info-font {
     font-family: 'Karla', sans-serif;
 }
 
