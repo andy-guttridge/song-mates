@@ -50,10 +50,9 @@
 
     <!-- Only display profile if at least some profile data has been entered -->
     {% if profile.profile_complete is True %}
-        {% cycle 'bkgnd-color-5' 'bkgnd-color-6' 'bkgnd-color-7' 'bkgnd-color-8' as bkgndcolors %}
         <div class="col-md-6 col-xl-4 mb-3 align-items-stretch d-flex txt-color-1">
             <div class="card text-start border-start-0 border-end-0 border-top-0 border-bottom-1">
-                <div class="card-header {{ bkgndcolors }}">
+                <div class="card-header {% cycle 'bkgnd-color-5' 'bkgnd-color-6' 'bkgnd-color-7' 'bkgnd-color-8' %}">
                     <div class="card-heading">
                         <h2 class="card-title txt-color-0">
                             {{ profile.user }}
@@ -76,8 +75,7 @@
                     </div>
                 </div>
                 <div class="card-body bkgnd-color-1 txt-color-2">
-                    {% cycle 'txt-color-4' 'txt-color-5' 'txt-color-6' 'txt-color-7' as txtcolors %}
-                    <h3 class="card-subtitle {{ txtcolors }}">
+                    <h3 class="card-subtitle {% cycle 'txt-color-4' 'txt-color-5' 'txt-color-6' 'txt-color-7' as txtcolors %}">
                         About Me
                     </h3>
                     <p>

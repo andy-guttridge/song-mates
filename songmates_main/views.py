@@ -162,7 +162,7 @@ class RequestCollab(View):
             collab_request = CollabRequest(from_user=request.user, to_user=to_user)
             collab_request.save()
 
-        return HttpResponseRedirect(reverse_lazy('home'))
+        return HttpResponseRedirect(reverse_lazy('find_collabs'))
 
 
 class CollabRequests(View):
@@ -276,7 +276,7 @@ class DeleteCollab(View):
             user_profile.friends.remove(collaborator_profile)
         if collaborator_profile.friends.filter(pk=user_profile.pk).exists():
             collaborator_profile.friends.remove(user_profile)
-        return HttpResponseRedirect(reverse_lazy('home'))
+        return HttpResponseRedirect(reverse_lazy('find_collabs'))
 
 
 class SearchProfile(View):
@@ -286,7 +286,7 @@ class SearchProfile(View):
     def get(self, request, *args, **kwargs):
         # Clear search and form if 'Show all' button pressed
         if 'search-form-show-all' in request.GET:
-            return HttpResponseRedirect(reverse_lazy('home'))
+            return HttpResponseRedirect(reverse_lazy('find_collabs'))
         
         # Retrieve only profiles of approved collaborators if
         # collabs_only checkbox selected, otherwise retrieve all
@@ -414,11 +414,11 @@ class SendMsg(View):
             message.save()
         
         # Return to messages view if that's where the sent message came from,
-        # otherwise back to home.
+        # otherwise back to find_collabs.
         if 'reply-msg' in request.POST:
             return HttpResponseRedirect(reverse_lazy('messages'))
         else: 
-            return HttpResponseRedirect(reverse_lazy('home'))
+            return HttpResponseRedirect(reverse_lazy('find_collabs'))
 
 
 class Messages(View):
