@@ -32,6 +32,26 @@ h3, h4, p, span, label, input, li, select, textarea {
     background-color: #fef921;
 }
 
+.bkgnd-color-4 {
+    background-color: #202020;
+}
+
+.bkgnd-color-5 {
+    background-color: #b23840;
+}
+
+.bkgnd-color-6 {
+    background-color: #2581b3;
+}
+
+.bkgnd-color-7 {
+    background-color: #0b6621;
+}
+
+.bkgnd-color-8 {
+    background-color: #ba32bf;
+}
+
 .bkgnd-hero {
     background-attachment: fixed;
     background-position-x: 40%;
@@ -56,13 +76,29 @@ h3, h4, p, span, label, input, li, select, textarea {
     color: #ccebff;
 }
 
+.txt-color-4 {
+    color: #b23840;
+}
+
+.txt-color-5 {
+    color: #2581b3;
+}
+
+.txt-color-6 {
+    color: #0b6621;
+}
+
+.txt-color-7 {
+    color: #ba32bf;
+}
+
 textarea::placeholder {
     color: #262526;
 }
 
 /* Site wide styles */
 
-.hero-font {
+.info-font {
     font-family: 'Karla', sans-serif;
 }
 
@@ -250,11 +286,5 @@ a:hover{
     .bkgnd-hero {
         font-size: 150%;
         height: auto;
-    }
-}
-
-@media (min-width: 768px) {
-    .hero-buttons-align {
-        bottom: 25%
     }
 }
