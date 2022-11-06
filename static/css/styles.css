@@ -252,9 +252,3 @@ a:hover{
         height: auto;
     }
 }
-
-@media (min-width: 768px) {
-    .hero-buttons-align {
-        bottom: 25%
-    }
-}
