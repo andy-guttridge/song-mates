@@ -38,7 +38,7 @@
 <h2 class="txt-color-3">Find Collaborators</h2>
 
 <!-- Render search form -->
-<div class="col col-md-6 col-xl-4 mb-3 m-2 align-items-stretch bkgnd-color-0 txt-color-1 border-bottom">
+<div class="col-10 col-md-4 col-xl-2 mb-3 m-2 align-items-stretch bkgnd-color-0 txt-color-1 border-bottom">
     <form action="{% url 'search_profile' %}" method="get" id="search-profile" class="text-center m-0">
         <h3>Search profiles</h3>
         {% crispy search_form %}
@@ -50,8 +50,8 @@
 
     <!-- Only display profile if at least some profile data has been entered -->
     {% if profile.profile_complete is True %}
-        <div class="col-md-6 col-xl-4 mb-3 align-items-stretch d-flex txt-color-1">
-            <div class="card text-start border-start-0 border-end-0 border-top-0 border-bottom-1">
+        <div class="col-6 col-md-4 col-xl-2 mb-3 d-flex txt-color-1">
+            <div class="card text-start border-start-0 border-end-0 border-top-0 border-bottom-1 bkgnd-color-0 w-100 align-self-start card-shadow">
                 <div class="card-header {% cycle 'bkgnd-color-5' 'bkgnd-color-6' 'bkgnd-color-7' 'bkgnd-color-8' %}">
                     <div class="card-heading">
                         <h2 class="card-title txt-color-0">
@@ -74,14 +74,8 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="card-body bkgnd-color-1 txt-color-2">
-                    <h3 class="card-subtitle {% cycle 'txt-color-4' 'txt-color-5' 'txt-color-6' 'txt-color-7' as txtcolors %}">
-                        About Me
-                    </h3>
-                    <p>
-                        {{ profile.biog|linebreaksbr }}
-                    </p>
-                    <h3 class="card-subtitle {{ txtcolors }}">
+                <div class="card-body bkgnd-color-2 txt-color-1">
+                    <h3 class="txt-color-0">
                         Genres
                     </h3>
 
@@ -103,7 +97,7 @@
                             , {{ profile.get_genre5_display }}
                         {% endif %}
                     </p>
-                    <h3 class="card-subtitle {{ txtcolors }}">
+                    <h3 class="txt-color-0">
                         Instruments and skills
                     </h3>
                     <p>
@@ -123,8 +117,18 @@
                             , {{ profile.instru_skill5 }}
                         {% endif %}
                     </p>
-
-                    {% if  user.is_authenticated  %}
+                    
+                    <!-- HTML/CSS technique for chaning the icon based on the value of the aria-collapse property is adapted from -->
+                    <!-- https://stackoverflow.com/questions/19024218/bootstrap-3-collapse-change-chevron-icon-on-click -->
+                    <button class="chevron-button m-auto" type="button" data-bs-toggle="collapse" data-bs-target="#profile-collapse-{{ profile.user.pk }}" aria-expanded="false" aria-controls="profile-collapse-{{ profile.user.pk }}"><i class="fa-solid fa-chevron-down txt-color-1"></i><i class="fa-solid fa-chevron-up txt-color-1"></i></button>
+                    <div class="collapse" id="profile-collapse-{{ profile.user.pk }}">
+                        <h3 class="txt-color-0">
+                            About Me
+                        </h3>
+                        <p>
+                            {{ profile.biog|linebreaksbr }}
+                        </p>
+                        {% if  user.is_authenticated  %}
 
                         <!-- Render request collaboration form and button if there are no pending requests, if this is not already a collaborator, if this profile is not the authenticated user and if this profile is not aleady a collaborator -->
                         {% if profile.user not in collab_request_users and profile.user != user and profile not in collaborators %}
@@ -143,8 +147,8 @@
 
                         <!-- If this profile belongs to an existing collaborator, render a contact icon and a remove collaborator button -->
                         {% if profile in collaborators %}
-                            <h3 class="{{ txtcolors }}">Contact me</h3>
-                            <button type="button" class="btn btn-primary" aria-labe="Send message" data-bs-toggle="modal" data-bs-target="#modal-send-msg-{{ profile.user.pk }}"><i class="fa-solid fa-user-pen icon-big"></i></button>
+                            <h3 class="txt-color-0">Contact me</h3>
+                            <button type="button" class="btn btn-primary" aria-label="Send message" data-bs-toggle="modal" data-bs-target="#modal-send-msg-{{ profile.user.pk }}"><i class="fa-solid fa-user-pen icon-big"></i></button>
                             <br>
                             <br>
                             <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id="delete-collab">
@@ -154,6 +158,8 @@
                             </form>
                         {% endif %}
                     {% endif %}
+
+                    </div>
                 </div>
             </div>
         </div>
