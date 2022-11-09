@@ -11,7 +11,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL,
                                 unique=True, related_name="profile")
     profile_complete = models.BooleanField(default=False)
-    friends = models.ManyToManyField("self", blank=True,
+    friends = models.ManyToManyField('self', blank=True,
                                      )
     image = CloudinaryField('image', default='placeholder')
     biog = models.TextField(
@@ -41,7 +41,7 @@ class Profile(models.Model):
         # Technique for overriding save method to set fields conditionally
         # on values of other fields adapted from
         # https://stackoverflow.com/questions/22157437/model-field-based-on-other-fields
-        if all(o is None or o == "" for o in [self.genre1,
+        if all(o is None or o == '' for o in [self.genre1,
                                               self.genre2,
                                               self.genre3,
                                               self.genre4,
@@ -63,17 +63,17 @@ class CollabRequest(models.Model):
     Model for collaboration requests
     """
     from_user = models.ForeignKey(User, null=False, on_delete=models.CASCADE,
-                                  unique=False, related_name="from_user")
+                                  unique=False, related_name='from_user')
     to_user = models.ForeignKey(User, null=False, on_delete=models.CASCADE,
-                                unique=False, related_name="to_user")
+                                unique=False, related_name='to_user')
     date = models.DateTimeField(auto_now_add=True)
 
 
 class Message(models.Model):
     from_user = models.ForeignKey(User, null=False, on_delete=models.CASCADE,
-                                  unique=False, related_name="msg_from_user")
+                                  unique=False, related_name='msg_from_user')
     to_user = models.ForeignKey(User, null=False, on_delete=models.CASCADE,
-                                unique=False, related_name="msg_to_user")
+                                unique=False, related_name='msg_to_user')
     date = models.DateTimeField(auto_now_add=True)
     subject = models.CharField(max_length=50, blank=True, null=True)
     message = models.CharField(max_length=200, blank=True, null=True)

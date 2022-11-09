@@ -20,7 +20,7 @@ class Home(View):
     def get(self, request, *args, **kwargs):
         return render(
             request,
-            "home.html"
+            'home.html'
         )
 
 
@@ -43,10 +43,10 @@ class ProfileAccount(View):
         profile_form = ProfileForm(instance=profile)
         return render(
             request,
-            "edit_profile.html",
+            'edit_profile.html',
             {
-                "profile": profile,
-                "form": profile_form
+                'profile': profile,
+                'form': profile_form
             }
         )
 
@@ -126,23 +126,23 @@ class FindCollabs(View):
         if request.user.is_authenticated:
             return render(
                 request,
-                "find_collabs.html",
+                'find_collabs.html',
                 {
-                    "profiles": profiles,
-                    "user_profile": user_profile,
-                    "collab_request_users": collab_request_users,
-                    "collaborators": collaborators,
-                    "user": request.user,
-                    "search_form": search_form
+                    'profiles': profiles,
+                    'user_profile': user_profile,
+                    'collab_request_users': collab_request_users,
+                    'collaborators': collaborators,
+                    'user': request.user,
+                    'search_form': search_form
                 },
             )
         else:
             return render(
                 request,
-                "find_collabs.html",
+                'find_collabs.html',
                 {
-                    "profiles": profiles,
-                    "search_form": search_form
+                    'profiles': profiles,
+                    'search_form': search_form
                 }
             )
 
@@ -178,10 +178,10 @@ class CollabRequests(View):
         out_requests = CollabRequest.objects.filter(from_user=request.user)
         return render(
             request,
-            "collab_requests.html",
+            'collab_requests.html',
             {
-                "in_requests": in_requests,
-                "out_requests": out_requests,
+                'in_requests': in_requests,
+                'out_requests': out_requests,
             }
         )
 
@@ -217,10 +217,10 @@ class CollabRequests(View):
         out_requests = CollabRequest.objects.filter(from_user=request.user)
         return render(
             request,
-            "collab_requests.html",
+            'collab_requests.html',
             {
-                "in_requests": in_requests,
-                "out_requests": out_requests,
+                'in_requests': in_requests,
+                'out_requests': out_requests,
             }
         )
 
@@ -247,11 +247,11 @@ class SingleProfile(View):
             is_collaborator = False
         return render(
             request,
-            "single_profile.html",
+            'single_profile.html',
             {
-                "profile": profile,
-                "collab_request": collab_request,
-                "is_collaborator": is_collaborator,
+                'profile': profile,
+                'collab_request': collab_request,
+                'is_collaborator': is_collaborator,
             }
         )
 
@@ -376,23 +376,23 @@ class SearchProfile(View):
                 first()
             return render(
                 request,
-                "find_collabs.html",
+                'find_collabs.html',
                 {
-                    "profiles": final_profiles,
-                    "user_profile": user_profile,
-                    "collab_request_users": collab_request_users,
-                    "collaborators": collaborators,
-                    "user": request.user,
-                    "search_form": search_form
+                    'profiles': final_profiles,
+                    'user_profile': user_profile,
+                    'collab_request_users': collab_request_users,
+                    'collaborators': collaborators,
+                    'user': request.user,
+                    'search_form': search_form
                 }
             )
         else:
             return render(
                 request,
-                "find_collabs.html",
+                'find_collabs.html',
                 {
-                    "profiles": final_profiles,
-                    "search_form": search_form
+                    'profiles': final_profiles,
+                    'search_form': search_form
                 }
             )
 
@@ -466,10 +466,10 @@ class Messages(View):
         )
         return render(
             request,
-            "messages.html",
+            'messages.html',
             {
-                "in_messages": in_messages,
-                "out_messages": out_messages,
+                'in_messages': in_messages,
+                'out_messages': out_messages,
             }
         )
 
