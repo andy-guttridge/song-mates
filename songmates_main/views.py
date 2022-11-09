@@ -401,10 +401,20 @@ class SendMsg(View):
     """
     @method_decorator(login_required)
     def post(self, request, to_user_pk, *args, **kwargs):
-        # Check if the user they want to message exists
-        # and retrieve if it does
 
-        if User.objects.filter(pk=to_user_pk).exists():
+        # Check if user is still a collaborator
+        is_collaborator = False
+        if Profile.objects.filter(user=to_user_pk).exists():
+            profile_queryset = Profile.objects.filter(user=to_user_pk)
+            profile = profile_queryset.first()
+            if profile.friends.filter(user=request.user):
+                is_collaborator = True
+        else:
+            profile = None
+
+        # Check if the user they want to message exists
+        # and is a collaborator - if so send message
+        if User.objects.filter(pk=to_user_pk).exists() and is_collaborator:
             to_user = User.objects.filter(pk=to_user_pk).first()
             subject = request.POST.get('msg-subject')
             message = request.POST.get('msg-body')
@@ -412,7 +422,25 @@ class SendMsg(View):
             message = Message(from_user=request.user, to_user=to_user,
                               subject=subject, message=message)
             message.save()
+
+        # If the user and profile exists but isn't a collaborator, inform the
+        # sender and don't send the message
+        elif profile and not is_collaborator:
+            messages.info(
+                request,
+                'The user you have attempted to '
+                'message is not your collaborator.'
+            )
         
+        # If the profile doesn't exist, inform the sender and don't send the
+        # message
+        else:
+            messages.info(
+                request,
+                'The user you have attempted to '
+                'message has deleted their profile.'
+            )
+
         # Return to messages view if that's where the sent message came from,
         # otherwise back to find_collabs.
         if 'reply-msg' in request.POST:

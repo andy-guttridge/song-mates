@@ -36,7 +36,7 @@ class CollabRequestAdmin(admin.ModelAdmin):
     Specify fields to be accessible in the admin panel for the CollabRequest
     model
     """
-    list_display = ('from_user', 'to_user', 'date', 'message')
+    list_display = ('from_user', 'to_user', 'date')
 
 
 @admin.register(Message)
@@ -44,5 +44,5 @@ class MessageAdmin(admin.ModelAdmin):
     """
     Specify fields to be accessible in the admin panel for the Message model
     """
-    list_display = ('from_user', 'to_user', 'date', 'subject','message',
+    list_display = ('from_user', 'to_user', 'date', 'subject', 'message',
                     'from_deleted', 'to_deleted')

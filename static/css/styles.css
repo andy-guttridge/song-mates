@@ -15,6 +15,10 @@ h3, h4, p, span, label, input, li, select, textarea {
     font-family: 'Rubik', sans-serif;
 }
 
+h3 {
+    font-size: 120%;
+}
+
 /* Main colours */
 .bkgnd-color-0 {
     background-color: #141414;
@@ -37,19 +41,23 @@ h3, h4, p, span, label, input, li, select, textarea {
 }
 
 .bkgnd-color-5 {
-    background-color: #b23840;
+    background-color: rgba(178, 56, 64, 0.2);
 }
 
 .bkgnd-color-6 {
-    background-color: #2581b3;
+    background-color: rgba(37, 129, 179, 0.2);
 }
 
 .bkgnd-color-7 {
-    background-color: #0b6621;
+    background-color: rgba(11, 102, 33, 0.2);
 }
 
 .bkgnd-color-8 {
-    background-color: #ba32bf;
+    background-color: rgba(186, 50, 191, 0.2);
+}
+
+.bkgnd-color-9 {
+    background-color: #2A2A2A;
 }
 
 .bkgnd-hero {
@@ -58,6 +66,10 @@ h3, h4, p, span, label, input, li, select, textarea {
     background-repeat: no-repeat;
     font-size: 200%;
     font-weight: bolder;
+}
+
+.card-shadow {
+    box-shadow: 1px 1px #000000;
 }
 
 .txt-color-0 {
@@ -115,6 +127,7 @@ textarea::placeholder {
     width: 10rem;
     height: 10rem;
     border-radius: 50%;
+    vertical-align: center;
     object-fit: cover;
 }
 
@@ -178,7 +191,7 @@ a:hover{
 }
 
 .icon-big {
-    font-size: 300%;
+    font-size: 150%;
 }
 
 .msg-field-container {
@@ -202,6 +215,12 @@ a:hover{
     border-width: 1px;
     border-radius: 0.2rem;
     padding: 1px;
+}
+
+.errorlist {
+    color: #fef921;
+    list-style-type: none;
+    text-align: left;
 }
 
 
@@ -258,8 +277,33 @@ a:hover{
     border: none;
 }
 
+.chevron-button {
+    border: none;
+    background-color: rgb(0, 0, 0, 0);
+    font-size: 120%;
+}
+
+/** HTML/CSS technique for changing the icon based on the value of the aria-collapse property is adapted from 
+<!-- https://stackoverflow.com/questions/19024218/bootstrap-3-collapse-change-chevron-icon-on-click **/
+.chevron-button[aria-expanded=true] .fa-chevron-down {
+    display: none;
+ }
+
+.chevron-button[aria-expanded=false] .fa-chevron-up {
+    display: none;
+ }
+
 .hero-buttons-align {
     bottom: 5%;
+}
+
+/* Form styles */
+.account-form {
+    text-align: left;
+}
+
+.account-form input {
+    background-color: #fff3e9;
 }
 
 /* Media queries */
