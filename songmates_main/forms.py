@@ -1,4 +1,5 @@
-from django.forms import ModelForm, Form, BooleanField, MultipleChoiceField, CharField, HiddenInput, FileInput, ImageField, Textarea
+from django.forms import ModelForm, Form, BooleanField, MultipleChoiceField,\
+    CharField, HiddenInput, FileInput, ImageField, Textarea
 from django.contrib.auth.models import User
 from django.conf.urls.static import static
 from .models import Profile
@@ -78,7 +79,7 @@ class ProfileForm(ModelForm):
             'instru_skill5': 'Instrument or skill 5',
         }
 
-        #Specify help text for form fields
+        # Specify help text for form fields
         help_texts = {
             'biog': 'Maximum 500 characters',
             'instru_skill1': 'Maximum 30 characters',
@@ -130,8 +131,7 @@ class SearchForm(Form):
         self.fields['collabs_only'].label = 'Show only my collaborators'
         self.fields['genres'].label = 'Select genres you are interested in'
         self.fields['search_phrase'].label = 'Search profiles'
-    
+
     collabs_only = BooleanField(required=False)
     genres = MultipleChoiceField(required=False, choices=Genres.choices)
     search_phrase = CharField(required=False, max_length=50)
-    

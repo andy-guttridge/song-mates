@@ -53,7 +53,7 @@ class Profile(models.Model):
                                               self.instru_skill5,
                                               self.biog]):
             self.profile_complete = False
-        else: 
+        else:
             self.profile_complete = True
         super(Profile, self).save(*args, **kwargs)
 

@@ -118,11 +118,11 @@ class FindCollabs(View):
             collab_request_users = find_collabs(request.user)
             collaborators = Profile.objects.filter(user=request.user).first().\
                 friends.all()
-        
 
-        
         # Create instance of the search form
-        search_form = SearchForm(is_authenticated=request.user.is_authenticated)
+        search_form = SearchForm(
+            is_authenticated=request.user.is_authenticated
+        )
         if request.user.is_authenticated:
             return render(
                 request,
@@ -159,7 +159,9 @@ class RequestCollab(View):
         if User.objects.filter(pk=to_user_pk).exists():
             to_user = User.objects.filter(pk=to_user_pk).first()
             # Create a new collaboration request and save
-            collab_request = CollabRequest(from_user=request.user, to_user=to_user)
+            collab_request = CollabRequest(
+                from_user=request.user, to_user=to_user
+            )
             collab_request.save()
 
         return HttpResponseRedirect(reverse_lazy('find_collabs'))
@@ -182,7 +184,7 @@ class CollabRequests(View):
                 "out_requests": out_requests,
             }
         )
-    
+
     @method_decorator(login_required)
     def post(self, request, user_pk, *args, **kwargs):
         # If the user has pressed the approve request button, find the user's
@@ -194,7 +196,7 @@ class CollabRequests(View):
             if new_friend:
                 profile.friends.add(new_friend)
                 profile.save()
-        
+
         # Find the right collaboration request depending if this was an
         # incoming or outgoing request, and delete - regardless of whether
         # it was an approval, rejection or cancellation.
@@ -208,8 +210,8 @@ class CollabRequests(View):
                 ).first()
 
         if collab_request:
-            collab_request.delete()        
-        
+            collab_request.delete()
+
         # Re-render the page
         in_requests = CollabRequest.objects.filter(to_user=request.user)
         out_requests = CollabRequest.objects.filter(from_user=request.user)
@@ -287,7 +289,7 @@ class SearchProfile(View):
         # Clear search and form if 'Show all' button pressed
         if 'search-form-show-all' in request.GET:
             return HttpResponseRedirect(reverse_lazy('find_collabs'))
-        
+
         # Retrieve only profiles of approved collaborators if
         # collabs_only checkbox selected, otherwise retrieve all
         # profiles
@@ -297,7 +299,7 @@ class SearchProfile(View):
                 first().friends.order_by('user__username')
         else:
             profiles_queryset = Profile.objects.order_by('user__username')
-        
+
         # Retrieve any genres selected and search phrase entered
         # Using the getlist method to access a list returned by a multiple
         # choice form element is from
@@ -311,7 +313,7 @@ class SearchProfile(View):
             collaborators = Profile.objects.filter(user=request.user).first().\
                 friends.all()
             collab_request_users = find_collabs(request.user)
-        
+
         # Retrieve profiles that match any selected genres.
         # Technique of using _in to check if the value of a field exists
         # within a list from
@@ -323,7 +325,7 @@ class SearchProfile(View):
             Q(genre4__in=genres) |
             Q(genre5__in=genres)
             )
-        
+
         # Retrieve profiles that match search phrase
         search_phrase_profiles_queryset = Profile.objects.filter(
             # How to search on the property of a foreign key object from
@@ -336,7 +338,7 @@ class SearchProfile(View):
             Q(instru_skill4__icontains=search_phrase) |
             Q(instru_skill5__icontains=search_phrase)
         )
-        
+
         # Retrieve profiles that match genres and search phrase...
         if genres_profiles_queryset and search_phrase_profiles_queryset:
             final_search_queryset = search_phrase_profiles_queryset\
@@ -350,7 +352,7 @@ class SearchProfile(View):
         # Retrieve profiles matched by search and those that are approved
         # collabs if user had selected collabs_only
         final_queryset = final_search_queryset.intersection(profiles_queryset)
-        
+
         # If collabs_only selected and no other search requested,
         # return all approved collabs, otherwise return final queryset
         if collabs_only == 'on' and final_queryset is None:
@@ -358,7 +360,7 @@ class SearchProfile(View):
         else:
             final_profiles = sorted(list(final_queryset.all()),
                                     key=lambda profile: profile.user.username)
-        
+
         # Technique of using initial argument to set value of form input from
         # https://stackoverflow.com/questions/604266/django-set-default-form-values
         search_form = SearchForm(initial={
@@ -431,7 +433,7 @@ class SendMsg(View):
                 'The user you have attempted to '
                 'message is not your collaborator.'
             )
-        
+
         # If the profile doesn't exist, inform the sender and don't send the
         # message
         else:
@@ -445,7 +447,7 @@ class SendMsg(View):
         # otherwise back to find_collabs.
         if 'reply-msg' in request.POST:
             return HttpResponseRedirect(reverse_lazy('messages'))
-        else: 
+        else:
             return HttpResponseRedirect(reverse_lazy('find_collabs'))
 
 
@@ -456,8 +458,12 @@ class Messages(View):
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         # Get all messages in inbox and outbox
-        in_messages = Message.objects.filter(to_user=request.user).order_by('date')
-        out_messages = Message.objects.filter(from_user=request.user).order_by('date')
+        in_messages = Message.objects.filter(to_user=request.user).order_by(
+            'date'
+        )
+        out_messages = Message.objects.filter(from_user=request.user).order_by(
+            'date'
+        )
         return render(
             request,
             "messages.html",
@@ -496,14 +502,14 @@ class DeleteMsg(View):
                 and user_profile.user == message.from_user):
             message.from_deleted = True
             message.save()
-        
+
         # If message has been marked as deletable by both sending and receiving
         # users, delete it
         message_queryset = Message.objects.filter(pk=message_pk)
         get_object_or_404(message_queryset)
         if message.from_deleted is True and message.to_deleted is True:
             message.delete()
-            
+
         return HttpResponseRedirect(reverse_lazy('messages'))
 
 
