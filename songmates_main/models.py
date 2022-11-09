@@ -9,7 +9,7 @@ class Profile(models.Model):
     Model for user profiles
     """
     user = models.OneToOneField(User, null=True, on_delete=models.SET_NULL,
-                             unique=True, related_name="profile")
+                                unique=True, related_name="profile")
     profile_complete = models.BooleanField(default=False)
     friends = models.ManyToManyField("self", blank=True,
                                      )
