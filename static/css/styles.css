@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@600&family=Monoton&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
 
 /* Fonts for site wide elements */
-
 h1, h2 {
     font-family: 'Monoton', cursive;
 }
@@ -112,7 +111,6 @@ textarea::placeholder {
 }
 
 /* Hero styles */
-
 .bkgnd-hero {
     background-attachment: fixed;
     background-position-x: 40%;
@@ -127,7 +125,6 @@ textarea::placeholder {
 }
 
 /* Other site wide styles */
-
 .card-shadow {
     box-shadow: 1px 1px #000000;
 }
@@ -305,7 +302,6 @@ a:hover{
 }
 
 /* Media queries */
-
 @media (max-width: 350px) {
     .navbar-brand img {
         width: 200px;
