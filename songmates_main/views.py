@@ -404,7 +404,7 @@ class SendMsg(View):
         # Check if the user they want to message exists
         # and retrieve if it does
 
-        if User.objects.filter(pk=to_user_pk).exists():
+        if User.objects.filter(pk=to_user_pk).exists() and Profile.objects.filter(user=to_user_pk).exists():
             to_user = User.objects.filter(pk=to_user_pk).first()
             subject = request.POST.get('msg-subject')
             message = request.POST.get('msg-body')
@@ -412,6 +412,14 @@ class SendMsg(View):
             message = Message(from_user=request.user, to_user=to_user,
                               subject=subject, message=message)
             message.save()
+        
+        else:
+            messages.info(
+                request, 
+                'The user you have attempted to '
+                'message has deleted their profile.'
+            )
+
         
         # Return to messages view if that's where the sent message came from,
         # otherwise back to find_collabs.
