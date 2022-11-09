@@ -67,7 +67,6 @@ class CollabRequest(models.Model):
     to_user = models.ForeignKey(User, null=False, on_delete=models.CASCADE,
                                 unique=False, related_name="to_user")
     date = models.DateTimeField(auto_now_add=True)
-    message = models.CharField(max_length=200, blank=True, null=True)
 
 
 class Message(models.Model):
