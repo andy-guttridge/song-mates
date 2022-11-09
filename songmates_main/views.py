@@ -338,6 +338,11 @@ class SearchProfile(View):
             Q(instru_skill4__icontains=search_phrase) |
             Q(instru_skill5__icontains=search_phrase)
         )
+        
+        # Empty the queryset if the search phrase was an empty string
+        # as the search will have matched empty text fields
+        if search_phrase == "":
+            search_phrase_profiles_queryset = Profile.objects.none()
 
         # Retrieve profiles that match genres and search phrase...
         if genres_profiles_queryset and search_phrase_profiles_queryset:
@@ -352,6 +357,11 @@ class SearchProfile(View):
         # Retrieve profiles matched by search and those that are approved
         # collabs if user had selected collabs_only
         final_queryset = final_search_queryset.intersection(profiles_queryset)
+        if not final_queryset:
+            messages.info(
+                request,
+                "Your search didn't find any results."
+            )
 
         # If collabs_only selected and no other search requested,
         # return all approved collabs, otherwise return final queryset
@@ -360,7 +370,7 @@ class SearchProfile(View):
         else:
             final_profiles = sorted(list(final_queryset.all()),
                                     key=lambda profile: profile.user.username)
-
+        
         # Technique of using initial argument to set value of form input from
         # https://stackoverflow.com/questions/604266/django-set-default-form-values
         search_form = SearchForm(initial={
