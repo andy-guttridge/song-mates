@@ -217,6 +217,12 @@ a:hover{
     padding: 1px;
 }
 
+.errorlist {
+    color: #fef921;
+    list-style-type: none;
+    text-align: left;
+}
+
 
 /* Button styles */
 
@@ -289,6 +295,15 @@ a:hover{
 
 .hero-buttons-align {
     bottom: 5%;
+}
+
+/* Form styles */
+.account-form {
+    text-align: left;
+}
+
+.account-form input {
+    background-color: #fff3e9;
 }
 
 /* Media queries */

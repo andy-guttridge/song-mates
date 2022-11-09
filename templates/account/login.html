@@ -3,12 +3,14 @@
 {% load i18n %}
 {% load account socialaccount %}
 
+{% load crispy_forms_tags %}
+
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
 {% block content %}
 
 <h2 class="txt-color-3">{% trans "Sign In" %}</h2>
-<div class="row justify-content-center">
+<div class="d-flex justify-content-center">
     <div class="col">
     {% get_providers as socialaccount_providers %}
 
@@ -30,18 +32,22 @@
     {% include "socialaccount/snippets/login_extra.html" %}
 
     {% else %}
-    <p class="txt-color-1">{% blocktrans %}If you have not created an account yet, then please
-    <a class="txt-color-3" href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+    <p class="txt-color-1">{% blocktrans %}Please
+    <a class="txt-color-3" href="{{ signup_url }}">register</a> if you don't yet have an account.{% endblocktrans %}</p>
     {% endif %}
-
-    <form class="login txt-color-1" method="POST" action="{% url 'account_login' %}">
+    
+    <div class="d-flex justify-content-center">
+    <div class="col-md-4">
+    <form class="login txt-color-1 account-form" method="POST" action="{% url 'account_login' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form|crispy }}
     {% if redirect_field_value %}
     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
     {% endif %}
     <button class="btn btn-warning primaryAction m-2" type="submit">{% trans "Sign In" %}</button>
     </form>
+    </div>
+    </div>
 </div>
 
 {% endblock %}
