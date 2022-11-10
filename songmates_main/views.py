@@ -356,7 +356,13 @@ class SearchProfile(View):
                 )
         # Retrieve profiles matched by search and those that are approved
         # collabs if user had selected collabs_only
-        final_queryset = final_search_queryset.union(profiles_queryset)
+        if final_search_queryset and profiles_queryset:
+            final_queryset = final_search_queryset.intersection(
+                profiles_queryset)
+        # Or retrieve only the filtered profiles if there is no intersection
+        else:
+            final_queryset = profiles_queryset
+        # Display message to user if the search result is empty
         if not final_queryset:
             messages.info(
                 request,
