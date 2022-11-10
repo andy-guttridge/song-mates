@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 import dj_database_url
+
 # Conditional import of env.py from Code Institute 'I think therefore I blog'
 # tutorial.
 if os.path.isfile('env.py'):
@@ -39,7 +41,7 @@ LOGOUT_REDIRECT_URL = '/'
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ALLOWED_HOSTS = ['songmates.herokuapp.com', 'localhost']
 
@@ -103,10 +105,19 @@ WSGI_APPLICATION = 'songmates.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
 }
 
+# Technique to conditionally switch to a local database
+# if tests are running is from
+# https://stackoverflow.com/questions/4650509/different-db-for-testing-in-django
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase'
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
