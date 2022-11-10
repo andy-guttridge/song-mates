@@ -286,6 +286,7 @@ class SearchProfile(View):
     Handle search form submission
     """
     def get(self, request, *args, **kwargs):
+        # Find out if user selected the checkbox to show only their collabs
         collabs_only = request.GET.get('collabs_only')
         # Retrieve any genres selected and search phrase entered
         # Using the getlist method to access a list returned by a multiple
@@ -341,7 +342,7 @@ class SearchProfile(View):
             Q(instru_skill4__icontains=search_phrase) |
             Q(instru_skill5__icontains=search_phrase)
         )
-        
+
         # Empty the queryset if the search phrase was an empty string
         # as the search will have matched empty text fields
         if search_phrase == "":
@@ -351,6 +352,7 @@ class SearchProfile(View):
         if genres_profiles_queryset and search_phrase_profiles_queryset:
             final_search_queryset = search_phrase_profiles_queryset\
                 .intersection(genres_profiles_queryset)
+
         # Or just matches to genre or search phrase if user only searched one
         # of these
         else:
@@ -362,11 +364,15 @@ class SearchProfile(View):
         if final_search_queryset and profiles_queryset:
             final_queryset = final_search_queryset.intersection(
                 profiles_queryset)
+
         # Or retrieve only the filtered profiles if there is no intersection
         elif not final_search_queryset and collabs_only == 'on':
             final_queryset = profiles_queryset
+
+        # Or ensure the final queryset is empty if there was nothing
         else:
             final_queryset = Profile.objects.none()
+
         # Display message to user if the search result is empty
         if not final_queryset:
             messages.info(
@@ -381,7 +387,7 @@ class SearchProfile(View):
         else:
             final_profiles = sorted(list(final_queryset.all()),
                                     key=lambda profile: profile.user.username)
-        
+
         # Technique of using initial argument to set value of form input from
         # https://stackoverflow.com/questions/604266/django-set-default-form-values
         search_form = SearchForm(initial={
