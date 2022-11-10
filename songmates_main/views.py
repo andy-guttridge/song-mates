@@ -286,20 +286,7 @@ class SearchProfile(View):
     Handle search form submission
     """
     def get(self, request, *args, **kwargs):
-        # Clear search and form if 'Show all' button pressed
-        if 'search-form-show-all' in request.GET:
-            return HttpResponseRedirect(reverse_lazy('find_collabs'))
-
-        # Retrieve only profiles of approved collaborators if
-        # collabs_only checkbox selected, otherwise retrieve all
-        # profiles
         collabs_only = request.GET.get('collabs_only')
-        if collabs_only == 'on':
-            profiles_queryset = Profile.objects.filter(user=request.user).\
-                first().friends.order_by('user__username')
-        else:
-            profiles_queryset = Profile.objects.order_by('user__username')
-
         # Retrieve any genres selected and search phrase entered
         # Using the getlist method to access a list returned by a multiple
         # choice form element is from
@@ -307,6 +294,22 @@ class SearchProfile(View):
         genres = request.GET.getlist('genres')
         search_phrase = request.GET.get('search_phrase')
         username = request.user.username
+
+        # Clear search and form if 'Show all' button pressed or if the search
+        # form is entirely empty
+        if 'search-form-show-all' in request.GET or (collabs_only != 'on' and
+                                                     genres == [] and
+                                                     search_phrase == ""):
+            return HttpResponseRedirect(reverse_lazy('find_collabs'))
+
+        # Retrieve only profiles of approved collaborators if
+        # collabs_only checkbox selected, otherwise retrieve all
+        # profiles
+        if collabs_only == 'on':
+            profiles_queryset = Profile.objects.filter(user=request.user).\
+                first().friends.order_by('user__username')
+        else:
+            profiles_queryset = Profile.objects.order_by('user__username')
 
         # Find current collabs and pending collab requests
         if request.user.is_authenticated:
@@ -360,8 +363,10 @@ class SearchProfile(View):
             final_queryset = final_search_queryset.intersection(
                 profiles_queryset)
         # Or retrieve only the filtered profiles if there is no intersection
-        else:
+        elif not final_search_queryset and collabs_only == 'on':
             final_queryset = profiles_queryset
+        else:
+            final_queryset = Profile.objects.none()
         # Display message to user if the search result is empty
         if not final_queryset:
             messages.info(
