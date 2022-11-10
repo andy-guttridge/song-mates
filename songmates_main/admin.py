@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.db import models 
+from django.forms import TextInput, Textarea
 from .models import Profile, CollabRequest, Message
 
 
@@ -49,3 +51,10 @@ class MessageAdmin(admin.ModelAdmin):
     """
     list_display = ('from_user', 'to_user', 'date', 'subject', 'message',
                     'from_deleted', 'to_deleted')
+    # Technique for resizing fields in admin panel from
+    # https://stackoverflow.com/questions/910169/resize-fields-in-django-admin
+    formfield_overrides = {
+        models.CharField: {'widget': Textarea(
+            attrs={'rows': '20', 'cols': ' 40'}
+            )},
+    }
