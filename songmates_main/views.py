@@ -356,7 +356,7 @@ class SearchProfile(View):
                 )
         # Retrieve profiles matched by search and those that are approved
         # collabs if user had selected collabs_only
-        final_queryset = final_search_queryset.intersection(profiles_queryset)
+        final_queryset = final_search_queryset.union(profiles_queryset)
         if not final_queryset:
             messages.info(
                 request,
