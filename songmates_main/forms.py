@@ -66,7 +66,7 @@ class ProfileForm(ModelForm):
         # Specify labels for form fields
         labels = {
             'image': 'Profile Image',
-            'biog': 'Biography',
+            'biog': 'About me',
             'genre1': 'Genre 1',
             'genre2': 'Genre 2',
             'genre3': 'Genre 3',
