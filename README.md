@@ -107,9 +107,10 @@ Front end CSS and JavaScript library
 
 The above errors were all rectified.
 
-The validator also produced the following information about closing slashes on void elements. These are inserted into the HTML by Django or CrispyForms when forms are rendered, and so can't be easily fixed, however since this is not regarded as an error, this was deemed satisfactory:
+The validator also produced the following information about closing slashes on void elements  within the `find_collabs` and `edit_profile` templates. These are inserted into the HTML by Django or CrispyForms when the forms defined in `forms.py` are rendered, and since this is not regarded as an error, this was deemed satisfactory:
 
 <img src="readme_media/trailing_slashes_1.png">
+<img src="readme_media/trailing_slashes_2.png">
 
 
 All pages of the site pass HTML validation with one exception. The validator flags one error which is caused by a font-awesome script. A Google search did not result in any helpful material. Since the error is in font-awesome's code, it could not be fixed, however the site functions correctly and no errors are reported with SongMates custom HTML, so the site was deemed to have passed HTML validation on that basis. A GitHub issue has been opened with Font Awesome. 
@@ -117,7 +118,7 @@ All pages of the site pass HTML validation with one exception. The validator fla
 - The custom CSS for the site passed through the W3C Jigsaw CSS validator with no issues
 <img src="readme_media/css_validation.png">
 
-*Done - home, collab requests!, find collabs!, messages, sign-in, sign-up, profile form, sign-out*
+*Done - home!, collab requests!, find collabs!, messages!, sign-in!, sign-up!, profile form!, sign-out!*
 
 ##  Bugs
 
