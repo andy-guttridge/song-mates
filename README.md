@@ -94,6 +94,21 @@ Front end CSS and JavaScript library
 
 ### Validator testing
 
+- The W3C HTML validator detected issues with:
+    - Two HTML character codes which were not terminated with a `;`  in the navbar and the footer.
+    - The `onchange` attribute for the checkbox on the search form was incorrectly spelt `on-change`. This highlighted that this attribute was a 'hangover' from the development process and had been replaced by an event listener added to the element via JavaScript, so was removed altogether.
+    - The `rows` attribute used on the form in the send message modal in the `find_collabs.html` template had been mispelt.
+    - Duplicate `id` attributes were found for the modals and forms used to confirm deletion of a collaboration relationship, and for the `form` elements used to send a collaboration request in `find_collabs.html`.
+    - Modals were being rendered with `id` attributes referencing non-existent forms in`find_collabs.html`. This error was rectified by wrapping the modal code in an `if`...`endif` block within the HTML template, to check whether a modal would be required for that particular user profile.
+    - A similar issue with modals being rendered with `id` attributes referencing non-existent forms was also present in `messages.html`. This only affected outgoing messages, and was rectified by moving an `endif` to ensure that modals are only rendered if there is an associated form.
+
+These errors were all rectified. All pages of the site pass HTML validation with one exception. The validator flags one error which is caused by a font-awesome script. A Google search did not result in any helpful material. Since the error is in font-awesome's code, it could not be fixed, however the site functions correctly and no errors are reported with SongMates custom HTML, so the site was deemed to have passed HTML validation on that basis. A GitHub issue has been opened with Font Awesome. 
+<img src="readme_media/html_error.png">
+- The custom CSS for the site passed through the W3C Jigsaw CSS validator with no issues
+<img src="readme_media/css_validation.png">
+
+*Done - home, collab requests, find collabs, messages, sign-in, sign-up, profile form, sign-out*
+
 ##  Bugs
 
 Initially, allauth configuration was set to require the user to login with an email address and for email verification to be required. However, this caused a Django 'connection refused' error. This was caused by the fact no email server was availabe to send verification request emails. Settings were changed so that account login is by username rather than email address. 
