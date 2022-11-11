@@ -50,4 +50,3 @@ class Genres(models.TextChoices):
     TRANCE = 'TRA', _('Trance')
     TV = 'TVT', _('TV Themes')
     WORLD = 'WOR', _('World')
-    

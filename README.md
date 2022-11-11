@@ -122,6 +122,22 @@ The small amount of custom JavaScript code for the project was passed through th
 
 <img src="readme_media/js_hint.png">
 
+#### Python validation
+The PEP8 validator was down at the time this project was developed, therefore Python code was validated using the `pycodestyle` tool, which was installed to the IDE (GitPod). Issues with the custom Python code were fixed on an ongoing basis. All files which contain custom Python code have been verified to have no issues detectabe by `pycodestyle`:
+
+- `songmates/settings.py`
+- `songmates/urls.py`
+- `songmates/wsgi.py`
+- `songmates_main/admin.py`
+- `songmate_main/apps.py`
+- `songmates_main/forms.py`
+- `songmates_main/functions.py`
+- `songmates_main/genres.py`
+- `songmates_main/models.py`
+- `songmates_main/tests.py`
+- `songmates_main/urls.py`
+- `songmates_main/views.py`
+
 ##  Bugs
 
 Initially, allauth configuration was set to require the user to login with an email address and for email verification to be required. However, this caused a Django 'connection refused' error. This was caused by the fact no email server was availabe to send verification request emails. Settings were changed so that account login is by username rather than email address. 
