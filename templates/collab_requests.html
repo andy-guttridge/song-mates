@@ -36,28 +36,31 @@
                         </form>
                     </td>
                 </tr>
-                <!-- Modal to confirm rejection of incoming collaboration request -->
-                <div class="modal" id="modal-confirm-reject-{{ collab.from_user.pk }}" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content bkgnd-color-1">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Confirm rejection</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to reject this collaboration request?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" aria-label="Cancel rejection"
-                                    data-bs-dismiss="modal">Dismiss</button>
-                                <button type="submit" class="btn btn-danger" aria-label="Confirm rejection"
-                                    data-bs-dismiss="modal" form="reject-collab-{{ collab.from_user.pk }}" name="collab-reject">Confirm</button>
-                            </div>
+            {% endfor %}
+        </table>
+        {% for collab in in_requests %}
+            <!-- Modal to confirm rejection of incoming collaboration request -->
+            <div class="modal" id="modal-confirm-reject-{{ collab.from_user.pk }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content bkgnd-color-1">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirm rejection</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to reject this collaboration request?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" aria-label="Cancel rejection"
+                                data-bs-dismiss="modal">Dismiss</button>
+                            <button type="submit" class="btn btn-danger" aria-label="Confirm rejection"
+                                data-bs-dismiss="modal" form="reject-collab-{{ collab.from_user.pk }}" name="collab-reject">Confirm</button>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </table>
+            </div>
+        {% endfor %}
+            
 
         <h3 class="txt-color-1">Outbox</h3>
 
@@ -86,28 +89,30 @@
                         </form>
                     </td>
                 </tr>
-                <!-- Modal to confirm cancellation of outgoing collaboration request -->
-                <div class="modal" id="modal-confirm-cancel-{{ collab.to_user.pk }}" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content bkgnd-color-1">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Confirm cancelation</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are you sure you want to cancel this collaboration request?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" aria-label="Dismiss cancellation"
-                                    data-bs-dismiss="modal">Dismiss</button>
-                                <button type="submit" class="btn btn-danger" aria-label="Confirm cancellation"
-                                    data-bs-dismiss="modal" form="cancel-request-{{ collab.to_user.pk }}" name="collab-cancel">Confirm</button>
-                            </div>
+            {% endfor %}
+        </table>
+        {% for collab in out_requests %}
+            <!-- Modal to confirm cancellation of outgoing collaboration request -->
+            <div class="modal" id="modal-confirm-cancel-{{ collab.to_user.pk }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content bkgnd-color-1">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirm cancelation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to cancel this collaboration request?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" aria-label="Dismiss cancellation"
+                                data-bs-dismiss="modal">Dismiss</button>
+                            <button type="submit" class="btn btn-danger" aria-label="Confirm cancellation"
+                                data-bs-dismiss="modal" form="cancel-request-{{ collab.to_user.pk }}" name="collab-cancel">Confirm</button>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
-        </table>
+            </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
