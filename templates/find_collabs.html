@@ -129,7 +129,7 @@
 
                         <!-- Render request collaboration form and button if there are no pending requests, if this is not already a collaborator, if this profile is not the authenticated user and if this profile is not aleady a collaborator -->
                         {% if profile.user not in collab_request_users and profile.user != user and profile not in collaborators %}
-                            <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab">
+                            <form action="{% url 'request_collab' profile.user.pk %}" method="post" id="request-collab-{{ profile.user.pk }}">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-primary" aria-label="Request to collaborate">Request to
                                     collaborate</button>
@@ -148,10 +148,10 @@
                             <button type="button" class="btn btn-primary" aria-label="Send message" data-bs-toggle="modal" data-bs-target="#modal-send-msg-{{ profile.user.pk }}"><i class="fa-solid fa-user-pen icon-big"></i></button>
                             <br>
                             <br>
-                            <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id="delete-collab">
+                            <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id="delete-collab-{{ profile.user.pk }}">
                                 {% csrf_token %}
                                 <button type="button" class="btn btn-warning" aria-label="Un-collaborate" data-bs-toggle="modal"
-                                    data-bs-target="#modal-confirm-delete">Un-collaborate</a>
+                                    data-bs-target="#modal-confirm-delete-{{ profile.user.pk }}">Un-collaborate</a>
                             </form>
                         {% endif %}
                     {% endif %}
@@ -168,26 +168,28 @@
     {% endif %}
 
     <!-- Modal to confirm ending a collaboration -->
-    <div class="modal" id="modal-confirm-delete" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content bkgnd-color-1">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm un-collaborate</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to end this collaboration?</p>
-                    <p>You will no longer be able to send messages to this user in SongMates.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" aria-label="Dismiss"
-                        data-bs-dismiss="modal">Dismiss</button>
-                    <button type="submit" class="btn btn-danger" aria-label="Confirm un-collaborate"
-                        data-bs-dismiss="modal" form="delete-collab" name="delete-collab">Confirm</button>
+    {% if profile in collaborators %}
+        <div class="modal" id="modal-confirm-delete-{{ profile.user.pk }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content bkgnd-color-1">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirm un-collaborate</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to end this collaboration?</p>
+                        <p>You will no longer be able to send messages to this user in SongMates.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" aria-label="Dismiss"
+                            data-bs-dismiss="modal">Dismiss</button>
+                        <button type="submit" class="btn btn-danger" aria-label="Confirm un-collaborate"
+                            data-bs-dismiss="modal" form="delete-collab-{{ profile.user.pk }}" name="delete-collab">Confirm</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
     <!-- Modal to send message to collaborator -->
     <div class="modal" id="modal-send-msg-{{ profile.user.pk }}" tabindex="-1">
@@ -209,7 +211,7 @@
                             <br>
                             <label for="msg-body-input-{{ profile.user.pk }}">Message:</label>
                             <br>
-                            <textarea maxlength="200" row="100" cols="50" class="msg-body-field m1 msg-border" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
+                            <textarea maxlength="200" rows="100" cols="50" class="msg-body-field m1 msg-border" id="msg-body-input-{{ profile.user.pk }}" name="msg-body"></textarea>
                             <p class="txt-explain">Maximum 200 characters</p>
                         </div>
                     </form>

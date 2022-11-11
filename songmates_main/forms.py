@@ -112,7 +112,6 @@ class SearchForm(Form):
             Field(
                 'collabs_only',
                 title='Show only my collaborators',
-                on_change=('searchSubmit()'),
             ),
             Field('genres', css_class='bkgnd-color-1 txt-color-2'),
             HTML('<p class = "txt-explain d-none d-lg-block ">Hold down \
