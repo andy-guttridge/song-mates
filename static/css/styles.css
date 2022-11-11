@@ -2,6 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@600&family=Monoton&family=Rubik+Mono+One&family=Rubik:wght@300&display=swap');
 
 /* Fonts for site wide elements */
+
+.logo {
+    width: 300px;
+    height: 48.5px;
+}
+
+.navbar-toggler {
+    font-size: 200%;
+}
+
 h1, h2 {
     font-family: 'Monoton', cursive;
 }
@@ -267,13 +277,13 @@ a:hover{
 }
 
 .btn-danger {
-    background-color: #ff0809;
+    background-color: #A20809;
     color: #fff3e9
 }
 
 .btn-danger:hover {
     background-color: #400000;
-    color: #ff0809
+    color: #fff3e9
 }
 
 .icon-button {
