@@ -118,7 +118,7 @@ All pages of the site pass HTML validation with one exception. The validator fla
 - The custom CSS for the site passed through the W3C Jigsaw CSS validator with no issues
 <img src="readme_media/css_validation.png">
 
-*Done - home!, collab requests!, find collabs!, messages!, sign-in!, sign-up!, profile form!, sign-out!*
+
 
 ##  Bugs
 
