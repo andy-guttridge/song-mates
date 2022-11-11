@@ -151,7 +151,7 @@
                             <form action="{% url 'delete_collab' profile.user.pk %}" method="post" id="delete-collab-{{ profile.user.pk }}">
                                 {% csrf_token %}
                                 <button type="button" class="btn btn-warning" aria-label="Un-collaborate" data-bs-toggle="modal"
-                                    data-bs-target="#modal-confirm-delete-{{ profile.user.pk }}">Un-collaborate</a>
+                                    data-bs-target="#modal-confirm-delete-{{ profile.user.pk }}">Un-collaborate</button>
                             </form>
                         {% endif %}
                     {% endif %}
