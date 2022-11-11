@@ -94,16 +94,17 @@ Front end CSS and JavaScript library
 
 ### Validator testing
 
-- The W3C HTML validator detected issues with:
-    - Three HTML character codes which were not terminated with a `;`  in the navbar and the footer.
-    - An element with an opening `<button>` tag and closing `<a>` tag in `find_collabs.html`.
-    - The `onchange` attribute for the checkbox on the search form was incorrectly spelt `on-change`. This highlighted that this attribute was a 'hangover' from the development process and had been replaced by an event listener added to the element via JavaScript, so was removed altogether.
-    - The `rows` attribute used on the form in the send message modal in the `find_collabs.html` template had been mispelt.
-    - Duplicate `id` attributes were found for the modals and forms used to confirm deletion of a collaboration relationship, and for the `form` elements used to send a collaboration request in `find_collabs.html`.
-    - Modals were being rendered with `id` attributes referencing non-existent forms in`find_collabs.html`. This error was rectified by wrapping the modal code in an `if`...`endif` block within the HTML template, to check whether a modal would be required for that particular user profile.
-    - A similar issue with modals being rendered with `id` attributes referencing non-existent forms was also present in `messages.html`. This only affected outgoing messages, and was rectified by moving an `endif` to ensure that modals are only rendered if there is an associated form.
-    - Modals were being rendered inside tables in `collab_requests.html` and `messages.html`. This was fixed by moving the modals into a separate for loop within the HTML template.
-    
+#### W3C HTML validator
+
+Given the presence of Django template code in the HTML templates, the rendered HTML was copied from the Chrome browser by right clicking, selecting 'view page source' for each page of the site and then pasting directly into the HTML validator. This following issues were detected:
+- Three HTML character codes which were not terminated with a `;`  in the navbar and the footer.
+- An element with an opening `<button>` tag and closing `<a>` tag in `find_collabs.html`.
+- The `onchange` attribute for the checkbox on the search form was incorrectly spelt `on-change`. This highlighted that this attribute was a 'hangover' from the development process and had been replaced by an event listener added to the element via JavaScript, so was removed altogether.
+- The `rows` attribute used on the form in the send message modal in the `find_collabs.html` template had been mispelt.
+- Duplicate `id` attributes were found for the modals and forms used to confirm deletion of a collaboration relationship, and for the `form` elements used to send a collaboration request in `find_collabs.html`.
+- Modals were being rendered with `id` attributes referencing non-existent forms in`find_collabs.html`. This error was rectified by wrapping the modal code in an `if`...`endif` block within the HTML template, to check whether a modal would be required for that particular user profile.
+- A similar issue with modals being rendered with `id` attributes referencing non-existent forms was also present in `messages.html`. This only affected outgoing messages, and was rectified by moving an `endif` to ensure that modals are only rendered if there is an associated form.
+- Modals were being rendered inside tables in `collab_requests.html` and `messages.html`. This was fixed by moving the modals into a separate for loop within the HTML template.
 
 The above errors were all rectified.
 
@@ -112,13 +113,14 @@ The validator also produced the following information about closing slashes on v
 <img src="readme_media/trailing_slashes_1.png">
 <img src="readme_media/trailing_slashes_2.png">
 
-
-All pages of the site pass HTML validation with one exception. The validator flags one error which is caused by a font-awesome script. A Google search did not result in any helpful material. Since the error is in font-awesome's code, it could not be fixed, however the site functions correctly and no errors are reported with SongMates custom HTML, so the site was deemed to have passed HTML validation on that basis. A GitHub issue has been opened with Font Awesome. 
-<img src="readme_media/html_error.png">
-- The custom CSS for the site passed through the W3C Jigsaw CSS validator with no issues
+#### W3C CSS Validator
+The custom CSS for the site passed through the W3C Jigsaw CSS validator with no issues
 <img src="readme_media/css_validation.png">
 
+#### JSHint JavaScript validator
+The small amount of custom JavaScript code for the project was passed through the JSHint validator. This detected a number of missing semi-colons and a missing `let` keyword. These issues have been corrected, and the JavaScript now passes validation. Note that JSHint flags an issue with an undefined `bootstrap` variable, however this because JSHint does not have access to the Bootstrap CDN import defined within a `<script>` tag in the `base.html` template. The Google Chrome inspector confirms there are no JavaScript errors with the deployed site.
 
+<img src="readme_media/js_hint.png">
 
 ##  Bugs
 

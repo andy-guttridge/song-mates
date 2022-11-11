@@ -11,12 +11,12 @@
         // Using setTimeout to automatically dismiss messages adapted from Code Institute Django Blog tutorial
         setTimeout(function() {
             let alertList = document.getElementsByClassName('alert');
-            alertArray = Array.from(alertList)
+            let alertArray = Array.from(alertList);
             alertArray.forEach(function (alert) {
                 let anAlert = new bootstrap.Alert(alert);
                 anAlert.close();
-            })
-        }, 3000)
+            });
+        }, 3000);
     }
 
     /**
@@ -25,4 +25,4 @@
     function searchSubmit(){
         document.getElementById('search-profile').submit();
     }
-})()
+})();
