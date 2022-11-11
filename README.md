@@ -95,19 +95,29 @@ Front end CSS and JavaScript library
 ### Validator testing
 
 - The W3C HTML validator detected issues with:
-    - Two HTML character codes which were not terminated with a `;`  in the navbar and the footer.
+    - Three HTML character codes which were not terminated with a `;`  in the navbar and the footer.
+    - An element with an opening `<button>` tag and closing `<a>` tag in `find_collabs.html`.
     - The `onchange` attribute for the checkbox on the search form was incorrectly spelt `on-change`. This highlighted that this attribute was a 'hangover' from the development process and had been replaced by an event listener added to the element via JavaScript, so was removed altogether.
     - The `rows` attribute used on the form in the send message modal in the `find_collabs.html` template had been mispelt.
     - Duplicate `id` attributes were found for the modals and forms used to confirm deletion of a collaboration relationship, and for the `form` elements used to send a collaboration request in `find_collabs.html`.
     - Modals were being rendered with `id` attributes referencing non-existent forms in`find_collabs.html`. This error was rectified by wrapping the modal code in an `if`...`endif` block within the HTML template, to check whether a modal would be required for that particular user profile.
     - A similar issue with modals being rendered with `id` attributes referencing non-existent forms was also present in `messages.html`. This only affected outgoing messages, and was rectified by moving an `endif` to ensure that modals are only rendered if there is an associated form.
+    - Modals were being rendered inside tables in `collab_requests.html` and `messages.html`. This was fixed by moving the modals into a separate for loop within the HTML template.
+    
 
-These errors were all rectified. All pages of the site pass HTML validation with one exception. The validator flags one error which is caused by a font-awesome script. A Google search did not result in any helpful material. Since the error is in font-awesome's code, it could not be fixed, however the site functions correctly and no errors are reported with SongMates custom HTML, so the site was deemed to have passed HTML validation on that basis. A GitHub issue has been opened with Font Awesome. 
+The above errors were all rectified.
+
+The validator also produced the following information about closing slashes on void elements. These are inserted into the HTML by Django or CrispyForms when forms are rendered, and so can't be easily fixed, however since this is not regarded as an error, this was deemed satisfactory:
+
+<img src="readme_media/trailing_slashes_1.png">
+
+
+All pages of the site pass HTML validation with one exception. The validator flags one error which is caused by a font-awesome script. A Google search did not result in any helpful material. Since the error is in font-awesome's code, it could not be fixed, however the site functions correctly and no errors are reported with SongMates custom HTML, so the site was deemed to have passed HTML validation on that basis. A GitHub issue has been opened with Font Awesome. 
 <img src="readme_media/html_error.png">
 - The custom CSS for the site passed through the W3C Jigsaw CSS validator with no issues
 <img src="readme_media/css_validation.png">
 
-*Done - home, collab requests, find collabs, messages, sign-in, sign-up, profile form, sign-out*
+*Done - home, collab requests!, find collabs!, messages, sign-in, sign-up, profile form, sign-out*
 
 ##  Bugs
 
