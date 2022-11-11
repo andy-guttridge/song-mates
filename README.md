@@ -1,4 +1,6 @@
-# SongMates
+# Song Mates
+
+[Link to deployed site](https://songmates.herokuapp.com/)
 
 ## Purpose
 
@@ -7,44 +9,42 @@ medium of digital recording. Great music is often the result of collaboration, a
  
 The purpose of Song Mates is to provide a platform for musicians who want to write, perform and record material to find like minded people to collaborate with, whether that be for a song or an album.
 
-Users can register with Song Mates, and create a profile with an image, a biography or summary of what they're looking for, and can specify the instruments they play and relevant skills. They can search for potential collaborators using these criteria, and make collaboration requests (like a connection request on LinkedIn or friend request on Facebook). The receiving user can see they have received a collaboration request via a number in the nav menu, and can then view the profile of the user who has requested to collaborate and decide whether to accept or decline the request. 
+Users can register with Song Mates, and create a profile with an image, a biography or summary of what they're looking for, and can specify the instruments they play and relevant skills. They can search for potential collaborators using these criteria, and make collaboration requests (like a connection request on LinkedIn or friend request on Facebook). Users can send direct messages to their  connections.
 
-Users can send messages to others who are approved 'collaborators' using a simple user-to-user messaging facility.
+**Important**
 
-[Link to deployed site](https://songmates.herokuapp.com/)
+Song mates is a work in progress. The backend is in place and key features for a minimum viable product have been implemented, however styling/design has not been completed. At least one additional feature (user to user messaging) will be implemented for the final version, to be completed by mid-November 2022.
 
-## **Important**
+## Table of contents
 
-SongMates is a work in progress. The backend and key interaction between the backend and frontend are in place, and key features for a minimum viable product have been implemented, however the front-end is very much a work in progress, with additional design and styling work to be completed. Version 1 of SongMates is expected to be completed by mid-November 2022.
+## User stories
 
-User profiles can be viewed and searched without signing in, but registering an account with a dummy email address is recommended to enable all features to be accessed (there is currently no requirement to verify email addresses). This will enable you to:
+## Agile development methodology
 
-- Create a profile (currently accessed via the 'Me' link in the menu);
-- Make connection requests to other users;
-- Approve/reject incoming connection requests;
-- Use the search form to filter profiles to only approved collaborators (the checkbox for this is not visible for anonymous users);
-- Send messages to other users who are approved collaborators.
+## Features
 
-Further work to be completed:
-
-- Create a full list of genre options for user profiles (the current list of five is placeholder for testing);
-- Design and styling to create an attractive and responsive mobile-first frontend;
-- Improvement of the search functionality to enable multiple search terms to be specified via a comma separated list (time permitting);
-- Enabling users to send a short message along with a connection request (time permitting).
-
-## Key code details
-
-Class based database models are declared in [songmates_main/models.py](https://github.com/andy-guttridge/song-mates/blob/a391de9ce36a807fb7125c7e3f413a86d03d08bf/songmates_main/models.py). These consist of a 'Profile' model to store user profile data (with a foreign key for user accounts and a many-to-many relationship to record collaboration links between users), and a 'CollabRequest' model to store details of user-to-user collaboration requests. Once requests are accepted or rejected, 'CollabRequest' records are no longer required and are deleted.
-
-View logic is in [songmates_main/views.py](https://github.com/andy-guttridge/song-mates/blob/a391de9ce36a807fb7125c7e3f413a86d03d08bf/songmates_main/views.py).
-
-Forms are declared in [songmates_main/forms.py](https://github.com/andy-guttridge/song-mates/blob/a391de9ce36a807fb7125c7e3f413a86d03d08bf/songmates_main/forms.py)
-
-HTML templates  are in [templates](https://github.com/andy-guttridge/song-mates/blob/a391de9ce36a807fb7125c7e3f413a86d03d08bf/templates).
-
-### Future improvements
+### Future improvements and features
 
 - There is currently a lot of HTML duplicated between the `find_collabs.html` and `single_profile.html` templates. These could be refactored into a single template, but this would require passing in additional data and adding conditional statements to the template to determine whether it should render as a single profile or multiple profiles (e.g. this would influence whether or not to render search features, the correct heading for the page etc).
+- The code to process the search form in the `SearchProfiles` class in `views.py` is overly complex and convoluted. This would benefit from refactoring as a priority, however this has not yet been addressed due to time pressures.
+
+**TBC**
+- Ability to rate collabs
+- Message or reason for uncollaborating
+- Send message with collab request
+- Organise messages as threads
+- Live feedback on character limit on forms
+- Option for users to hide their profile from unauthenticated users
+- Distinguish between 'read' and 'unread' messages so that only unread messages are show in the navbar, and ability to mark messages as read or unread
+- Enable users to include SoundCloud and Youtube clips in their profiles
+- User reporting functionality
+- Mechanism to easily contact the site admin
+- Masonry layout
+- Feature to mark accounts as 'hidden', e.g. an admin account - although this can be achieved now by maintaining an empty profile
+- Ability to login with social media accounts
+- Better account management functionality, e.g. change username, change password, add email account verifications
+
+## Planning
 
 ## Frameworks, libraries and dependencies
 
@@ -74,11 +74,35 @@ Bootstrap 5 templates for Crispy Forms
 ### Bootstrap 5
 Front end CSS and JavaScript library
 
+## Data model
+
+## Testing
+
 ### Fixed bugs
-- Initially, allauth configuration was set to require the user to login with an email address and for email verification to be required. However, this caused a Django 'connection refused' error. This was caused by the fact no email server was availabe to send verification request emails. Settings were changed so that account login is by username rather than email address. 
 - Testing of the update profile form showed that profile pictures were not uploading to cloudinary. This was rectifed by adding the `enctype="multipart/form-data"` attribute to the form element.
 - While testing the search feature, it was realised that if the user did not select any genres, no profiles would be returned. This was fixed by adding a simple conditional statement to ensure that profiles are not filtered by genre if no genres are selected.
 - During testing, it was found that the 'Show my collaborators only' checkbox on the search form was overriding other search results. For example, if a genre of 'Hip-Hop' was selected in the genres menu and the checkbox to show collaborators only was selected, collaborators would show in the search results even if none of them were matched with the 'Hip-Hop' selection. The correct outcome in this case would be no search results. This was bug was caused by an incorrect boolean condition in an if statement and easily fixed.
+- Non-authenticated users using the search function resulted in a server error. This was caused by an attempt to reference the user's profile in the `SearchProfile` view. This was fixed by moving the offending code inside a conditional statement checking for an authenticated user.
+- Testing uploading an invalid  profile image resulted in an error. This was fixed by adding a try/except block to the view code. A Django message is displayed within the except block in the event of an error.
+- The modal dialog for sending a user to user message in the Find Collaborators page was always displaying the name of the first user profile in the list, no matter which user selected to send a message to. This was because Bootstrap modals must have a unique `id` attribute. All the modals had been given the same `id` within the `for` loop that renders profiles. This was also the case for the corresponding `data-bs-modal` attribute of the buttons used to open the modal from each profile. This was fixed by appending the primary key for each user to the modal `id` and button `data-bs-modal` attribute.
+- The modal dialogs for rejecting incoming or cancelling outgoing collaboration requests were targetting the incorrect users, meaning that when there were multiple collaboration requests for one user, the incorrect one would be deleted from the database. This was for a similar reason to the above issue with user messages, and was fixed by moving the modals within the for loop and applying unique `id` attributes to the forms and buttons for each collaboration request.
+- The 'Show only my collaborators' checkbox on the search form was always returning no results, even when the user did have collaborators. This was fixed by additional checks for empty querysets and whether the checkbox has been selected in `SearchProfile` class in `views.py`.
+
+### Manual testing
+
+### Automated tests
+
+### Validator testing
+
+##  Bugs
+
+Initially, allauth configuration was set to require the user to login with an email address and for email verification to be required. However, this caused a Django 'connection refused' error. This was caused by the fact no email server was availabe to send verification request emails. Settings were changed so that account login is by username rather than email address. 
+
+### Resolved bugs
+
+### Unresolved bugs
+
+## Deployment
 
 ## Credits
 
@@ -98,10 +122,35 @@ Front end CSS and JavaScript library
 - Using the `_in` lookup parameter to find out if the value of a field exists within a list was adapated from (https://stackoverflow.com/questions/70703168/check-if-each-value-within-list-is-present-in-the-given-django-model-table-in-a)
 - The syntax for searching on a property of a foreign key object is adapated from (https://stackoverflow.com/questions/35012942/related-field-got-invalid-lookup-icontains)
 - The technique for overriding the save method of a Django model class in order to compute the value of a field based on the values of other fields is adapted from(https://stackoverflow.com/questions/22157437/model-field-based-on-other-fields)
+- The technique for identifying the currently active link in the navbar and conditionally applying classes is from (https://stackoverflow.com/questions/46617375/how-do-i-show-an-active-link-in-a-django-navigation-bar-dropdown-list)
+- Using the JavaScript `setTimeout()` function to automatically dismiss Django messages was adapted from the Code Institute Django Blog walkthrough.
+- This [Stack Overflow](https://stackoverflow.com/questions/35777410/multi-modals-bootstrap-in-for-loop-django) question was referenced to fix the issue with modals opening for the incorrect user when sending a message from the Find Collaborators page.
+- This [Stack Overflow](https://stackoverflow.com/questions/19024218/bootstrap-3-collapse-change-chevron-icon-on-click) question was referenced for a solution to changing the icon displayed depending on the state of a Bootstrap collapse item.
+- This [Stack Overflow](https://stackoverflow.com/questions/36940384/how-do-i-setup-a-unit-test-user-for-django-app-the-unit-test-cant-login) article was referenced to understand how to create a test user for Django unit tests.
+- The technique to conditionally add a local database for unit tests within the `settings.py` file is from [this Stack Overflow artice](https://stackoverflow.com/questions/4650509/different-db-for-testing-in-django).
+- The technique to ensure the latest state of the user is loaded from the database within a unit test is from [Stack Overflow](https://stackoverflow.com/questions/64741329/why-is-my-test-function-not-activating-the-user).
+- This [Stack Overflow](https://stackoverflow.com/questions/910169/resize-fields-in-django-admin) article was referenced to understand how to resize fields in the Django admin panel forms.
 
 ### Content
 
 - Font Awesome icons
     - [Burger menu icon](https://fontawesome.com/icons/bars?s=solid&f=classic)
-    - ['Collaborator' icon](https://fontawesome.com/icons/user?s=solid&f=classic)
+    - [Collaborator icon](https://fontawesome.com/icons/user?s=solid&f=classic)
+    - [Information icon](https://fontawesome.com/icons/circle-info?s=solid&f=classic)
+    - [User pen icon](https://fontawesome.com/icons/user-pen?s=solid&f=classic)
+    - [Envelope icon](https://fontawesome.com/icons/envelope)
+    - [Down chevron icon](https://fontawesome.com/icons/chevron-down?s=solid&f=classic)
+    - [Up chevron icon](https://fontawesome.com/icons/chevron-up?s=solid&f=classic)
+- **Google Fonts TBC**
 - Placeholder profile image by WandererCreative and downloaded from [Pixabay](https://pixabay.com/images/id-973460/)
+- Vinyl record image used in the logo by Paul Brennan and downloade from [Pixabay](https://pixabay.com/photos/phonograph-record-vinyl-audio-sound-3148686/)
+**???***
+- Hero image of guitar amplifier by dmkock and downloaded  from [Pixabay](https://pixabay.com/photos/electric-guitar-amplifier-amplifier-640683/) 
+- Hero image of red vinyl record by Stas Knop and downloaded from [Pexels](https://www.pexels.com/photo/red-vinyl-record-3552948/)
+- Profile images for test user accounts:
+    - ElizaB's image is from [Freepik](https://www.freepik.es/vector-premium/dibujo-dibujos-animados-cantante_20243817.htm)
+    - Luna's image is from [Pixabay](https://pixabay.com/photos/cat-tree-climb-kitten-domestic-cat-2902599/)
+    - Trumpet_Mike's image is from [Pixabay](https://pixabay.com/photos/music-instrument-trumpet-metal-624421/)
+    - Elvis' image is from [Pixabay](https://pixabay.com/photos/elvis-elvis-presley-musician-1269775/)
+    - holy_grail_42's image is from [Pixabay](https://pixabay.com/photos/forest-girl-trees-fog-lantern-3833973/)
+    - Lauren's image is from [Pixabay](https://pixabay.com/photos/announcer-audio-black-cassette-316586/)
