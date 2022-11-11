@@ -138,6 +138,14 @@ The PEP8 validator was down at the time this project was developed, therefore Py
 - `songmates_main/urls.py`
 - `songmates_main/views.py`
 
+### Lighthouse testing
+
+- Lighthouse found that the chevron buttons on each profile on the 'Find Collaborators' page did not have accessible names. This was corrected by adding an `aria-label` attribute to these buttons.
+- Buttons with the `btn-danger` class were found to have insufficient contrast. This was corrected by making the red colour darker.
+- The navbar 'burger' menu button for mobile was found to be too small to provide a suitable touch target. The size was increased.
+- The SongMates logo in the navbar was found to be of insufficient resolution. The image was re-exported at double the resolution, and resized back down to 300px width in CSS.
+- Performance scores were disappointing and seemed to be largely related to image loading. The hero image on the homepage was converted from `jpg` to `webp` format, but this made little difference. Lighthouse found the profile images to be inappropriately large - this is difficult to control because they are uploaded by users. A future improvement could be to automatically resize them on upload. A further issue may simply be that the site is hosted using free hosting from Heroku, which is not as fast as a 'paid for' web hosting package.
+
 ##  Bugs
 
 Initially, allauth configuration was set to require the user to login with an email address and for email verification to be required. However, this caused a Django 'connection refused' error. This was caused by the fact no email server was availabe to send verification request emails. Settings were changed so that account login is by username rather than email address. 
