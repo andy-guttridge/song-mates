@@ -11,6 +11,8 @@ The purpose of Song Mates is to provide a platform for musicians who want to wri
 
 Users can register with Song Mates, and create a profile with an image, a biography or summary of what they're looking for, and can specify the instruments they play and relevant skills. They can search for potential collaborators using these criteria, and make collaboration requests (like a connection request on LinkedIn or friend request on Facebook). Users can send direct messages to their  connections.
 
+**CRUD functionality**
+
 **Important**
 
 Song mates is a work in progress. The backend is in place and key features for a minimum viable product have been implemented, however styling/design has not been completed. At least one additional feature (user to user messaging) will be implemented for the final version, to be completed by mid-November 2022.
@@ -25,43 +27,107 @@ Song mates is a work in progress. The backend is in place and key features for a
 
 ### Home page with hero image and text carousel
 
-<img src="readme_media/hero3.png" width="200">
-<img src="readme_media/hero2.png" width="200">
-<img src="readme_media/hero1.png" width="200">
+<p align="center">
+    <img src="readme_media/hero3.png" width="200">
+    <img src="readme_media/hero2.png" width="200">
+    <img src="readme_media/hero1.png" width="200">
+</p>
 
-### Navbar with informative icons and collapsible 'burger' menu for mobile
+An eye catching hero image and three paragraphs of descriptive text, each displayed in turn in a carousel.
 
-<img src="readme_media/burger1.png" width="200">
-<img src="readme_media/burger2.png" width="200">
+### Navbar with 'info-icons' and collapsible 'burger' menu for mobile
 
-### Form for users to customise their profiles
+<p align="center">
+    <img src="readme_media/burger1.png" width="300">
+    <img src="readme_media/burger2.png" width="300">
+</p>
 
-<img src="readme_media/edit_profile1.png" width="200">
-<img src="readme_media/edit_profile2.png" width="200">
-<img src="readme_media/edit_profile3.png" width="200">
+The SongMates navbar features a collapsibe 'burger' menu for mobile users (although it expands to a full horizontal navbar on wider screens).
+The navbar includes two 'info-icons', which show:
+  - The number of user messages in the user's inbox (incoming only)
+  - The number of pending collaboration requests for the user (incoming and outgoing)
 
-### Find collaborators page for browsing profiles
-<img src="readme_media/find_collabs.png" width="200">
-<img src="readme_media/find_collabs2.png" width="200">
+The envelope icon links to the user's message inbox and outbox, while the 'collaborator' icon links to the user's pending collaboration requests inbox and outbox.
+
+### Edit profile page
+
+<p align="center">
+    <img src="readme_media/edit_profile1.png" width="200">
+    <img src="readme_media/edit_profile2.png" width="200">
+    <img src="readme_media/edit_profile3.png" width="200">
+    <img src="readme_media/edit_profile4.png" width="200">
+</p>
+
+The 'edit-profile' page ('Me' in the navbar) features an 'update profile' form and a 'delete account' form.
+Users who have not yet filled out any of their profile are redirected to this page when they first login if they choose 'find collaborators', to encourage them to provide some details.
+
+The update profile form enables the user to update their profile with:
+
+- A 'biography' of up to 500 characters. This is where the user can describe their musical interests and goals.
+- An image.
+- A selection of up to five musical genres from pre-populated lists.
+- Up to five free text 'instruments or skills' of up to 30 characters
+
+The form is validated so that if something goes wrong with the image upload, the user is prompted to consider whether they have uploaded a non-image file (see custom user messages below).
+The form has 'revert' and 'submit' buttons. The revert button reloads the form with the previous data, while submit commits the form to the database.
+
+At the bottom of the edit-profile is the delete account form, enabling the user to close their account. Selecting the button opens a modal dialog, giving the user the choice to dismiss the modal or confirm the deletion.
+
+In the event the user confirms the deletion, their profile is deleted from the database and their user account made inactive (in line with Django best practice which recommends not deleting user accounts in order not to cause broken references within database tables referencing users).
+
+### Find collaborators page
+<p align="center">
+    <img src="readme_media/find_collabs.png" width="200">
+    <img src="readme_media/find_collabs2.png" width="200">
+</p>
+
+The 'find collaborators' page enables browsing of user profiles. Users who have not yet filled out any of their profile do not have their profiles displayed on this page, and are presented with a message to encourage them to fill it out.
 
 ### Search form
-<img src="readme_media/search_form.png" width="200">
+<p align="center">
+    <img src="readme_media/search_form.png" width="200">
+</p>
+The find collaborators page includes a search form to enable users to find potential collaborators aligned to their own interests.
+The 'show only my collaborators' checkbox lets the user filter the profiles to only those who are approved collaborators. This works in combination with the other search fields, so for example a user could find only their collaborators whose profiles include 'country'.
+The genres drop-down allows the user to narrow the search down to those genres they are interested in.
+The 'search profiles' field enables the user to perform a free text search on profile biographies and instruments/skills.
 
-### Expandable user profiles with role dependent information and buttons
-<img src="readme_media/profile1.png" width="200">
-<img src="readme_media/profile2.png" width="200">
-<img src="readme_media/profile3.png" width="200">
-<img src="readme_media/profile4.png" width="200">
+### Expandable user profiles with role based information and buttons
+<p align="center">
+    <img src="readme_media/profile1.png" width="200">
+    <img src="readme_media/profile2.png" width="200">       
+    <img src="readme_media/profile5.png" width="200">
+    <img src="readme_media/profile6.png" width="200">
+    <img src="readme_media/profile3.png" width="200">
+    <img src="readme_media/profile4.png" width="200">
+</p>
+
+Profiles are displayed with a collapsible section which can be expanded by pressing the down arrow. This reveals the 'About me' biography and a number of possible buttons depending on the status of the user and their relationship to the other users.
+
+- If the user is not authenticated, only the 'About me' section is revealed within the collapsible.
+- If the authenticated user has an approved collaboration relationship with the other user, this is indicated with a blue collaborator icon next to the other user's name. A 'contact me' icon enables them to send a message to the other user, and an un-collaborate button enables them to end the collaboration. The send message button opens a modal dialog enabling a message to be sent directly from this page. Chossing to un-collaborate opens another modal, asking the user to dismiss or confirm the request.
+- If the authenticated user has a pending collaboration request (incoming or outgoing), a 'pending collaboration request' button provides a visual indication and links directly to the collaboration requests page so that action can be taken.
+- If the user is authenticated but does not currently have a collaborative relationship with the other user, a 'request to collaborate' button sends the other user a collaboration request.
 
 ### Pending collaboration requests page with inbox and outbox
-<img src="readme_media/collabs1.png" width="200">
-<img src="readme_media/collabs2.png" width="200">
-<img src="readme_media/collabs3.png" width="200">
+<p align="center">
+    <img src="readme_media/collabs1.png" width="200">
+    <img src="readme_media/collabs2.png" width="200">
+    <img src="readme_media/collabs3.png" width="200">
+</p>
+
+The 'pending collaboration requests' page enables the authenticated user to see an overview of incoming and outgoing collaboration requests. They can view the profile of the other user to enable them to decide whether this looks like a worthwhile collaborator by clicking on their name in the 'from' column.
+
+For incoming collaboration requests, the user can decide whether to accept or reject the collaboration request. Selecting reject opens a modal dialog to ask the user to confirm the rejection.
 
 ### Messages page with inbox and outbox
-<img src="readme_media/messages1.png" width="200">
-<img src="readme_media/messages2.png" width="200">
-<img src="readme_media/messages3.png" width="200">
+<p align="center">
+    <img src="readme_media/messages1.png" width="200">
+    <img src="readme_media/messages2.png" width="200">
+    <img src="readme_media/messages3.png" width="200">
+</p>
+
+Similar to the collaboration requests page, the 'messages' page provides users with an overview of incoming and outgoing messages. They can users' profiles by clicking on the name in the 'from' column, and can view messages in a modal by selecting the subject of the message in the 'subject' column. For incoming messages, they can reply directly from the modal. A delete button enables the user to delete messages, after confirming the action in a modal dialog.
 
 ### Sign-in, sign-out and register pages
 <img src="readme_media/sign_in.png" width="200">
@@ -82,6 +148,9 @@ Song mates is a work in progress. The backend is in place and key features for a
 <img src="readme_media/admin5.png" width="200">
 <img src="readme_media/admin6.png" width="200">
 
+### Fully responsive design
+<img src="readme_media/desktop.png" width="800">
+
 
 
 
@@ -95,7 +164,9 @@ Song mates is a work in progress. The backend is in place and key features for a
 - Message or reason for uncollaborating
 - Send message with collab request
 - Organise messages as threads
+- Group messages
 - Live feedback on character limit on forms
+- Ability to center and zoom images within the update profile form
 - Option for users to hide their profile from unauthenticated users
 - Distinguish between 'read' and 'unread' messages so that only unread messages are show in the navbar, and ability to mark messages as read or unread
 - Enable users to include SoundCloud and Youtube clips in their profiles
