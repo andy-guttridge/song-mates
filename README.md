@@ -9,6 +9,8 @@ medium of digital recording. Great music is often the result of collaboration, a
  
 The purpose of Song Mates is to provide a platform for musicians who want to write, perform and record material to find like minded people to collaborate with, whether that be for a song or an album.
 
+SongMates was conceived as a 'mobile first' web app.
+
 SongMates enables un-quthenticated users to:
 
 - Browse and search profiles of other users.
@@ -38,9 +40,11 @@ SongMates features a persistent data store with full Create, Read, Update and De
 
 ## User stories
 
-Having conceived the basic idea for the site, user stories were created in a spreadsheet (see link below). These were categorised according to whether they had to be implemented to produce a Minimum Viable Product (MVP), with priority for development to be given to those that were part of the MVP specification. Note that some of the terminology in the user stories varies from final implementation, for example the final website refers to 'collaboration requests' and 'collaborators', whereas the user stories refer to 'connections'.
+Having conceived the basic idea for the site, themes and epics were documented in a spreadsheet (see link below). These were further refined into user stories.
 
-User acceptance criteria/manual tests for each user story were added to the spreadsheet as development commenced on each user story.
+Individual user stories were categorised according to whether they had to be implemented to produce a Minimum Viable Product (MVP), with priority for development to be given to those that were part of the MVP specification. Note that some of the terminology in the user stories varies from final implementation, for example the final website refers to 'collaboration requests' and 'collaborators', whereas the user stories refer to 'connections'.
+
+User acceptance criteria/manual tests for each user story were added to the spreadsheet as development commenced on each user story. User stories with a white background and no acceptance criteria/tests were not part of the MVP and not implemented.
 
 [Link to SongMates user stories spreadsheet](https://docs.google.com/spreadsheets/d/1lfMAhZfRnoHnkIVx8LW1cVvdgnDvWeyrtCgRz0_mvzA/edit?usp=sharing)
 
@@ -49,6 +53,9 @@ Implementation deviated from some of the original user stories, in response to c
 - *'As a user I can be confident that my profile will only be visible to registered users so that my details can only be accessed by potential collaborators registered with the site.'*
 
     This user story was implemented, however in testing the site it became apparent that making profiles visible to non-authenticated users could serve to increase engagement and interest, leading to more registrations and a richer pool of potential collaborators. Implementation of this user story was  un-done, however a priority for future development would be giving users the option to hide their profiles from non-authenticated users.
+- *As a user, I can see an option to cancel pending connection requests on profiles of users to whom I have sent a request so that I can change my mind if I no longer feel I might wish to collaorate with them.*
+
+    This was implemented in a slightly different way. The user story suggests that a button to directly cancel an outgoing collaboration request should be visible on the relevant user profile, however during development it was felt that providing a button indicating both outgoing and incoming pending collaboration requests and linking to an overview of such requests would be more logical and user friendly.
 - *As a user I can see a list of my current connections and access their profiles so that I can evaluate their usefulness.*
 
     It was originally envisaged that this user story would be implemented with a separate navbar link to a list of current collaborators, however during development it was realised that incorporating a simple checkbox into the search form to allow users to display only their current collaborators and further narrow the search if desired would simplify the user experience and reduce site complexity.
@@ -57,6 +64,28 @@ Implementation deviated from some of the original user stories, in response to c
     While this user story was included to provide an easy-to-implement way for users to communicate with each other to achieve a MVP, it was always felt that a user-to-user messaging system would be a better way to facilitate communication between users. This was not included in the spec for a MVP due to concerns around development time. The email functionality was implemented by displaying an email link on the profiles of approved collaborators, but as successful implementation of user stories was proceeding more quickly than anticipated, this was replaced with a messaging system, exceeding the original MVP spec.
 
 ## Agile development methodology
+
+GitHub issues, milestones and projects were used to document and track an agile development approach.
+An issue was created for each user story. These were labelled as 'MVP' if they were part of the MVP spec. All user stories were then added to a 'Product Backlog' milestone  ([link to Product Backlog with remaining user stories that were not completed](https://github.com/andy-guttridge/song-mates/milestone/1)).
+
+Development was divided into iterations with a timebox of three working days, each with a total value of 16 story points (although the duration in calendar days was variable, due to fitting the three working days around work and other commitments). A milestone and a GitHub project board were created for each iteration, and user stories moved from the Product Backlog and into the iteration. They were labelled as 'must have', 'could have' or 'should have' goals for the iteration, and assigned story point values. Story points for 'must have' user stories never exceeded 9 (60%).
+
+A project Kanban board was used to track progress, with user stories moved between 'Todo', 'In Progress' and 'Done' columns as appropriate. For example, the iteration 3 project board was captured near the start, mid-way through the iteration and at the end:
+
+<p align="center">
+    <img src="readme_media/iteration_3_kanban_i.png" width="400">
+    <img src="readme_media/iteration_3_kanban_ii.png" width="400">
+    <img src="readme_media/iteration_3_kanban_iii.png" width="400">
+</p>
+
+The project boards for each iteration in their final form can be accessed [via this link](https://github.com/andy-guttridge/song-mates/projects?query=is%3Aopen).
+There are no project boards for iterations 4 and 6, because they were 'special' three working day iterations dedicated to design/styling work and testing/bug fixing, as opposed to implementing user stories. All the MVP user stories had been successfully implemented by the end of iteration 3.
+
+There were some user stories which were automatically implemented as a consequence of other work (e.g. implementing admin panels for the data models) or by virtue of Django's built in features. These were documented with a special 'mop-up' milestone ([link](https://github.com/andy-guttridge/song-mates/milestone/6)) and closed.
+
+One challenge was that there was considerable uncertainty as to how many story points to allocate to each task. For this reason, the first iteration had tasks equating to more than 16 total, although care was taken to ensure the number of 'must haves' did not exceed 60%. As work progressed, it became apparent that story points had been overestimated for some tasks, with iteration 2 completed ahead of schedule. Iteration 3 was then opened early.
+
+Note that one user story was left off the iteration 3 board in error, but was planned for and completed during that iteration. It was later added to the 'done' column for that iteration to ensure it was documented.
 
 ## Features
 
@@ -257,6 +286,44 @@ A significant number of potential enhancements for the future have been identifi
 - Automatic deletion of images from cloudinary storage when users change their profile images or delete their profiles.
 
 ## Planning
+
+### Mockups
+
+Wireframes were produced, mapping the 'user journey' through the site. These were based on a mobile view of the site, as SongMates is very much a mobile first web app.
+
+<p align="center">
+    <img src="readme_media/wire_frames.png" width="800">
+</p>
+<p align="center">
+    <a href="readme_media/wire_frames.pdf" target="_rel">Link to full size wireframes</a>
+</p>
+
+The wireframes proved invaluable as a guideline for the implementation phase. In response to the continual testing of the site throughout the development process, some implementation details diverged from the original wireframe plan:
+
+- Users are directed back to the home page when they login.
+- The number of instruments/skills fields available on user profiles was reduced from ten to five. The data model was initially created with five fields to keep things manageable during the initial development phase, however testing suggested that more than five could become overwhelming and that five should be sufficient for most users. The user corresponding user story was revised accordingly.
+- As noted in the user stories section above, it was decided during development to replace the separate 'My collaborators' view with a checkbox on the profile search form, as a way of reducing site complexity and enhancing the user experience.
+- The separate 'write new message' and read message views were replaced by modal dialogs, again to reduce site complexity from the user's perspective.
+- The button to cancel a collaboration request from an individual user profile was replaced with the 'Pending collaboration request' button mentioned in the user stories section. This led to the creation of a whole new 'collaboration requests' view, which was deemed to be a more comprehensive and useful implementation.
+
+### Data models
+
+Data models were originally planned using a spreadsheet prior to implementation, however are presented here in diagram form for clarity. Note that the 'join table' was not created in the Django `models.py`, but is simplified representation of how Django handles many-to-many relationships 'under the hood'.
+
+SongMates uses the standard Django user model, although not all the fields are utilised.
+
+Custom models for SongMates are:
+
+- Profile - represents the user's profile. This includes the biog (used for the 'About me' information), the genres, the instruments/skills fields, and an image. The profile model also records collaboration relationships between users, using a many-to-many field.
+- CollabRequest - this is a simple model representing collaboration requests sent from one user to another. When a CollabRequest instance is approved or rejected by the receiver, or cancelled by the sender, it is deleted. If approved, this results in a new many-to-many relationship in the Profile table.
+- Message - this represents user-to-user messages. This model includes `from_deleted` and `to_delete` fields, which are used to separately record when the sender and receiver have 'deleted' the message. This enables the message to be hidden from a user when they have marked it as deleted, but for it not to be actually deleted from the database until both users have 'deleted' it.
+
+<p align="center">
+    <img src="readme_media/songmates_db_schema.png" width="400">
+</p>
+<p align="center">
+    <a href="readme_media/songmates_db_schema.png" target="_rel">Link to full size DB schema</a>
+</p>
 
 ## Frameworks, libraries and dependencies
 
