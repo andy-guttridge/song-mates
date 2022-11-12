@@ -34,7 +34,6 @@ SongMates features a persistent data store with full Create, Read, Update and De
 - Delete - authenticated users can delete their profiles, delete pending collaboration requests (whether cancelling, rejecting or approving them) and delete messages sent by or to them (note that messages appear to be deleted to the user, but are not actually deleted from the database until both the sending and receiving users have marked them as deleted).
 
 ## Table of contents
-
 - [Song Mates](#song-mates)
   * [Purpose](#purpose)
     + [CRUD functionality](#crud-functionality)
@@ -61,15 +60,15 @@ SongMates features a persistent data store with full Create, Read, Update and De
     + [Mockups](#mockups)
     + [Data models](#data-models)
   * [Frameworks, libraries and dependencies](#frameworks--libraries-and-dependencies)
-    + [[Django 3.2](https://www.djangoproject.com/)](#-django-32--https---wwwdjangoprojectcom--)
-    + [[Psychopg 2](https://pypi.org/project/psycopg2/)](#-psychopg-2--https---pypiorg-project-psycopg2--)
-    + [[Gunicorn](https://gunicorn.org/)](#-gunicorn--https---gunicornorg--)
-    + [[dj-database-url](https://pypi.org/project/dj-database-url/)](#-dj-database-url--https---pypiorg-project-dj-database-url--)
-    + [[Django-allauth](https://django-allauth.readthedocs.io/en/latest/overview.html)](#-django-allauth--https---django-allauthreadthedocsio-en-latest-overviewhtml-)
-    + [[Cloudinary](https://cloudinary.com/) and [django-cloudinary-storage](https://pypi.org/project/django-cloudinary-storage/)](#-cloudinary--https---cloudinarycom---and--django-cloudinary-storage--https---pypiorg-project-django-cloudinary-storage--)
-    + [[Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/)](#-crispy-forms--https---django-crispy-formsreadthedocsio-en-latest--)
-    + [[Crispy Bootstrap 5](https://pypi.org/project/crispy-bootstrap5/)](#-crispy-bootstrap-5--https---pypiorg-project-crispy-bootstrap5--)
-    + [[Bootstrap 5](https://getbootstrap.com/)](#-bootstrap-5--https---getbootstrapcom--)
+    + [Django 3.2](#django-32)
+    + [Psychopg 2](#psychopg-2)
+    + [Gunicorn](#gunicorn)
+    + [dj-database-url](#dj-database-url)
+    + [Django-allauth](#django-allauth)
+    + [Cloudinary and django-cloudinary-storage](#cloudinary-and-django-cloudinary-storage)
+    + [Crispy Forms](#crispy-forms)
+    + [Crispy Bootstrap 5](#crispy-bootstrap-5)
+    + [Bootstrap 5](#bootstrap-5)
   * [Testing](#testing)
     + [Manual testing](#manual-testing)
     + [Automated tests](#automated-tests)
@@ -380,32 +379,35 @@ Custom models for SongMates are:
 
 ## Frameworks, libraries and dependencies
 
-### [Django 3.2](https://www.djangoproject.com/)
-Python web framework
+### Django 3.2
+[Python web framework](https://www.djangoproject.com/)
 
-### [Psychopg 2](https://pypi.org/project/psycopg2/)
-Python PostgreSQL adapater.
+### Psychopg 2
+[Python PostgreSQL adapater](https://pypi.org/project/psycopg2/)
 
-### [Gunicorn](https://gunicorn.org/)
-Python WSGI HTTP server.
+### Gunicorn
+[Python WSGI HTTP server](https://gunicorn.org/)
 
-### [dj-database-url](https://pypi.org/project/dj-database-url/)
-Django utility to create an environment variable to configure the Django application.
+### dj-database-url
+[Django utility to create an environment variable to configure the Django application]((https://pypi.org/project/dj-database-url/))
 
-### [Django-allauth](https://django-allauth.readthedocs.io/en/latest/overview.html)
-User account management django application suite.
+### Django-allauth
+[User account management django application suite](https://django-allauth.readthedocs.io/en/latest/overview.html)
 
-### [Cloudinary](https://cloudinary.com/) and [django-cloudinary-storage](https://pypi.org/project/django-cloudinary-storage/)
-Libraries to enable storage of static files and media in Cloudinary.
+### Cloudinary and django-cloudinary-storage
+Libraries to enable storage of static files and media in Cloudinary
 
-### [Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/)
-Django app to simplify form rendering.
+https://cloudinary.com/
+https://pypi.org/project/django-cloudinary-storage/
 
-### [Crispy Bootstrap 5](https://pypi.org/project/crispy-bootstrap5/)
-Bootstrap 5 templates for Crispy Forms.
+### Crispy Forms
+[Django app to simplify form rendering](https://django-crispy-forms.readthedocs.io/en/latest/)
 
-### [Bootstrap 5](https://getbootstrap.com/)
-Front end CSS and JavaScript library.
+### Crispy Bootstrap 5
+[Bootstrap 5 templates for Crispy Forms](https://pypi.org/project/crispy-bootstrap5/)
+
+### Bootstrap 5
+[Front end CSS and JavaScript library](https://getbootstrap.com/)
 
 ## Testing
 
