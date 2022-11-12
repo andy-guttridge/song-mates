@@ -9,17 +9,52 @@ medium of digital recording. Great music is often the result of collaboration, a
  
 The purpose of Song Mates is to provide a platform for musicians who want to write, perform and record material to find like minded people to collaborate with, whether that be for a song or an album.
 
+SongMates enables un-quthenticated users to:
+
+- Browse and search profiles of other users.
+- Register with SongMates
+
+Authenticated users are able to:
+
+- Create a user profile with an image, and 'About me' section, select up to five genres of music they are interested in from a preset list, and specify up to five instruments and skills to display on their profile.
+- Send a 'collaboration request' to other users. This is similar to a connection request on LinkedIn or friend request on Facebook.
+- Send user to user messages directly to other users who are collaborators. Note the term 'messages' refers to user to user messages throughout this documentation (as opposed to Django user messages).
+- Mark messages as deleted.
+- Uncollaborate with collaborators (this means these two users will no longer be able to message each other).
+
+
 Users can register with Song Mates, and create a profile with an image, a biography or summary of what they're looking for, and can specify the instruments they play and relevant skills. They can search for potential collaborators using these criteria, and make collaboration requests (like a connection request on LinkedIn or friend request on Facebook). Users can send direct messages to their  connections.
 
-**CRUD functionality**
+### CRUD functionality
 
-**Important**
+SongMates features a persistent data store with full Create, Read, Update and Delete functionality.
 
-Song mates is a work in progress. The backend is in place and key features for a minimum viable product have been implemented, however styling/design has not been completed. At least one additional feature (user to user messaging) will be implemented for the final version, to be completed by mid-November 2022.
+- Create - authenticated users can create a user account, a profile, collaboration requests and messages (only to their approved collaborators).
+- Read - users can view the profiles of other users, and authenticated users can read messages sent to them.
+- Update - authenticated users can update their profiles and save the changes.
+- Delete - authenticated users can delete their profiles, delete pending collaboration requests (whether cancelling, rejecting or approving them) and delete messages sent by or to them (note that messsages appear to be deleted to the user, but are not actually deleted from the database until both the sending and receiving users have marked them as deleted).
 
 ## Table of contents
 
 ## User stories
+
+Having conceived the basic idea for the site, user stories were created in a spreadsheet (see link below). These were categorised according to whether they had to be implemented to produce a Minimum Viable Product (MVP), with priority for development to be given to those that were part of the MVP specification. Note that some of the terminology in the user stories varies from final implementation, for example the final website refers to 'collaboration requests' and 'collaborators', whereas the user stories refer to 'connections'.
+
+User acceptance criteria/manual tests for each user story were added to the spreadsheet as development commenced on each user story.
+
+[Link to SongMates user stories spreadsheet](https://docs.google.com/spreadsheets/d/1lfMAhZfRnoHnkIVx8LW1cVvdgnDvWeyrtCgRz0_mvzA/edit?usp=sharing)
+
+Implementation deviated from some of the original user stories, in response to continual testing as development progressed:
+
+- *'As a user I can be confident that my profile will only be visible to registered users so that my details can only be accessed by potential collaborators registered with the site.'*
+
+    This user story was implemented, however in testing the site it became apparent that making profiles visible to non-authenticated users could serve to increase engagement and interest, leading to more registrations and a richer pool of potential collaborators. Implementation of this user story was  un-done, however a priority for future development would be giving users the option to hide their profiles from non-authenticated users.
+- *As a user I can see a list of my current connections and access their profiles so that I can evaluate their usefulness.*
+
+    It was originally envisaged that this user story would be implemented with a separate navbar link to a list of current collaborators, however during development it was realised that incorporating a simple checkbox into the search form to allow users to display only their current collaborators and further narrow the search if desired would simplify the user experience and reduce site complexity.
+- *As a user I can send emails to my connections so that I can facilitate collaboration with them.*
+
+    While this user story was included to provide an easy-to-implement way for users to communicate with each other to achieve a MVP, it was always felt that a user-to-user messaging system would be a better way to facilitate communication between users. This was not included in the spec for a MVP due to concerns around development time. The email functionality was implemented by displaying an email link on the profiles of approved collaborators, but as successful implementation of user stories was proceeding more quickly than anticipated, this was replaced with a messaging system, exceeding the original MVP spec.
 
 ## Agile development methodology
 
@@ -78,17 +113,18 @@ In the event the user confirms the deletion, their profile is deleted from the d
 ### Find collaborators page
 <p align="center">
     <img src="readme_media/find_collabs.png" width="200">
+    <img src="readme_media/find_collabs3.png" width="200">
     <img src="readme_media/find_collabs2.png" width="200">
 </p>
 
-The 'find collaborators' page enables browsing of user profiles. Users who have not yet filled out any of their profile do not have their profiles displayed on this page, and are presented with a message to encourage them to fill it out.
+The 'find collaborators' page enables browsing of user profiles. Unregistered users are encouraged to register. Those who are authenticated but who have not yet filled out any of their profile do not have their profiles displayed on this page, and are presented with a message to encourage them to fill it out.
 
 ### Search form
 <p align="center">
     <img src="readme_media/search_form.png" width="200">
 </p>
 The find collaborators page includes a search form to enable users to find potential collaborators aligned to their own interests.
-The 'show only my collaborators' checkbox lets the user filter the profiles to only those who are approved collaborators. This works in combination with the other search fields, so for example a user could find only their collaborators whose profiles include 'country'.
+The 'show only my collaborators' checkbox lets the user filter the profiles to only those who are approved collaborators. This works in combination with the other search fields, so for example a user could find only their collaborators whose profiles include 'country'. The checkbox is hidden from un-authenticated users.
 The genres drop-down allows the user to narrow the search down to those genres they are interested in.
 The 'search profiles' field enables the user to perform a free text search on profile biographies and instruments/skills.
 
@@ -127,56 +163,98 @@ For incoming collaboration requests, the user can decide whether to accept or re
     <img src="readme_media/messages3.png" width="200">
 </p>
 
-Similar to the collaboration requests page, the 'messages' page provides users with an overview of incoming and outgoing messages. They can users' profiles by clicking on the name in the 'from' column, and can view messages in a modal by selecting the subject of the message in the 'subject' column. For incoming messages, they can reply directly from the modal. A delete button enables the user to delete messages, after confirming the action in a modal dialog.
+Similar to the collaboration requests page, the 'messages' page provides users with an overview of incoming and outgoing messages. They can users' profiles by clicking on the name in the 'from' column, and can view messages in a modal by selecting the subject of the message in the 'subject' column. For incoming messages, they can reply directly from the modal.
+
+A delete button enables the user to delete messages, after confirming the action in a modal dialog. If the user confirms deletion, the message will no longer be visible to them, but will only be deleted from the database when both the sending and receiving users have marked it as deleted. This is to prevent messages disappearing for one user when they have only been deleted by the other. 
 
 ### Sign-in, sign-out and register pages
-<img src="readme_media/sign_in.png" width="200">
-<img src="readme_media/sign_out.png" width="200">
-<img src="readme_media/register.png" width="200">
+<p align="center">
+    <img src="readme_media/sign_in.png" width="200">
+    <img src="readme_media/sign_out.png" width="200">
+    <img src="readme_media/register.png" width="200">
+</p>
 
-### Custom user messages
-<img src="readme_media/custom_msg1.png" width="200">
-<img src="readme_media/custom_msg4.png" width="200">
-<img src="readme_media/custom_msg3.png" width="200">
-<img src="readme_media/custom_msg2.png" width="200">
+Sign-in, sign-out and register pages are customised to match the styling of the site.
+
+### Custom Django messages
+<p align="center">
+    <img src="readme_media/custom_msg1.png" width="200">
+    <img src="readme_media/custom_msg4.png" width="200">
+    <img src="readme_media/custom_msg3.png" width="200">
+    <img src="readme_media/custom_msg2.png" width="200">
+</p>
+
+In addition to the standard Django user messages confirming successful sign-in and sign-out, the site features four additional custom messages to give the user feedback on some possible issues:
+
+- The user could attempt to message another user with whom they were a collaborator from the messages inbox, but the previous collaborator has now deleted their profile.
+- The user could attempt to message another user with whom they were a collaborator from the messages inbox, but the previous collaborator has now ended the collaboration.
+- The user is provided with feedback if a profile search returns no results.
+- The user is provided with feedback if something goes wrong with the edit profile form submission. While not the only possible issue, a typical cause of an error would be attempting to upload a non-image file, because most of the fields are straighforward text or multiple choice fields. The message includes a prompt to reflect this.
 
 ### Administrator panel
-<img src="readme_media/admin1.png" width="200">
-<img src="readme_media/admin2.png" width="200">
-<img src="readme_media/admin3.png" width="200">
-<img src="readme_media/admin4.png" width="200">
-<img src="readme_media/admin5.png" width="200">
-<img src="readme_media/admin6.png" width="200">
+<p align="center">
+    <img src="readme_media/admin1.png" width="200">
+    <img src="readme_media/admin2.png" width="200">
+    <img src="readme_media/admin3.png" width="200">
+    <img src="readme_media/admin4.png" width="200">
+    <img src="readme_media/admin5.png" width="200">
+    <img src="readme_media/admin6.png" width="200">
+</p>
+
+The site includes an administrator panel only accessible to users with admin or super-user permissions. This enables:
+- User accounts to be created.
+- User accounts to be permanently deleted.
+- Inactive user accounts to be reactivated.
+- User details to be amended.
+- User profiles to be created.
+- User profiles to be deleted.
+- User profiles to be amended, including upload of new images.
+- Collaboration requests to be created and deleted.
+- User to user messages to be created and deleted. This means site administrators can message any user, even if they are not collaborators.
+- Only superusers are able to change the permission levels for other users.
+
+The SongMates admin site is accessed via (https://songmates.herokuapp.com/admin/login/?next=/admin/)
 
 ### Fully responsive design
-<img src="readme_media/desktop.png" width="800">
+<p>
+    <img src="readme_media/desktop.png" width="800">
+</p>
 
-
-
+While the site is very much 'mobile first', it scales well to larger devices.
 
 ### Future improvements and features
 
-- There is currently a lot of HTML duplicated between the `find_collabs.html` and `single_profile.html` templates. These could be refactored into a single template, but this would require passing in additional data and adding conditional statements to the template to determine whether it should render as a single profile or multiple profiles (e.g. this would influence whether or not to render search features, the correct heading for the page etc).
-- The code to process the search form in the `SearchProfiles` class in `views.py` is overly complex and convoluted. This would benefit from refactoring as a priority, however this has not yet been addressed due to time pressures.
+#### Future improvements
 
-**TBC**
-- Ability to rate collabs
-- Message or reason for uncollaborating
-- Send message with collab request
-- Organise messages as threads
-- Group messages
-- Live feedback on character limit on forms
-- Ability to center and zoom images within the update profile form
-- Option for users to hide their profile from unauthenticated users
-- Distinguish between 'read' and 'unread' messages so that only unread messages are show in the navbar, and ability to mark messages as read or unread
-- Enable users to include SoundCloud and Youtube clips in their profiles
-- User reporting functionality
-- Mechanism to easily contact the site admin
-- Masonry layout
-- Feature to mark accounts as 'hidden', e.g. an admin account - although this can be achieved now by maintaining an empty profile
-- Ability to login with social media accounts
-- Better account management functionality, e.g. change username, change password, add email account verifications
-- Automatic reduction of profile image size on upload
+There are some parts of the site that would benefit from refactoring, which has not been possible due to time constraints.
+
+- There is currently a lot of HTML duplicated between the `find_collabs.html` and `single_profile.html` templates. These could be refactored into a single template, but this would require passing in additional data and adding conditional statements to the template to determine whether it should render as a single profile or multiple profiles (e.g. this would influence whether or not to render search features, the correct heading for the page etc).
+- The code to process the search form in the `SearchProfiles` class in `views.py` is overly complex. This would benefit from refactoring as a priority.
+- Currently multiple modal dialogs are created within the DOM to faciliate user interaction relating to specific profiles, collaboration requests and messages. These require unique elements and attributes such as forms and buttons, to ensure actions are performed on the correct database objects, that the correct user to user messages are displayed and so on. It would be more efficient to render one modal and populate it for the appropriate action.
+
+#### Future features
+
+A significant number of potential enhancements for the future have been identified.
+
+- Ability for users to rate or rank their collaborators, and have this displayed on profiles for authenticated users.
+- Ability to send a message with a collaboration request.
+- Ability to send a message when choosing to 'un-collaborate' with a user.
+- Organisation of user to user messages into 'threads'.
+- Abiity to distinguish between 'read' and 'unread' messages so that only unread messages are counted in the navbar, and the ability for the user to mark messages as read or unread
+- Group messages.
+- Live chat.
+- Live feedback on character limit on forms.
+- Ability to live preview, center and zoom images within the update profile form.
+- An option for users to hide their profile from unauthenticated users.
+- Enable users to embed SoundCloud and Youtube clips in their profiles.
+- Ability for users to report other users to the site admin.
+- Mechanism for users to easily contact the site admin.
+- 'Masonry' layout of user profile 'cards'.
+- A fearture to explicitly mark accounts as 'hidden', e.g. for admin accounts, although this can be achieved now by maintaining a completely empty profile.
+- Ability to login with social media accounts.
+- Enhanced account management functionality, e.g. ability for users to change username, change password, change email account and add email account verifications without having to get in touch with the site admin.
+- Automatic reduction of profile image size on upload.
+- Automatic deletion of images from cloudinary storage when users change their profile images or delete their profiles.
 
 ## Planning
 
