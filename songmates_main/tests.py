@@ -70,7 +70,7 @@ class TestViewModelInteraction(TestCase):
 
     def test_collab_request_is_created(self):
         """
-        Create collaboration request is added correctly
+        Test create collaboration request is added correctly
         """
         # Call view to create new collab request to user_2
         response = self.client.post(f'/request-collab/{self.user_2.pk}')
@@ -83,8 +83,8 @@ class TestViewModelInteraction(TestCase):
 
     def test_collab_request_approval(self):
         """
-        Test collaboration request is added to correct profiles and deleted
-        when approved
+        Test collaboration results in many to many relationship for the
+        correct profiles and is deleted when approved
         """
         # Create profiles for the two test users
         user_profile = Profile.objects.create(user=self.user)
