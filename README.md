@@ -327,33 +327,32 @@ Custom models for SongMates are:
 
 ## Frameworks, libraries and dependencies
 
-### Django 3.2
+### [Django 3.2](https://www.djangoproject.com/)
+Python web framework
 
-### Psychopg 2
-Python PostgreSQL adapater
+### [Psychopg 2](https://pypi.org/project/psycopg2/)
+Python PostgreSQL adapater.
 
-### Gunicorn
-Python WSGI HTTP server
+### [Gunicorn](https://gunicorn.org/)
+Python WSGI HTTP server.
 
-### dj-database-url
-Django utility to create an environment variable to configure the Django application
+### [dj-database-url](https://pypi.org/project/dj-database-url/)
+Django utility to create an environment variable to configure the Django application.
 
-### Django-allauth
-User account management django application suite
+### [Django-allauth](https://django-allauth.readthedocs.io/en/latest/overview.html)
+User account management django application suite.
 
-### Cloudinary and django-cloudinary-storage
-Libraries to enable storage of static files and media in Cloudinary
+### [Cloudinary](https://cloudinary.com/) and [django-cloudinary-storage](https://pypi.org/project/django-cloudinary-storage/)
+Libraries to enable storage of static files and media in Cloudinary.
 
-### Crispy Forms
-Django app to simplify form rendering
+### [Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/)
+Django app to simplify form rendering.
 
-### Crispy Bootstrap 5
-Bootstrap 5 templates for Crispy Forms
+### [Crispy Bootstrap 5](https://pypi.org/project/crispy-bootstrap5/)
+Bootstrap 5 templates for Crispy Forms.
 
-### Bootstrap 5
-Front end CSS and JavaScript library
-
-## Data model
+### [Bootstrap 5](https://getbootstrap.com/)
+Front end CSS and JavaScript library.
 
 ## Testing
 
@@ -369,7 +368,27 @@ Front end CSS and JavaScript library
 
 ### Manual testing
 
+Manual tests were devised for each user story, once it was decided a particular story would be implemented. These are documented on the [SongMates user stories spreadsheet](https://docs.google.com/spreadsheets/d/1lfMAhZfRnoHnkIVx8LW1cVvdgnDvWeyrtCgRz0_mvzA/edit?usp=sharing).
+
+All manual tests were found to pass, once the bugs noted above had been fixed.
+
+In addition, the site was subject to continual user testing throughout the development process. This resulted in a number of enhancements to the user experience, which are documented in the user stories and planning sections above.
+
 ### Automated tests
+
+A number of unit tests were written to test key interactions between the views and the database models. These can be found in the `tests.py` file in the `songmates_main` directory. These tests covered:
+
+- Test new profile is created when account is registered - passed
+- Test profile is deleted when request received from user - passed
+- Test the user account becomes inactive when the user requests account deletion - passed
+- Test a collaboration request is created correctly when requested by the sender - passed
+- Test that when a collaboration request is approved, it results in a many to many relationship for the correct profiles and is then deleted - passed
+- Test that when a collaboration request is rejected, no many to many relationship is created between the sending and receiving users and that it is deleted - passed
+- Test that when a user decides to end a collaboration, the many to many relationship between the two profiles is correctly removed - passed
+- Test that user to user messages are sent correctly when requested by the sender - passed
+- Test that user to user messages are correctly marked as deleted when requested by one user, but only deleted when marked as deleted by both users - passed
+
+
 
 ### Validator testing
 
