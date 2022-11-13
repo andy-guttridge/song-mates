@@ -89,7 +89,19 @@ SongMates features a persistent data store with full Create, Read, Update and De
 
 ## User stories
 
-Having conceived the basic idea for the site, themes and epics were documented in a spreadsheet (see link below). These were further refined into user stories.
+Having conceived the basic idea for the site, themes and epics were documented in a spreadsheet (see link below). 
+The themes and epics were:
+
+**Theme: Account management**
+*Epics: register account, sign-in, sign-out, delete account, user profile
+
+**Theme: User interaction**
+*Epics: user profile, manage connections, message connections
+
+**Theme: Site administration**
+*Epics: manage users
+
+The epics were then further refined into user stories.
 
 Individual user stories were categorised according to whether they had to be implemented to produce a Minimum Viable Product (MVP), with priority for development to be given to those that were part of the MVP specification. Note that some of the terminology in the user stories varies from final implementation, for example the final website refers to 'collaboration requests' and 'collaborators', whereas the user stories refer to 'connections'.
 
