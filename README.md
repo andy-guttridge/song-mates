@@ -93,21 +93,24 @@ Having conceived the basic idea for the site, themes and epics were documented i
 The themes and epics were:
 
 **Theme: Account management**
-*Epics: register account, sign-in, sign-out, delete account, user profile
+
+*Epics: register account, sign-in, sign-out, delete account, user profile*
 
 **Theme: User interaction**
-*Epics: user profile, manage connections, message connections
+
+*Epics: user profile, manage connections, message connections*
 
 **Theme: Site administration**
-*Epics: manage users
+
+*Epics: manage users*
 
 The epics were then further refined into user stories.
+
+[Link to SongMates user stories spreadsheet](https://docs.google.com/spreadsheets/d/1lfMAhZfRnoHnkIVx8LW1cVvdgnDvWeyrtCgRz0_mvzA/edit?usp=sharing)
 
 Individual user stories were categorised according to whether they had to be implemented to produce a Minimum Viable Product (MVP), with priority for development to be given to those that were part of the MVP specification. Note that some of the terminology in the user stories varies from final implementation, for example the final website refers to 'collaboration requests' and 'collaborators', whereas the user stories refer to 'connections'.
 
 User acceptance criteria/manual tests for each user story were added to the spreadsheet as development commenced on each user story. User stories with a white background and no acceptance criteria/tests were not part of the MVP and not implemented.
-
-[Link to SongMates user stories spreadsheet](https://docs.google.com/spreadsheets/d/1lfMAhZfRnoHnkIVx8LW1cVvdgnDvWeyrtCgRz0_mvzA/edit?usp=sharing)
 
 Implementation deviated from some of the original user stories, in response to continual testing as development progressed:
 
