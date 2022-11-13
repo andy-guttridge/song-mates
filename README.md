@@ -598,6 +598,7 @@ In addition to the specific articles and materials referenced above, the officia
     - [Rubik](https://fonts.google.com/specimen/Rubik?query=rubik)
 - Placeholder profile image by WandererCreative and downloaded from [Pixabay](https://pixabay.com/images/id-973460/)
 - Vinyl record image used in the logo by Paul Brennan and downloade from [Pixabay](https://pixabay.com/photos/phonograph-record-vinyl-audio-sound-3148686/)
+- Vinyl record image used for the favicon by Clker-Free-Vector-Images from [Pixabay](https://pixabay.com/vectors/record-album-retro-vintage-vinyl-312730/)
 - Hero image of red vinyl record by Stas Knop and downloaded from [Pexels](https://www.pexels.com/photo/red-vinyl-record-3552948/)
 - Profile images for test user accounts:
     - ElizaB's image is from [Freepik](https://www.freepik.es/vector-premium/dibujo-dibujos-animados-cantante_20243817.htm)
