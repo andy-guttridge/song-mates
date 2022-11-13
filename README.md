@@ -108,6 +108,12 @@ The epics were then further refined into user stories.
 
 [Link to SongMates user stories spreadsheet](https://docs.google.com/spreadsheets/d/1lfMAhZfRnoHnkIVx8LW1cVvdgnDvWeyrtCgRz0_mvzA/edit?usp=sharing)
 
+The task management app [Wrike](https://www.wrike.com/main/) was used to manage individual tasks required for implementing user stories and other general tasks. It is not possible to share a public link to the Wrike project, but this screenshot illustrates its use:
+
+<p align="center">
+    <img src="readme_media/wrike.png" width="300">
+</p>
+
 Individual user stories were categorised according to whether they had to be implemented to produce a Minimum Viable Product (MVP), with priority for development to be given to those that were part of the MVP specification. Note that some of the terminology in the user stories varies from final implementation, for example the final website refers to 'collaboration requests' and 'collaborators', whereas the user stories refer to 'connections'.
 
 User acceptance criteria/manual tests for each user story were added to the spreadsheet as development commenced on each user story. User stories with a white background and no acceptance criteria/tests were not part of the MVP and not implemented.
@@ -150,6 +156,25 @@ There were some user stories which were automatically implemented as a consequen
 One challenge was that there was considerable uncertainty as to how many story points to allocate to each task. For this reason, the first iteration had tasks equating to more than 16 total, although care was still taken to ensure the number of 'must haves' did not exceed 9 story points. As work progressed, it became apparent that story points had been overestimated for some tasks, with iteration 2 completed ahead of schedule. Iteration 3 was then opened early.
 
 Note that one user story was left off the iteration 3 board in error, but was planned for and completed during that iteration. It was later added to the 'done' column for that iteration to ensure it was documented.
+
+## Design
+Research indicated that yellow is a colour traditionally associated with creativity, so a bright yellow was chosen as the basis for the design of the site. A very dark grey (almost black) was chosen as a background to provide a contrast with the yellow. A logo was designed using the Monoton font and an image of a vinyl record for the letter O. Monoton was chosen for the logo and main headings, as the lines in the letters are evocative of the grooves in a record. Rubik Mono One and Rubik were chosen for sub-headings and main text respectively, to provide a contrast to Monoton and ensure legibility at smaller font sizes.
+
+[Adobe color wheel](https://color.adobe.com/) was used to find some contrasting colours for headings and buttons. A hero image of a vinyl record with a yellow label was chosen for the home page. The body of the record has a red colour - this colour was sampled using the Digital Colour Meter in Mac OS, and pasted into Adobe Color Wheel to find a number of contrasting colours. The original red and the colours derived from this were used for the alternating colours of the user profile 'cards' in the 'find collaborators' page, but were given an alpha value of 0.2 in order to blend them in against the dark background.'
+
+The full colour palette is:
+
+`#141414` - main background colour
+`#fff3e9` - light background colour used for modals, form fields and tables
+`rgba(43, 49, 54, 0.3)` - lighter semi-transparent grey used for the profile 'card' body
+`#fef921` - the yellow used for the logo, headings, alerts etc
+`rgba(178,56,64,0.2)` - alternating colour used for profile 'card' header and bottom
+`rgba(37,129,179,0.2)` - alternating colour used for profile 'card' header and bottom
+`rgba(11, 102, 33, 0.2)` - alternating colour used for profile 'card' header and bottom
+`rgba(186, 50, 191, 0.2)` - alternating colour used for profile 'card' header and bottom
+`#e8e1e8` - used for the bulk of the text against the dark background
+`#262526`- dark text colour used against the light background of modals and tables
+`#ccebff`- light blue text colour used for some headings
 
 ## Features
 
