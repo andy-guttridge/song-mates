@@ -40,6 +40,7 @@ SongMates features a persistent data store with full Create, Read, Update and De
   * [Table of contents](#table-of-contents)
   * [User stories](#user-stories)
   * [Agile development methodology](#agile-development-methodology)
+  * [Design](#design)
   * [Features](#features)
     + [Home page with hero image and text carousel](#home-page-with-hero-image-and-text-carousel)
     + [Navbar with 'info-icons' and collapsible 'burger' menu for mobile](#navbar-with--info-icons--and-collapsible--burger--menu-for-mobile)
