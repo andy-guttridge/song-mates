@@ -96,22 +96,6 @@ h3 {
     color: #ccebff;
 }
 
-.txt-color-4 {
-    color: #b23840;
-}
-
-.txt-color-5 {
-    color: #2581b3;
-}
-
-.txt-color-6 {
-    color: #0b6621;
-}
-
-.txt-color-7 {
-    color: #ba32bf;
-}
-
 textarea::placeholder {
     color: #262526;
 }
