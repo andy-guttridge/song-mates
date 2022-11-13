@@ -513,7 +513,9 @@ Performance scores for some pages are disappointing and seem to be largely relat
 - The 'Show only my collaborators' checkbox on the search form was always returning no results, even when the user did have collaborators. This was fixed by additional checks for empty querysets and whether the checkbox has been selected in the `SearchProfile` class in `views.py`.
 
 ### Unresolved bugs
-- There are no known unresolved bugs, however it is very likely there are some which have not been detected.
+The following bugs were not resolved due to time constraints:
+- If user A sends a collaboration request to user B, user B then opens their collaboration requests inbox, and user A then cancels the collaboration request, user B can still accept the collaboration request if they happen not to refresh their browser. This was not deemed a major bug, as the timing and sequence of events would have to be very specific for this to occur, and users can still choose to un-collaborate at any time.
+- Entering a search term and selecting a genre in the search form returns all profiles matching the search term if there are no profiles matching the genre. Intended behaviour is that no results would be returned in this circumstance.
 
 ## Deployment
 
