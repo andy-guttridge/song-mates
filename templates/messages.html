@@ -57,11 +57,11 @@
                     <div class="modal-dialog">
                         <div class="modal-content bkgnd-color-1">
                             <div class="modal-header">
-                                <h5 class="modal-title">Read message</h5>
+                                <h3 class="modal-title">Read message</h3>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <h5>Message from {{ message.from_user }}</h5>
+                                <h3>Message from {{ message.from_user }}</h3>
                                 <div class="text-start d-inline-block msg-field-container">
                                     <span>Subject:</span>
                                     <br>
@@ -72,7 +72,7 @@
                                     <div class="msg-body-field bkgnd-color-1 msg-border m-1 placeholder-color-0" id="in-msg-message{{ message.pk }}">{{ message.message|linebreaksbr }}</div>
                                     <br>
                                 </div>
-                                <h5>Reply</h5>
+                                <h3>Reply</h3>
                                 <form action="{% url 'send_msg' message.from_user.pk %}" method="post" id="reply-msg-{{ message.pk }}">
                                     {% csrf_token %}
                                     <div class="text-start d-inline-block msg-field-container">
@@ -103,7 +103,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content bkgnd-color-1">
                             <div class="modal-header">
-                                <h5 class="modal-title">Confirm deletion</h5>
+                                <h3 class="modal-title">Confirm deletion</h3>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -170,13 +170,13 @@
                     <div class="modal-dialog">
                         <div class="modal-content bkgnd-color-1">
                             <div class="modal-header">
-                                <h5 class="modal-title">Read message</h5>
+                                <h3 class="modal-title">Read message</h3>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
 
                                 <!-- Display message to user -->
-                                <h5>Message to {{ message.to_user }}</h5>
+                                <h3>Message to {{ message.to_user }}</h3>
                                 <div class="text-start d-inline-block msg-field-container">
                                     <span>Subject:</span>
                                     <br>
@@ -201,7 +201,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content bkgnd-color-1">
                             <div class="modal-header">
-                                <h5 class="modal-title">Confirm deletion</h5>
+                                <h3 class="modal-title">Confirm deletion</h3>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
