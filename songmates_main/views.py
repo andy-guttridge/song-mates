@@ -72,6 +72,10 @@ class UpdateProfile(View):
             profile_form.clean()
             try:
                 profile_form.save()
+                messages.info(
+                    request,
+                    "The changes to your profile have been saved."
+                )
             except Error:
                 messages.error(request, "Error in form submission. Did you\
                                 try to upload a file that isn't an image?")
@@ -96,6 +100,10 @@ class UserDelete(View):
         # Make user account inactive
         request.user.is_active = False
         request.user.save()
+        messages.info(
+                request,
+                "Your profile has been deleted."
+            )
         return HttpResponseRedirect(reverse_lazy('account_logout'))
 
 
@@ -162,6 +170,10 @@ class RequestCollab(View):
             collab_request = CollabRequest(
                 from_user=request.user, to_user=to_user
             )
+            messages.info(
+                request,
+                "Your collaboration request has been sent."
+            )
             collab_request.save()
 
         return HttpResponseRedirect(reverse_lazy('find_collabs'))
@@ -196,10 +208,15 @@ class CollabRequests(View):
             if new_friend:
                 profile.friends.add(new_friend)
                 profile.save()
+                messages.info(
+                    request,
+                    "You have approved this collaboration request."
+                )
 
         # Find the right collaboration request depending if this was an
         # incoming or outgoing request, and delete - regardless of whether
-        # it was an approval, rejection or cancellation.
+        # it was an approval, rejection or cancellation. Also display Django
+        # messages to provide user feedback.
         if 'collab-approve' in request.POST or 'collab-reject' in request.POST:
             collab_request = CollabRequest.objects.filter(
                 from_user=user_pk
@@ -208,6 +225,15 @@ class CollabRequests(View):
             collab_request = CollabRequest.objects.filter(
                 to_user=user_pk
                 ).first()
+            messages.info(
+                    request,
+                    "You have cancelled this collaboration request."
+                )
+        if 'collab-reject' in request.POST:
+            messages.info(
+                    request,
+                    "You have rejected this collaboration request."
+                )
 
         if collab_request:
             collab_request.delete()
@@ -276,6 +302,11 @@ class DeleteCollab(View):
         # between them on each side.
         if user_profile.friends.filter(pk=collaborator_profile.pk).exists():
             user_profile.friends.remove(collaborator_profile)
+            messages.info(
+                    request,
+                    f'{collaborator_profile.user} is no longer your'
+                    'collaborator.'
+                )
         if collaborator_profile.friends.filter(pk=user_profile.pk).exists():
             collaborator_profile.friends.remove(user_profile)
         return HttpResponseRedirect(reverse_lazy('find_collabs'))
@@ -451,6 +482,10 @@ class SendMsg(View):
             message = Message(from_user=request.user, to_user=to_user,
                               subject=subject, message=message)
             message.save()
+            messages.info(
+                    request,
+                    'Your message has been sent.'
+                )
 
         # If the user and profile exists but isn't a collaborator, inform the
         # sender and don't send the message
@@ -525,10 +560,18 @@ class DeleteMsg(View):
                 and user_profile.user == message.to_user):
             message.to_deleted = True
             message.save()
+            messages.info(
+                    request,
+                    'You have now deleted this message.'
+                )
         if ('confirm-msg-out-delete' in request.POST
                 and user_profile.user == message.from_user):
             message.from_deleted = True
             message.save()
+            messages.info(
+                    request,
+                    'You have now deleted this message.'
+                )
 
         # If message has been marked as deletable by both sending and receiving
         # users, delete it
