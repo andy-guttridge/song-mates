@@ -304,14 +304,32 @@ Sign-in, sign-out and register pages are customised to match the styling of the 
     <img src="readme_media/custom_msg4.png" width="200">
     <img src="readme_media/custom_msg3.png" width="200">
     <img src="readme_media/custom_msg2.png" width="200">
+    <img src="readme_media/custom_msg5.png" width="200">
+    <img src="readme_media/custom_msg6.png" width="200">
+    <img src="readme_media/custom_msg7.png" width="200">
+    <img src="readme_media/custom_msg8.png" width="200">
+    <img src="readme_media/custom_msg9.png" width="200">
+    <img src="readme_media/custom_msg10.png" width="200">
+    <img src="readme_media/custom_msg11.png" width="200">
+    <img src="readme_media/custom_msg12.png" width="200">
+    <img src="readme_media/custom_msg13.png" width="200">
 </p>
 
-In addition to the standard Django user messages confirming successful sign-in and sign-out, the site features four additional custom messages to give the user feedback on some possible issues:
+In addition to the standard Django user messages confirming successful sign-in and sign-out, the site features four additional custom messages to give the user feedback on some possible issues and user actions:
 
 - The user could attempt to message another user with whom they were a collaborator from the messages inbox, but the previous collaborator has now deleted their profile.
 - The user could attempt to message another user with whom they were a collaborator from the messages inbox, but the previous collaborator has now ended the collaboration. In this event, the message will not be sent.
 - The user is provided with feedback if a profile search returns no results.
 - The user is provided with feedback if something goes wrong with the edit profile form submission. While not the only possible issue, a typical cause of an error would be attempting to upload a non-image file, because most of the fields are straighforward text or multiple choice fields. The message includes a prompt to reflect this.
+- The user is notified when changes to their profile have been saved to the database.
+- The user is notified when their profile has been deleted.
+- The user is notified when they have successfully sent a collaboration request.
+- The user is notified when they have cancelled a previously sent collaboration request.
+- The user is notified when they have rejected a collaboration request they have received.
+- The user is notified when they have approved a collaboration request.
+- The user is notified when they have terminated a collaboration.
+- The user is notified when they have sent a message to a collaborator.
+- The user is notified when they have 'deleted' a message from their inbox or outbox.
 
 ### Administrator panel
 <p align="center">
