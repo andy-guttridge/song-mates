@@ -690,6 +690,7 @@ In addition to the specific articles and materials referenced above, the officia
     - [Monoton](https://fonts.google.com/specimen/Monoton?query=Monoton)
     - [Rubik Mono One](https://fonts.google.com/specimen/Rubik+Mono+One?query=rubik+mono)
     - [Rubik](https://fonts.google.com/specimen/Rubik?query=rubik)
+    - [Karla](https://fonts.google.com/specimen/Karla)
 - Placeholder profile image by WandererCreative and downloaded from [Pixabay](https://pixabay.com/images/id-973460/)
 - Vinyl record image used in the logo by Paul Brennan and downloade from [Pixabay](https://pixabay.com/photos/phonograph-record-vinyl-audio-sound-3148686/)
 - Vinyl record image used for the favicon by Clker-Free-Vector-Images from [Pixabay](https://pixabay.com/vectors/record-album-retro-vintage-vinyl-312730/)
