@@ -74,7 +74,7 @@ class UpdateProfile(View):
                 profile_form.save()
                 messages.info(
                     request,
-                    "The changes to your profile have been saved."
+                    'The changes to your profile have been saved.'
                 )
             except Error:
                 messages.error(request, "Error in form submission. Did you\
@@ -102,7 +102,7 @@ class UserDelete(View):
         request.user.save()
         messages.info(
                 request,
-                "Your profile has been deleted."
+                'Your profile has been deleted.'
             )
         return HttpResponseRedirect(reverse_lazy('account_logout'))
 
@@ -172,7 +172,7 @@ class RequestCollab(View):
             )
             messages.info(
                 request,
-                "Your collaboration request has been sent."
+                'Your collaboration request has been sent.'
             )
             collab_request.save()
 
@@ -210,7 +210,7 @@ class CollabRequests(View):
                 profile.save()
                 messages.info(
                     request,
-                    "You have approved this collaboration request."
+                    'You have approved this collaboration request.'
                 )
 
         # Find the right collaboration request depending if this was an
@@ -227,12 +227,12 @@ class CollabRequests(View):
                 ).first()
             messages.info(
                     request,
-                    "You have cancelled this collaboration request."
+                    'You have cancelled this collaboration request.'
                 )
         if 'collab-reject' in request.POST:
             messages.info(
                     request,
-                    "You have rejected this collaboration request."
+                    'You have rejected this collaboration request.'
                 )
 
         if collab_request:
