@@ -305,7 +305,7 @@ class DeleteCollab(View):
             messages.info(
                     request,
                     f'{collaborator_profile.user} is no longer your'
-                    'collaborator.'
+                    ' collaborator.'
                 )
         if collaborator_profile.friends.filter(pk=user_profile.pk).exists():
             collaborator_profile.friends.remove(user_profile)
