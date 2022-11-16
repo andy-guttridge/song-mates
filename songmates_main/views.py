@@ -319,6 +319,7 @@ class SearchProfile(View):
     def get(self, request, *args, **kwargs):
         # Find out if user selected the checkbox to show only their collabs
         collabs_only = request.GET.get('collabs_only')
+
         # Retrieve any genres selected and search phrase entered
         # Using the getlist method to access a list returned by a multiple
         # choice form element is from

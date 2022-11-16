@@ -39,6 +39,7 @@
             {% endfor %}
         </table>
         {% for collab in in_requests %}
+        
             <!-- Modal to confirm rejection of incoming collaboration request -->
             <div class="modal" id="modal-confirm-reject-{{ collab.from_user.pk }}" tabindex="-1">
                 <div class="modal-dialog">

@@ -36,6 +36,7 @@
                             data-bs-toggle="modal" data-bs-target="#modal-show-msg-{{ message.pk }}">{{ message.subject }}</button>
                         </td>
                         <td>
+
                             <!-- Form to deal with deletion of incoming messages -->
                             <form action="{% url 'delete_msg' message.pk %}" method="post" id="delete-msg-form-{{ message.pk }}">
                                 {% csrf_token %}
@@ -164,6 +165,7 @@
         </table>
         {% for message in out_messages %}
             {% if message.from_deleted == False %}
+            
                 <!-- Render modals to read outgoing messages -->
                 <!-- Modals are only rendered if the message has been displayed-->
                 <div class="modal" id="modal-show-msg-{{ message.pk }}" tabindex="-1">

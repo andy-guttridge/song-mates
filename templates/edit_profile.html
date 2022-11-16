@@ -7,6 +7,7 @@
 <h2 class="txt-color-3">Update Profile</h2>
 <div class="d-flex justify-content-center">
     <div class="col-md-6">
+
         <!-- Form for updating user profile -->
         <form action="{% url 'update_profile' %}" method="post" id="profile-form" enctype="multipart/form-data">
             {% csrf_token %}
@@ -15,14 +16,13 @@
 
     <h2 class="txt-color-3">Delete Account</h2>
     <br>
+
         <!-- Form for account deletion -->
         <form action="{% url 'user_delete' %}" method="post" id="user-delete">
             {% csrf_token %}
             <button type="button" class="btn btn-danger" aria-label="Delete my account" data-bs-toggle="modal" data-bs-target="#modal-confirm-del">Delete my account</button>
         </form>
     </div>
-
-
 
     <!-- Modal to confirm account deletion -->
     <div class="modal" id="modal-confirm-del" tabindex="-1">
