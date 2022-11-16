@@ -14,9 +14,9 @@ SongMates enables un-authenticated users to:
 - Browse and search profiles of other users.
 - Register with SongMates.
 
-Authenticated users are able to:
+In addition to the above, authenticated users are able to:
 
-- Create a user profile with an image, and 'About me' section, select up to five genres of music they are interested in from a preset list, and specify up to five instruments and skills to display on their profile.
+- Create a user profile with an image, an 'About me' section, select up to five genres of music they are interested in from a preset list, and specify up to five instruments and skills to display on their profile.
 - Send a 'collaboration request' to other users. This is similar to a connection request on LinkedIn or friend request on Facebook.
 - View the profile of users who have sent them collaboration requests, and decide whether to accept or reject the request.
 - Send user to user messages directly to other users who are collaborators. Note the term 'messages' refers to user to user messages throughout this documentation, unless otherwise stated (as opposed to Django user messages).
@@ -28,7 +28,7 @@ Authenticated users are able to:
 
 SongMates features a persistent data store with full Create, Read, Update and Delete functionality.
 
-- Create - authenticated users can create a user account, a profile, collaboration requests and messages (only to their approved collaborators).
+- Create - users can create a user account, and authenticated users can create a profile, collaboration requests and messages (only to their approved collaborators).
 - Read - users can view the profiles of other users, and authenticated users can read messages sent to them.
 - Update - authenticated users can update their profiles and save the changes, and can approve collaboration requests sent to them (resulting in a new many-to-many relationship in the database).
 - Delete - authenticated users can delete their profiles, delete pending collaboration requests (whether cancelling, rejecting or approving them) and delete messages sent by or to them (note that messages appear to be deleted to the user, but are not actually deleted from the database until both the sending and receiving users have marked them as deleted).
@@ -43,14 +43,14 @@ SongMates features a persistent data store with full Create, Read, Update and De
   * [Design](#design)
   * [Features](#features)
     + [Home page with hero image and text carousel](#home-page-with-hero-image-and-text-carousel)
-    + [Navbar with 'info-icons' and collapsible 'burger' menu for mobile](#navbar-with--info-icons--and-collapsible--burger--menu-for-mobile)
+    + [Navbar with 'info icons' and collapsible 'burger' menu for mobile](#navbar-with-info-icons-and-collapsible-burger-menu-for-mobile)
     + [Edit profile page](#edit-profile-page)
     + [Find collaborators page](#find-collaborators-page)
     + [Search form](#search-form)
     + [Expandable user profiles with role based information and buttons](#expandable-user-profiles-with-role-based-information-and-buttons)
     + [Pending collaboration requests page with inbox and outbox](#pending-collaboration-requests-page-with-inbox-and-outbox)
     + [Messages page with inbox and outbox](#messages-page-with-inbox-and-outbox)
-    + [Sign-in, sign-out and register pages](#sign-in--sign-out-and-register-pages)
+    + [Sign in, sign out and register pages](#sign-in-sign-out-and-register-pages)
     + [Custom Django messages](#custom-django-messages)
     + [Administrator panel](#administrator-panel)
     + [Fully responsive design](#fully-responsive-design)
@@ -125,22 +125,22 @@ Implementation deviated from some of the original user stories, in response to c
 - *'As a user I can be confident that my profile will only be visible to registered users so that my details can only be accessed by potential collaborators registered with the site.'*
 
     This user story was implemented, however in testing the site it became apparent that making profiles visible to non-authenticated users could serve to increase engagement and interest, leading to more registrations and a richer pool of potential collaborators. Implementation of this user story was  un-done, however a priority for future development would be giving users the option to hide their profiles from non-authenticated users.
-- *As a user, I can see an option to cancel pending connection requests on profiles of users to whom I have sent a request so that I can change my mind if I no longer feel I might wish to collaorate with them.*
+- *As a user, I can see an option to cancel pending connection requests on profiles of users to whom I have sent a request so that I can change my mind if I no longer feel I might wish to collaborate with them.*
 
     This was implemented in a slightly different way. The user story suggests that a button to directly cancel an outgoing collaboration request should be visible on the relevant user profile, however during development it was felt that providing a button indicating both outgoing and incoming pending collaboration requests and linking to an overview of such requests would be more logical and user friendly.
 - *As a user I can see a list of my current connections and access their profiles so that I can evaluate their usefulness.*
 
-    It was originally envisaged that this user story would be implemented with a separate navbar link to a list of current collaborators, however during development it was realised that incorporating a simple checkbox into the search form to allow users to display only their current collaborators and further narrow the search if desired would simplify the user experience and reduce site complexity.
+    It was originally envisaged that this user story would be implemented with a separate navbar link to a list of current collaborators, however during development it was realised that incorporating a simple checkbox into the search form to allow users to display only their current collaborators and further narrow the search if desired would simplify the user experience by reducing site complexity.
 - *As a user I can send emails to my connections so that I can facilitate collaboration with them.*
 
-    While this user story was included to provide an easy-to-implement way for users to communicate with each other to achieve a MVP, it was always felt that a user-to-user messaging system would be a better way to facilitate communication between users. This was not included in the spec for a MVP due to concerns around development time. The email functionality was implemented by displaying an email link on the profiles of approved collaborators, but as successful implementation of user stories was proceeding more quickly than anticipated, this was replaced with a messaging system, exceeding the original MVP spec.
+    While this user story was included to provide an easy-to-implement way for users to communicate with each other to achieve a MVP, it was always felt that a user-to-user messaging system would be a better way to facilitate communication between users. This was not included in the spec for a MVP due to concerns around development time. The email functionality was implemented by displaying an email link on the profiles of approved collaborators, but as there was some time available towards the end of the implementation phase, this was replaced with a messaging system, exceeding the original MVP spec.
 
 ## Agile development methodology
 
 GitHub issues, milestones and projects were used to document and track an agile development approach.
 An issue was created for each user story. These were labelled as 'MVP' if they were part of the MVP spec. All user stories were then added to a 'Product Backlog' milestone  ([link to Product Backlog with remaining user stories that were not completed](https://github.com/andy-guttridge/song-mates/milestone/1)).
 
-Development was divided into iterations with a timebox of three working days, each with a total value of 16 story points (although the duration in calendar days was variable, due to fitting the three working days around work and other commitments). A milestone and a GitHub project board were created for each iteration, and user stories moved from the Product Backlog and into the iteration. They were labelled as 'must have', 'could have' or 'should have' goals for the iteration, and assigned story point values. Story points for 'must have' user stories never exceeded 9 (60%).
+Development was divided into iterations with a timebox of three working days, each with a total value of 16 story points (although the duration in calendar days was variable, due to fitting the three working days around work and other commitments). A milestone and a GitHub project board were created for each iteration, and user stories moved from the Product Backlog and into iterations as each cycle of work began. They were labelled as 'must have', 'could have' or 'should have' goals for the iteration, and assigned story point values. Story points for 'must have' user stories never exceeded 9 (60%).
 
 A project Kanban board was used to track progress, with user stories moved between 'Todo', 'In Progress' and 'Done' columns as appropriate. For example, the iteration 3 project board was captured near the start, mid-way through the iteration and at the end:
 
@@ -151,32 +151,32 @@ A project Kanban board was used to track progress, with user stories moved betwe
 </p>
 
 The project boards in their final form can be accessed [via this link](https://github.com/andy-guttridge/song-mates/projects?query=is%3Aopen).
-There are no project boards for iterations 4 and 6, because they were 'special' three working day iterations dedicated to design/styling work and testing/bug fixing, as opposed to implementing user stories. All the MVP user stories had been successfully implemented by the end of iteration 3.
+There are no project boards for iterations 4 and 6, because these were three working day iterations dedicated to design/styling work and experimentation, and testing/bug fixing, as opposed to implementing user stories. Wrike was still used to manage specific tasks for these iterations. All the MVP user stories had been successfully implemented by the end of iteration 3.
 
 There were some user stories which were automatically implemented as a consequence of other work (e.g. implementing admin panels for the data models) or by virtue of Django's built in features. These were documented with a special 'mop-up' milestone ([link](https://github.com/andy-guttridge/song-mates/milestone/6)) and closed.
 
 One challenge was that there was considerable uncertainty as to how many story points to allocate to each task. For this reason, the first iteration had tasks equating to more than 16 total, although care was still taken to ensure the number of 'must haves' did not exceed 9 story points. As work progressed, it became apparent that story points had been overestimated for some tasks, with iteration 2 completed ahead of schedule. Iteration 3 was then opened early.
 
-Note that one user story was left off the iteration 3 board in error, but was planned for and completed during that iteration. It was later added to the 'done' column for that iteration to ensure it was documented.
+Note that one user story was left off the iteration 3 board in error, but was completed during that time box. It was later added to the 'done' column for that iteration to ensure it was documented.
 
 ## Design
-Research indicated that yellow is a colour traditionally associated with creativity, so a bright yellow was chosen as the basis for the design of the site. A very dark grey (almost black) was chosen as a background to provide a contrast with the yellow. A logo was designed using the Monoton font and an image of a vinyl record for the letter O. Monoton was chosen for the logo and main headings, as the lines in the letters are evocative of the grooves in a record. Rubik Mono One and Rubik were chosen for sub-headings and main text respectively, to provide a contrast to Monoton and ensure legibility at smaller font sizes.
+Research indicated that yellow is a colour traditionally associated with creativity, so a bright yellow was chosen as the basis for the design of the site. A very dark grey (almost black) was chosen as a background to provide a contrast with the yellow. A logo was designed using the Monoton font and an image of a vinyl record for the letter O. Monoton was chosen for the logo and main headings, as the lines in the letters are evocative of the grooves in a record. Rubik Mono One and Rubik were chosen for sub-headings and main text respectively, to provide a contrast to Monoton and ensure legibility at smaller font sizes. Karla was used for some guidance text on forms.
 
-[Adobe color wheel](https://color.adobe.com/) was used to find some contrasting colours for headings and buttons. A hero image of a vinyl record with a yellow label was chosen for the home page. The body of the record has a red colour - this colour was sampled using the Digital Colour Meter in Mac OS, and pasted into Adobe Color Wheel to find a number of contrasting colours. The original red and the colours derived from this were used for the alternating colours of the user profile 'cards' in the 'find collaborators' page, but were given an alpha value of 0.2 in order to blend them in against the dark background.'
+[Adobe color wheel](https://color.adobe.com/) was used to find some contrasting colours for headings and buttons. A hero image of a vinyl record with a yellow label was chosen for the home page. The body of the record has a red colour - this colour was sampled using the Digital Colour Meter in Mac OS, and pasted into Adobe Color Wheel to find a number of contrasting colours. The original red and the colours derived from this were used for the alternating colours of the user profile 'cards' in the 'find collaborators' page, but were given an alpha value of 0.2 in order to blend them in against the dark background.
 
 The full colour palette is:
 
-`#141414` - main background colour
-`#fff3e9` - light background colour used for modals, form fields and tables
-`rgba(43, 49, 54, 0.3)` - lighter semi-transparent grey used for the profile 'card' body
-`#fef921` - the yellow used for the logo, headings, alerts etc
-`rgba(178,56,64,0.2)` - alternating colour used for profile 'card' header and bottom
-`rgba(37,129,179,0.2)` - alternating colour used for profile 'card' header and bottom
-`rgba(11, 102, 33, 0.2)` - alternating colour used for profile 'card' header and bottom
-`rgba(186, 50, 191, 0.2)` - alternating colour used for profile 'card' header and bottom
-`#e8e1e8` - used for the bulk of the text against the dark background
-`#262526`- dark text colour used against the light background of modals and tables
-`#ccebff`- light blue text colour used for some headings
+- `#141414` - main background colour
+- `#fff3e9` - light background colour used for modals, form fields and tables
+- `rgba(43, 49, 54, 0.3)` - lighter semi-transparent grey used for the profile 'card' body
+- `#fef921` - the yellow used for the logo, headings, alerts etc
+- `rgba(178,56,64,0.2)` - alternating colour used for profile 'card' header and bottom
+- `rgba(37,129,179,0.2)` - alternating colour used for profile 'card' header and bottom
+- `rgba(11, 102, 33, 0.2)` - alternating colour used for profile 'card' header and bottom
+- `rgba(186, 50, 191, 0.2)` - alternating colour used for profile 'card' header and bottom
+- `#e8e1e8` - used for the bulk of the text against the dark background
+- `#262526`- dark text colour used against the light background of modals and tables
+- `#ccebff`- light blue text colour used for some headings
 
 ## Features
 
@@ -190,19 +190,21 @@ The full colour palette is:
 
 An eye catching hero image and three paragraphs of descriptive text, each displayed in turn in a carousel.
 
-### Navbar with 'info-icons' and collapsible 'burger' menu for mobile
+### Navbar with 'info icons' and collapsible 'burger' menu for mobile
 
 <p align="center">
     <img src="readme_media/burger1.png" width="300">
     <img src="readme_media/burger2.png" width="300">
 </p>
 
-The SongMates navbar features a collapsibe 'burger' menu for mobile users (although it expands to a full horizontal navbar on wider screens).
-The navbar includes two 'info-icons', which show:
+The SongMates navbar features a collapsibe 'burger' menu for authenticated mobile users (although it expands to a full horizontal navbar on wider screens).
+The navbar includes two 'info-icons' for authenticated users, which show:
   - The number of user messages in the user's inbox (incoming only)
   - The number of pending collaboration requests for the user (incoming and outgoing)
 
 The envelope icon links to the user's message inbox and outbox, while the 'collaborator' icon links to the user's pending collaboration requests inbox and outbox.
+
+For non-authenticated users, there is no burger menu on mobile, and the only menu option is a 'sign-up/register' link. This ensure it is immediately clear to users whether they are currently logged in or not.
 
 ### Edit profile page
 
@@ -218,7 +220,7 @@ Users who have not yet filled out any of their profile are redirected to this pa
 
 The update profile form enables the user to update their profile with:
 
-- Am  About Me 'biography' of up to 500 characters. This is where the user can describe their musical interests and goals.
+- An About Me 'biography' of up to 500 characters. This is where the user can describe their musical interests and goals.
 - An image.
 - A selection of up to five musical genres from pre-populated lists.
 - Up to five free text 'instruments or skills' fields of up to 30 characters
@@ -261,7 +263,7 @@ The 'search profiles' field enables the user to perform a free text search on pr
 Profiles are displayed with a collapsible section which can be expanded by pressing the down arrow. This reveals the 'About me' biography and a number of possible buttons depending on the status of the user and their relationship to the other users.
 
 - If the user is not authenticated, only the 'About me' section is revealed within the collapsible.
-- If the authenticated user has an approved collaboration relationship with the other user, this is indicated with a blue collaborator icon next to the other user's name. A 'contact me' icon enables them to send a message to the other user, and an un-collaborate button enables them to end the collaboration. The send message button opens a modal dialog enabling a message to be sent directly from this page. Choosing to un-collaborate opens another modal, asking the user to dismiss or confirm the request.
+- If the authenticated user has an approved collaboration relationship with the other user, this is indicated with a blue collaborator icon next to the other user's name. A 'contact me' icon enables them to send a message to the other user, and an un-collaborate button enables them to end the collaboration. The contact me button opens a modal dialog enabling a message to be sent directly from this page. Choosing to un-collaborate opens another modal, asking the user to dismiss or confirm the request.
 - If the authenticated user has a pending collaboration request (incoming or outgoing), a 'pending collaboration request' button provides a visual indication and links directly to the collaboration requests page so that action can be taken.
 - If the user is authenticated but does not currently have a collaborative relationship with the other user, a 'request to collaborate' button sends the other user a collaboration request.
 
@@ -274,7 +276,7 @@ Profiles are displayed with a collapsible section which can be expanded by press
 
 The 'pending collaboration requests' page enables the authenticated user to see an overview of incoming and outgoing collaboration requests. They can view the profile of the other user to enable them to decide whether this looks like a worthwhile collaborator by clicking on their name in the 'from' column.
 
-For incoming collaboration requests, the user can decide whether to accept or reject the collaboration request. Selecting reject opens a modal dialog to ask the user to confirm the rejection.
+For incoming collaboration requests, the user can decide whether to approve or reject the collaboration request. Selecting reject opens a modal dialog to ask the user to confirm the rejection.
 
 For outgoing collaboration requests, the user can cancel the request.
 
@@ -289,7 +291,7 @@ Similar to the collaboration requests page, the 'messages' page provides users w
 
 A delete button enables the user to delete messages, after confirming the action in a modal dialog. If the user confirms deletion, the message will no longer be visible to them, but will only be deleted from the database when both the sending and receiving users have marked it as deleted. This is to prevent messages disappearing for one user before they have chosen to delete it.
 
-### Sign-in, sign-out and register pages
+### Sign in, sign out and register pages
 <p align="center">
     <img src="readme_media/sign_in.png" width="200">
     <img src="readme_media/sign_out.png" width="200">
@@ -315,7 +317,7 @@ Sign-in, sign-out and register pages are customised to match the styling of the 
     <img src="readme_media/custom_msg13.png" width="200">
 </p>
 
-In addition to the standard Django user messages confirming successful sign-in and sign-out, the site features four additional custom messages to give the user feedback on some possible issues and user actions:
+In addition to the standard Django user messages confirming successful sign-in and sign-out, the site features thirteen additional custom messages to give the user feedback on some possible issues and user actions:
 
 - The user could attempt to message another user with whom they were a collaborator from the messages inbox, but the previous collaborator has now deleted their profile.
 - The user could attempt to message another user with whom they were a collaborator from the messages inbox, but the previous collaborator has now ended the collaboration. In this event, the message will not be sent.
@@ -391,8 +393,8 @@ A significant number of potential enhancements for the future have been identifi
 - Mechanism for users to easily contact the site admin.
 - 'Masonry' layout of user profile 'cards'.
 - A feature to explicitly mark accounts as 'hidden', e.g. for admin accounts, although this can be achieved now by maintaining a completely empty profile.
-- Ability to login with social media accounts.
-- Enhanced account management functionality, e.g. ability for users to change username, change password, change email account and add email account verifications without having to get in touch with the site admin (currently unused allauth templates have not been removed, with a view to implementing these features in future).
+- Ability to register and login with social media accounts.
+- Enhanced account management functionality, e.g. ability for users to change username, change password, change email account and add email account verifications without having to get in touch with the site admin (currently unused allauth templates have not been removed from the repo, with a view to implementing these features in future).
 - Automatic reduction of profile image size on upload.
 - Automatic deletion of images from cloudinary storage when users change their profile images or delete their profiles.
 
@@ -414,9 +416,9 @@ The wireframes proved invaluable as a guideline for the implementation phase. In
 - Users are directed back to the home page when they login.
 - The number of instruments/skills fields available on user profiles was reduced from ten to five. The data model was initially created with five fields to keep things manageable during the initial development phase, however testing suggested that more than five could become overwhelming and that five should be sufficient for most users. The corresponding user story was revised accordingly.
 - As noted in the user stories section above, it was decided during development to replace the separate 'My collaborators' view with a checkbox on the profile search form, as a way of reducing site complexity and enhancing the user experience.
-- The separate 'write new message' and read message views were replaced by modal dialogs, again to reduce site complexity from the user's perspective.
+- The separate 'write new message' and 'read message' views were replaced by modal dialogs, again to reduce site complexity from the user's perspective.
 - The button to cancel a collaboration request from an individual user profile was replaced with the 'Pending collaboration request' button mentioned in the user stories section. This led to the creation of a whole new 'collaboration requests' view, which was deemed to be a more comprehensive and useful implementation.
-- Account management features such as changing user name, email address etc were not implemented due to time constraints.
+- Some account management features such as changing user name, email address etc were not implemented due to time constraints.
 
 ### Data models
 
@@ -449,7 +451,7 @@ Custom models for SongMates are:
 [Python WSGI HTTP server](https://gunicorn.org/)
 
 ### dj-database-url
-[Django utility to create an environment variable to configure the Django application]((https://pypi.org/project/dj-database-url/))
+[Django utility to create an environment variable to configure the Django application](https://pypi.org/project/dj-database-url/)
 
 ### Django-allauth
 [User account management django application suite](https://django-allauth.readthedocs.io/en/latest/overview.html)
@@ -458,6 +460,7 @@ Custom models for SongMates are:
 Libraries to enable storage of static files and media in Cloudinary
 
 https://cloudinary.com/
+
 https://pypi.org/project/django-cloudinary-storage/
 
 ### Crispy Forms
@@ -475,7 +478,7 @@ https://pypi.org/project/django-cloudinary-storage/
 
 Manual tests were devised for each user story, once it was decided a particular story would be implemented. These are documented on the [SongMates user stories spreadsheet](https://docs.google.com/spreadsheets/d/1lfMAhZfRnoHnkIVx8LW1cVvdgnDvWeyrtCgRz0_mvzA/edit?usp=sharing).
 
-All manual tests were found to pass, once the bugs noted above had been fixed.
+All manual tests were found to pass, once the bugs noted below had been fixed.
 
 In addition, the site was subject to continual user testing throughout the development process. This resulted in a number of enhancements to the user experience, which are documented in the user stories and planning sections above.
 
@@ -483,7 +486,7 @@ In addition, the site was subject to continual user testing throughout the devel
 
 A number of unit tests were written to test key interactions between the views and the database models. These can be found in the `tests.py` file in the `songmates_main` directory. These were:
 
-- Test new profile is created when account is registered - passed
+- Test new profile is created when account is registered and user visits the edit profile page - passed
 - Test profile is deleted when request received from user - passed
 - Test the user account becomes inactive when the user requests account deletion - passed
 - Test a collaboration request is created correctly when requested by the sender - passed
@@ -523,7 +526,7 @@ The custom CSS for the site passed through the W3C Jigsaw CSS validator with no 
 </p>
 
 #### JSHint JavaScript validator
-The small amount of custom JavaScript code for the project was passed through the JSHint validator. This detected a number of missing semi-colons and a missing `let` keyword. These issues have been corrected, and the JavaScript now passes validation. Note that JSHint flags an issue with an undefined `bootstrap` variable, however this because JSHint does not have access to the Bootstrap CDN import defined within a `<script>` tag in the `base.html` template. The Google Chrome inspector confirms there are no JavaScript errors with the deployed site.
+The small amount of custom JavaScript code for the project was passed through the JSHint validator. This detected a number of missing semi-colons and a missing `let` keyword. These issues have been corrected, and the JavaScript now passes validation. Note that JSHint flags an issue with an undefined `bootstrap` variable, however this is because JSHint does not have access to the Bootstrap CDN import defined within a `<script>` tag in the `base.html` template. The Google Chrome inspector confirms there are no JavaScript errors with the deployed site.
 
 <p align="center">
     <img src="readme_media/js_hint.png">
@@ -573,12 +576,12 @@ Performance scores for some pages are disappointing and seem to be largely relat
 
 All pages of the site were tested with the [WAVE evaluation tool](https://wave.webaim.org). The browser extension version of the tool was used for the pages that are only accessible to authenticated users. The following issues were found:
 
-- The modal dialogs on the 'find collaborators', 'collaboration requests' and 'messages' pages all made use of `<h5>` elements which were the next headings below `<h2>` elements, therefore breaking the semantics rules of heading elements. These were all replaced with `<h3>` elements.
-- The first heading on each page was a `<h2>`. This is because a text `<h1>` used for the logo in the navbar had been replaced with an image. The image was wrapped in a `<h1>` tag.
-- All of the profile images on the 'find collaborators' page had identical `alt` tags. The HTML template was amended to create a unique alt tag for each profile image based on the name each user.
+- The modal dialogs on the 'find collaborators', 'collaboration requests' and 'messages' pages all made use of `<h5>` elements which were the next headings below `<h2>` elements, therefore breaking the semantic best practice of heading elements. These were all replaced with `<h3>` elements.
+- The first heading on each page was a `<h2>`. This is because a text `<h1>` used for the logo in the navbar had been replaced with an image. The image was wrapped in a `<h1>` tag to address the issue.
+- All of the profile images on the 'find collaborators' page had identical `alt` tags. The HTML template was amended to create a unique alt tag for each profile image based on the name of each user.
 - A 'suspicious link' was found on the 'register' page. This was fixed by changing the text within the anchor tag from 'here' to 'sign in here'.
 
-After these changes had been made, there was one remaining alerts on the 'register' page. This related to a 'redundant link' alert, caused by two adjacent links to the sign-in page. Given that one of them is in the navbar which is the same on all pages (for non-authenticated users) and the other is a specific message to the user in the context of the registration page, this was felt to be acceptable. 
+After these changes had been made, there was one remaining alert on the 'register' page. This related to a 'redundant link' alert, caused by two adjacent links to the sign-in page. Given that one of them is in the navbar which is the same on all pages (for non-authenticated users) and the other is a specific message to the user in the context of the registration page, this was felt to be acceptable. 
 
 Other than this, all pages passed WAVE validation. The screenshots are in the order homepage, find collaborators, collaboration requests, messages, update profile, sign-in, sign-out, register:
 
@@ -597,21 +600,21 @@ Other than this, all pages passed WAVE validation. The screenshots are in the or
 - Initially, allauth configuration was set to require the user to login with an email address and for email verification to be required. However, this resulted in a Django 'connection refused' error. This was caused by the fact no email server was availabe to send verification request emails. Settings were changed so that account login is by username rather than email address. 
 - Testing of the update profile form showed that profile pictures were not uploading to cloudinary. This was rectifed by adding the `enctype="multipart/form-data"` attribute to the form element.
 - While testing the search feature, it was realised that if the user did not select any genres, no profiles would be returned. This was fixed by adding a simple conditional statement to ensure that profiles are not filtered by genre if no genres are selected.
-- During testing, it was found that the 'Show my collaborators only' checkbox on the search form was overriding other search results. For example, if a genre of 'Hip-Hop' was selected in the genres menu and the checkbox to show collaborators only was selected, collaborators would show in the search results even if none of them were matched with the 'Hip-Hop' selection. The correct outcome in this case would be no search results. This was bug was caused by an incorrect boolean condition in an if statement and easily fixed.
+- During testing, it was found that the 'Show my collaborators only' checkbox on the search form was overriding other search results. For example, if a genre of 'Hip-Hop' was selected in the genres menu and the checkbox to show collaborators only was selected, collaborators would show in the search results even if none of them were matched with the 'Hip-Hop' selection. The correct outcome in this case would be no search results. This was bug was caused by an incorrect boolean condition in an if statement.
 - Non-authenticated users using the search function resulted in a server error. This was caused by an attempt to reference the user's profile in the `SearchProfile` view. This was fixed by moving the offending code inside a conditional statement checking for an authenticated user.
 - Testing uploading an invalid  profile image resulted in an error. This was fixed by adding a try/except block to the view code. A Django message is displayed within the except block in the event of an error.
-- The modal dialog for sending a user to user message in the Find Collaborators page was always displaying the name of the first user profile in the list, no matter which user selected to send a message to. This was because Bootstrap modals must have a unique `id` attribute. All the modals had been given the same `id` within the `for` loop that renders profiles. This was also the case for the corresponding `data-bs-modal` attribute of the buttons used to open the modal from each profile. This was fixed by appending the primary key for each user to the modal `id` and button `data-bs-modal` attribute.
+- The modal dialog for sending a user to user message in the Find Collaborators page was always displaying the name of the first user profile in the list, no matter which user was selected to send a message to. This was because Bootstrap modals must have a unique `id` attribute. All the modals had been given the same `id` within the `for` loop that renders profiles. This was also the case for the corresponding `data-bs-modal` attribute of the buttons used to open the modal from each profile. This was fixed by appending the primary key for each user to the modal `id` and button `data-bs-modal` attribute.
 - The modal dialogs for rejecting incoming or cancelling outgoing collaboration requests were targetting the incorrect users, meaning that when there were multiple collaboration requests for one user, the incorrect one would be deleted from the database. This was for a similar reason as the above issue with user messages, and was fixed by moving the modals within the for loop and applying unique `id` attributes to the forms and buttons for each collaboration request.
 - The 'Show only my collaborators' checkbox on the search form was always returning no results, even when the user did have collaborators. This was fixed by additional checks for empty querysets and whether the checkbox has been selected in the `SearchProfile` class in `views.py`.
 
 ### Unresolved bugs
 The following bugs were not resolved due to time constraints:
 - If user A sends a collaboration request to user B, user B then opens their collaboration requests inbox, and user A then cancels the collaboration request, user B can still accept the collaboration request if they happen not to refresh their browser. This was not deemed a major bug, as the timing and sequence of events would have to be very specific for this to occur, and users can still choose to un-collaborate at any time.
-- Entering a search term and selecting a genre in the search form returns all profiles matching the search term if there are no profiles matching the genre. Intended behaviour is that no results would be returned in this circumstance.
+- Entering a search term and selecting a genre in the search form returns all profiles matching the search term if there are no profiles matching the genre. Intended behaviour is that no results would be returned in this circumstance. This would likely be resolved by re-factoring the search code as would be planned for a future version of the site.
 
 ## Deployment
 
-SongMates is deployed to Heroku. 
+SongMates is deployed to Heroku, using an ElephantSQL Postgres database.
 To duplicate deployment to Heroku, follow these steps:
 
 - Fork or clone this repository in GitHub.
@@ -624,19 +627,20 @@ To duplicate deployment to Heroku, follow these steps:
 - Enter a name for the app and select the appropriate region.
 - Select 'Create app'.
 - Select 'Settings' from the menu at the top.
-- Select the 'resources' tab. 
-- Search for 'Heroku Postgres' in 'Add-ons' search bar.
-- Choose the 'Hobby Dev - free' plan.
-- When the Heroku Postgres database has been added, select the instance of the database by clicking on 'Heroku Postgres' (to the right of this it will say 'Attached as database').
-- Select the 'settings' option at the top (this opens the settings for the database as opposed to the app).
-- Select the 'view credentials' button to the right.
-- Copy and paste the value given for the database URI somewhere for use in a moment.
-- Close the database page (which should have opened in a new tab) and return to your Heroku app.
+- Login to ElephantSQL.
+- Click 'Create new instance' on the dashboard.
+- Name the 'plan' and select the 'Tiny Turtle (free)' plan.
+- Select 'select region'.
+- Choose the nearest data centre to your location.
+- Click 'Review'.
+- Go to the ElephantSQL dashboard and click on the 'database instance name' for this project.
+- Copy the ElephantSQL database URL to your clipboard (this starts with `postgres://`).
+- Return to the Heroku dashboard.
 - Select the 'settings' tab.
 - Locate the 'reveal config vars' link and select.
 - Enter the following config var names and values:
     - `CLOUDINARY_URL`: *your cloudinary URL as obtained above*
-    - `DATABASE_URL`: *your Heroku postgres database URI as obtained above*
+    - `DATABASE_URL`: *your ElephantSQL postgres database URL as obtained above*
     - `PORT`: `8000`
     - `SECRET_KEY`: *your secret key*
 - Select the 'Deploy' tab at the top.
@@ -651,7 +655,7 @@ To duplicate deployment to Heroku, follow these steps:
 
 ### Code
 
-- The steps to connect to a Heroku Postgres database and deploy were adapted from the Code Institute 'I think therefore I blog' tutorial. This includes defining `DATABASE_URL` and `SECRET_KEY` environment variables in an `env.py` file in the local environment and adding corresponding config variables in the Heroku dashboard, using dj_database_url to create a URL from the Heroku database URL in `settings.py`, updating `ALLOWED_HOSTS` in `settings.py` with the deployed Heroku URL and adding the templates path to a `TEMPLATES_DIR` variable in `settings.py`.
+- The steps to connect to a Heroku Postgres database and deploy were adapted from the Code Institute 'I think therefore I blog' tutorial. This includes defining `DATABASE_URL` and `SECRET_KEY` environment variables in an `env.py` file in the local environment and adding corresponding config variables in the Heroku dashboard, using dj_database_url to create a URL from the database URL in `settings.py`, updating `ALLOWED_HOSTS` in `settings.py` with the deployed Heroku URL and adding the templates path to a `TEMPLATES_DIR` variable in `settings.py`.
 - This [stackoverflow article](https://stackoverflow.com/questions/68810221/login-required-decorator-gives-object-has-no-attribute-user-error) was referenced to understand how to use the 'login-required' decorator with a class based view.
 - The approach to deleting a user account (actually making the account inactive) in response to a button was adapted from [this stackoverflow article](https://stackoverflow.com/questions/38047408/how-to-allow-user-to-delete-account-in-django-allauth).
 - The Bootstrap 5 documentation was extensively referenced for guidance on implementing navbars and modal dialogs.
